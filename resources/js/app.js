@@ -1,0 +1,13 @@
+require('./bootstrap');
+require('bootstrap-select');
+require('datatables.net-bs4');
+window.JSZip = require('jszip');
+require('datatables.net-buttons-bs4');
+require('datatables.net-buttons/js/buttons.html5.js');
+require('datatables.net-responsive-bs4');
+require('bootstrap-fileinput');
+require('bootstrap-fileinput/themes/fas/theme.min.js');
+require('bootstrap-fileinput/js/locales/es.js');
+require('bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js');
+require('bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js');
+require('bootstrap-toggle/js/bootstrap-toggle.min.js');
