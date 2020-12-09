@@ -18,7 +18,6 @@
   <script src="{{ asset('js/app.js') }}" defer></script>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -120,18 +119,18 @@
 
   </div>
   <!-- ============ Body content End ============= -->
-  </div>
-  <script src="{{ asset ('assets/js/vendor/jquery-3.3.1.min.js') }}"></script>
-  <script src="{{ asset ('assets/js/vendor/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset ('assets/js/vendor/perfect-scrollbar.min.js') }}"></script>
-  <script src="{{ asset ('assets/js/vendor/echarts.min.js') }}"></script>
-  <script src="{{ asset ('assets/js/es5/echart.options.min.js') }}"></script>
-  <script src="{{ asset ('assets/js/es5/dashboard.v1.script.min.js') }}"></script>
-  <script src="{{ asset('js/home/home.js') }}"></script>
-  <script src="{{ asset ('assets/js/es5/script.min.js') }}"></script>
-  <script src="{{ asset ('assets/js/es5/sidebar.large.script.min.js') }}"></script>
-  <script src="{{ asset ('assets/js/vendor/sweetalert2.min.js') }}"></script>
-  <script src="{{ asset ('assets/js/sweetalert.script.js') }}"></script>
+</div>
+<script src="{{ asset ('assets/js/vendor/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('js/home/home.js') }}" defer></script>
+<!-- <script src="{{ asset ('assets/js/vendor/bootstrap.bundle.min.js') }}"></script> -->
+<script src="{{ asset ('assets/js/vendor/perfect-scrollbar.min.js') }}"></script>
+<script src="{{ asset ('assets/js/vendor/echarts.min.js') }}"></script>
+<script src="{{ asset ('assets/js/es5/echart.options.min.js') }}"></script>
+<script src="{{ asset ('assets/js/es5/dashboard.v1.script.min.js') }}"></script>
+<script src="{{ asset ('assets/js/es5/script.min.js') }}"></script>
+<script src="{{ asset ('assets/js/es5/sidebar.large.script.min.js') }}"></script>
+<script src="{{ asset ('assets/js/vendor/sweetalert2.min.js') }}"></script>
+<script src="{{ asset ('assets/js/sweetalert.script.js') }}"></script> 
 </body>
 
 </html>

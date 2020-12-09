@@ -1,12 +1,11 @@
 <div class="form-group">
 	<div class="row">
 		<div class="col-xs-6 col-md-6 col-lg-6">
-			Tipo de documento
-			<select class="form-control selecpicker" id="tipo_documento" required>
-			</select>
+			<span>Tipo de documento</span>
+			<select class="form-control selectpicker" id="tipo_documento" required title="Seleccione una opción"></select>
 		</div>
 		<div class="col-xs-6 col-md-6 col-lg-6">
-			Número de documento
+			<span>Número de documento</span>
 			<input class="form-control" type="text" id="documento" required>
 		</div>
 	</div>
@@ -14,11 +13,11 @@
 <div class="form-group">
 	<div class="row">
 		<div class="col-xs-6 col-md-6 col-lg-6">
-			Pimer nombre
+			<span>Pimer nombre</span>
 			<input class="form-control" type="text" id="primer_nombre" required>
 		</div>
 		<div class="col-xs-6 col-md-6 col-lg-6">
-			Segundo nombre
+			<span>Segundo nombre</span>
 			<input class="form-control" type="text" id="segundo_nombre">
 		</div>
 	</div>
@@ -26,11 +25,11 @@
 <div class="form-group">
 	<div class="row">
 		<div class="col-xs-6 col-md-6 col-lg-6">
-			Primer apellido
+			<span>Primer apellido</span>
 			<input class="form-control" type="text" id="primer_apellido" required>
 		</div>
 		<div class="col-xs-6 col-md-6 col-lg-6">
-			Segundo apellido
+			<span>Segundo apellido</span>
 			<input class="form-control" type="text" id="segundo_apellido">
 		</div>
 	</div>
@@ -38,13 +37,12 @@
 <div class="form-group">
 	<div class="row">
 		<div class="col-xs-6 col-md-6 col-lg-6">
-			Fecha de nacimiento
+			<span>Fecha de nacimiento</span>
 			<input class="form-control" type="date" id="f_nacimiento" required>
 		</div>
 		<div class="col-xs-6 col-md-6 col-lg-6">
 			Genero
-			<select class="form-control selecpicker" title="Seleccione una opción" id="genero" required>
-				<option value="0">Seleccione una opción</option>
+			<select class="form-control selectpicker" title="Seleccione una opción" id="genero" required>
 				<option value="1">Masculino</option>
 				<option value="2">Femenino</option>
 			</select>
@@ -54,11 +52,11 @@
 <div class="form-group">
 	<div class="row">
 		<div class="col-xs-6 col-md-6 col-lg-6">
-			Email
+			<span>Email</span>
 			<input class="form-control" type="email" id="email" required>
 		</div>
 		<div class="col-xs-6 col-md-6 col-lg-6">
-			Celular
+			<span>Celular</span>
 			<input class="form-control" type="number" id="celular" required>
 		</div>
 	</div>
@@ -66,8 +64,8 @@
 <div class="form-group">
 	<div class="row">
 		<div class="col-xs-6 col-md-6 col-lg-6 offset-lg-3">
-			Tipo de usuario
-			<select class="form-control selecpicker" id="rol-usuario" required>				
+			<span>Tipo de usuario</span>
+			<select class="form-control selectpicker" id="rol-usuario" required>				
 			</select>
 		</div>		
 	</div>
