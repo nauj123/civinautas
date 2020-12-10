@@ -118,7 +118,6 @@
 
 
   </div>
-  <!-- ============ Body content End ============= -->
 </div>
 <script src="{{ asset ('assets/js/vendor/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ asset('js/home/home.js') }}" defer></script>

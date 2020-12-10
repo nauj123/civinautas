@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Gestion_Colegios/colegios.js?v=2020.12.9.4') }}" defer></script>
+<script src="{{ asset('js/Gestion_Colegios/colegios.js?v=2020.12.10.8') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -20,7 +20,7 @@
 					<div class="col-xs-6 col-md-6 col-lg-6">
 					</div>
 					<div class="col-xs-6 col-md-6 col-lg-6">
-						<button class="btn btn-block btn-success" id="btn-crear-institucion" data-toggle='modal' data-target='#modal-crear-institucion' >Crear institución educativa</button>
+					<button class="btn btn-block btn-success" id="btn-crear-institucion" data-toggle='modal' data-target='#modal-crear-institucion'>Crear institución educativa</button>
 					</div>
 				</div>
 				<table class="table display" id="tabla-info-instituciones" style="width: 100%;">

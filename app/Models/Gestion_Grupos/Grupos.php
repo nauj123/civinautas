@@ -1,21 +1,21 @@
 <?php 
 
-namespace App\Models\Gestion_Colegios;
+namespace App\Models\Gestion_Grupos;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Colegios extends Model
+class Grupos extends Model
 {
     /**
     * The table associated with the model.
     *
     * @var string
     */
-    protected $table = 'tb_instituciones_educativas';
+    protected $table = 'tb_grupos';
     public $timestamps = false;
 
-  public function getInstitucionesEducativas(){
+/*  public function getInstitucionesEducativas(){
     	$sql = "SELECT 
         IE.Pk_Id_Institucion AS 'IDINSTITUCIONAL',
         PDT.descripcion AS 'TIPOINSTITUCION',
@@ -30,33 +30,14 @@ class Colegios extends Model
         JOIN tb_upz AS UP ON IE.Fk_Id_Upz = UP.Pk_Id_Upz";
         $informacion = DB::select($sql);
         return $informacion;
-    }
-   /*   public function getInfoUsuario($user_id){
-        $usuario = Users::select(
-            "id",
-            "primer_nombre",
-            "segundo_nombre",
-            "primer_apellido",
-            "segundo_apellido",
-            "fk_tipo_documento as tipo_documento",
-            "identificacion",
-            "fecha_nacimiento",
-            "genero",
-            "email",
-            "celular",
-            "fk_rol as rol"
-        )
-        ->where("id", $user_id)
-        ->get();
-        return $usuario;
-    }
- */ 
-    public function getOptionsInstituciones(){
+    } */
+
+ /*   public function getOptionsInstituciones(){
     	$instituciones = Colegios::select(Colegios::raw("CONCAT(GROUP_CONCAT('<option value=\"', Pk_Id_Institucion, '\">', VC_Nombre_Institucion , '</option>' SEPARATOR '')) AS 'option'"))
     	->where([
     		['IN_Estado', 1]
     	])
     	->get();
     	return $instituciones;
-    }
+    } */
 }

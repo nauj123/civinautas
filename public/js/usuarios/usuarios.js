@@ -5,25 +5,50 @@ var tabla_info_usuarios;
 var info_tabla_info_usuarios;
 
 $(document).ready(function(){
-	getTiposDocumento();
-	getroles();
+
+	tabla_info_usuarios = $("#tabla-info-usuarios").DataTable({
+		pageLength: 50,
+		lengthChange: false,
+		responsive: true,
+		dom: 'Bfrtip',
+		buttons: [{
+			extend: 'excel',
+			text: 'Descargar datos',
+			filename: 'Datos'
+		}],
+		"language": {
+			"lengthMenu": "Ver _MENU_ registros por página",
+			"zeroRecords": "No hay información, lo sentimos.",
+			"info": "Mostrando página _PAGE_ de _PAGES_",
+			"infoEmpty": "No hay registros disponibles",
+			"infoFiltered": "(filtrado de un total de _MAX_ registros)",
+			"search": "Filtrar",
+			"paginate": {
+				"first": "Primera",
+				"last": "Última",
+				"next": "Siguiente",
+				"previous": "Anterior"
+			},
+		}
+	});
+	getUsuarios();
+	getTiposDocumento(1);
+	getroles(5);
 
 	$("#tipo_documento").html(options_tipodocumento).selectpicker("refresh");
-	$("#rol-usuario").html(options_roles).selectpicker("refresh");
-	
+	$("#rol-usuario").html(options_roles).selectpicker("refresh");	
 	$("#tipo-documento-m").html(options_tipodocumento).selectpicker("refresh");
 	$("#rol-usuario-m").html(options_roles).selectpicker("refresh");
 
-	$("#btn-crear-usuario").click(function() {
-		$("#modal-registro-usuario").modal('show');
-	});
-
-	function getTiposDocumento() {
+	function getTiposDocumento(id_parametro) {
 		$.ajax({
-			url: "../administracion/getTiposDocumento",
+			url: "../administracion/getOptionsParametro",
 			type: 'POST',
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data:{
+				id_parametro: id_parametro
 			},
 			success: function(data) {
 				options_tipodocumento += data["option"];
@@ -36,12 +61,15 @@ $(document).ready(function(){
 		return options_tipodocumento;
 	}
 
-	function getroles() {
+	function getroles(id_parametro) {
 		$.ajax({
-			url: "../administracion/getroles",
+			url: "../administracion/getOptionsParametro",
 			type: 'POST',
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data:{
+				id_parametro: id_parametro
 			},
 			success: function(data) {
 				options_roles += data["option"];
@@ -92,33 +120,6 @@ $(document).ready(function(){
 			async: false
 		});		
 	});
-
-	tabla_info_usuarios = $("#tabla-info-usuarios").DataTable({
-		pageLength: 50,
-		lengthChange: false,
-		responsive: true,
-		dom: 'Bfrtip',
-		buttons: [{
-			extend: 'excel',
-			text: 'Descargar datos',
-			filename: 'Datos'
-		}],
-		"language": {
-			"lengthMenu": "Ver _MENU_ registros por página",
-			"zeroRecords": "No hay información, lo sentimos.",
-			"info": "Mostrando página _PAGE_ de _PAGES_",
-			"infoEmpty": "No hay registros disponibles",
-			"infoFiltered": "(filtrado de un total de _MAX_ registros)",
-			"search": "Filtrar",
-			"paginate": {
-				"first": "Primera",
-				"last": "Última",
-				"next": "Siguiente",
-				"previous": "Anterior"
-			},
-		}
-	});
-	getUsuarios();
 
 	function getUsuarios() {
 		$.ajax({

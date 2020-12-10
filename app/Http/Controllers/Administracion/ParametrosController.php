@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Administracion; 
 
-use App\Http\Controllers\Controller;
-use App\Models\Administracion\DisciplinaDeportiva;
+use App\Http\Controllers\Controller; 
 use Illuminate\Http\Request;
 use App\Models\Administracion\ParametroDetalle;
 use Illuminate\Support\Facades\DB;
@@ -13,14 +12,10 @@ class ParametrosController extends Controller
 	public function index(){
 		return view('administracion/administracion_parametros');
 	}
-	public function getTiposDocumento(Request $request){
+	
+	public function getOptionsParametro(Request $request){
 		$parametro = new ParametroDetalle;
-		$resultado = $parametro->getTiposDocumento();
-		return response()->json($resultado[0]);
-	}
-	public function getroles(Request $request){
-		$parametro = new ParametroDetalle;
-		$resultado = $parametro->getroles();
+		$resultado = $parametro->getOptionsParametro($request->id_parametro);
 		return response()->json($resultado[0]);
 	}
 	public function getParametros(Request $request){
@@ -47,14 +42,16 @@ class ParametrosController extends Controller
 			return 200;
 		}
 	}
-	public function getOptionsParametro(Request $request){
+	public function getLocalidades(Request $request){
 		$parametro = new ParametroDetalle;
-		$resultado = $parametro->getOptionsParametro($request->id_parametro);
+		$resultado = $parametro->getLocalidades();
 		return response()->json($resultado[0]);
 	}
-	/*public function getetnias(Request $request){
+	public function getUpz(Request $request){
 		$parametro = new ParametroDetalle;
-		$resultado = $parametro->getetnias();
+		$resultado = $parametro->getUpz($request->id_localidad);
 		return response()->json($resultado[0]);
-	}*/	
+	}
+
+	
 }

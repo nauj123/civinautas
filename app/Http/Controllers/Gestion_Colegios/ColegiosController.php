@@ -37,11 +37,15 @@ class ColegiosController extends Controller
 		if($instituciones->save())
 			return 200;
 	}
-
 	public function getInstitucionesEducativas(Request $request){
 		$usuario = new Colegios;
 		$resultado = $usuario->getInstitucionesEducativas();
 		return response()->json($resultado, 200);
+	}
+	public function getOptionsInstituciones(Request $request){
+		$parametro = new Colegios;
+		$resultado = $parametro->getOptionsInstituciones();
+		return response()->json($resultado[0]);
 	}
 
 

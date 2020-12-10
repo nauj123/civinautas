@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Gestion_Grupos/grupos.js') }}" defer></script>
+<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2020.12.10.1') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -8,10 +8,9 @@
 <div class="p-2 rounded d-flex align-items-center bg-primary text-white">
 	<h1 class="text-28 mb-1 text-white">Gestión de grupos</h1>
 </div>
-
 <br>
-
 <div class="container-fluid">
+@auth
 	<div class="panel-body">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#creacion_usuario">Creación de grupos</a></li>
@@ -25,46 +24,42 @@
 				<div class="card" id="nuevo-usuario-contenedor">
 					<div class="card-header bg-dark text-white">Crear grupo</div>
 					<div class="card-body">
-						<form id="form-nuevo-usuario">
+						<form id="form-nuevo-grupo">
 							<div class="form-group">
 								<div class="row">
 									<div class="col-xs-12 col-md-6 col-lg-6  form-group mb-3">
-										Entidad
-										<select class="form-control selectpicker" title="Seleccione una opción" id="entidad" required>
-											<option>Option 1</option>
-											<option>Option 1</option>
-											<option>Option 1</option>
-										</select>
+										<span>Institucion</span> 
+										<select class="form-control selectpicker" title="Seleccione una opción" id="institucion" required></select>
 									</div>
 									<div class="col-xs-12 col-md-6 col-lg-6">
-										Nombre del Grupo
+										<span>Nombre del grupo</span>
 										<input type="text" class="form-control" id="nombre-grupo">
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-12 col-md-6 col-lg-6">
-										Mediador
-										<input type="text" class="form-control" id="mediador">
+										<span>Nombre mediador</span>
+										<input type="text" class="form-control" value="{{ Auth::user()->primer_nombre }} {{ Auth::user()->segundo_nombre }} {{ Auth::user()->primer_apellido }}" id="mediador" readonly>
 									</div>
 									<div class="col-xs-12 col-md-6 col-lg-6">
-										Docente
+										<span>Nombre docente</span>
 										<input class="form-control" type="text" id="docente" required>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-12 col-md-6 col-lg-6">
-										Tipo de atención
-										<select class="form-control selectpicker" title="Seleccione una opción" id="entidad" required></select>
+										<span>Tipo de atención</span>
+										<select class="form-control selectpicker" title="Seleccione una opción" id="tipo-atencion" required></select>
 									</div>
 									<div class="col-xs-12 col-md-6 col-lg-6">
-										Jornada
-										<select class="form-control selectpicker" title="Seleccione una opción" id="entidad" required></select>
+										<span>Jornada</span>
+										<select class="form-control selectpicker" title="Seleccione una opción" id="jornada" required></select>
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-lg-4 offset-lg-4"><br>
-									<button class="btn btn-block btn-primary" type="submit">Registrar grupo</button>
+									<button class="btn btn-block btn-primary" type="submit">Registrar el grupo</button>
 								</div>
 							</div>
 						</form>
@@ -137,6 +132,6 @@
 
 		</div>
 	</div>
-
+@endauth
 </div>
 @endsection

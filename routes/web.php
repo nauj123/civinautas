@@ -37,13 +37,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 /**
  * Rutas administración
  */
-Route::post('/administracion/getTiposDocumento', 'Administracion\ParametrosController@getTiposDocumento');
-Route::post('/administracion/getroles', 'Administracion\ParametrosController@getroles');
+
+Route::post('/administracion/getOptionsParametro', 'Administracion\ParametrosController@getOptionsParametro');
 Route::post('/administracion/getParametros', 'Administracion\ParametrosController@getParametros');
 Route::post('/administracion/getParametroAsociados', 'Administracion\ParametrosController@getParametroAsociados');
-Route::post('/administracion/getOptionsParametro', 'Administracion\ParametrosController@getOptionsParametro');
 Route::post('/administracion/modificarParametroAsociado', 'Administracion\ParametrosController@modificarParametroAsociado');
 Route::post('/administracion/guardarNuevoParametroAsociado', 'Administracion\ParametrosController@guardarNuevoParametroAsociado');
+Route::post('/administracion/getLocalidades', 'Administracion\ParametrosController@getLocalidades');
+Route::post('/administracion/getUpz', 'Administracion\ParametrosController@getUpz');
+
 
 /**
  * Rutas usuarios
@@ -60,3 +62,10 @@ Route::post('/usuarios/getListadoUsuarios', 'Usuarios\UsuariosController@getList
  */
 Route::post('/Gestion_Colegios/guardarNuevaInstitucion', 'Gestion_Colegios\ColegiosController@guardarNuevaInstitucion');
 Route::post('/Gestion_Colegios/getInstitucionesEducativas', 'Gestion_Colegios\ColegiosController@getInstitucionesEducativas');
+Route::post('/Gestion_Colegios/getOptionsInstituciones', 'Gestion_Colegios\ColegiosController@getOptionsInstituciones');
+
+/**
+ * Rutas instituciones educativas
+ */
+Route::post('/Gestion_Grupos/guardarNuevoGrupo', 'Gestion_Grupos\GruposController@guardarNuevoGrupo');
+

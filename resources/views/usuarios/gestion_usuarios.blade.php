@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/usuarios/usuarios.js?v=2020.12.8.4') }}" defer></script>
+<script src="{{ asset('js/usuarios/usuarios.js?v=2020.12.9.1') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -20,7 +20,7 @@
 					<div class="col-xs-6 col-md-6 col-lg-6">
 					</div>
 					<div class="col-xs-6 col-md-6 col-lg-6">
-						<button class="btn btn-block btn-success" id="btn-crear-usuario">Crear Usuario</button>
+						<button class="btn btn-block btn-success" id="btn-crear-usuario"  data-toggle='modal' data-target='#modal-registro-usuario'>Crear Usuario</button>
 					</div>
 				</div>
 				<table id="tabla-info-usuarios" class="display table table-striped table-bordered" style="width:100%">

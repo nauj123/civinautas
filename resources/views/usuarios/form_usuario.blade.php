@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-xs-6 col-md-6 col-lg-6">
 			<span>Tipo de documento</span>
-			<select class="form-control selectpicker" id="tipo_documento" required title="Seleccione una opción"></select>
+			<select class="form-control selectpicker" id="tipo_documento" title="Seleccione una opción" required></select>
 		</div>
 		<div class="col-xs-6 col-md-6 col-lg-6">
 			<span>Número de documento</span>
@@ -65,7 +65,7 @@
 	<div class="row">
 		<div class="col-xs-6 col-md-6 col-lg-6 offset-lg-3">
 			<span>Tipo de usuario</span>
-			<select class="form-control selectpicker" id="rol-usuario" required>				
+			<select class="form-control selectpicker" id="rol-usuario"  title="Seleccione una opción" required>				
 			</select>
 		</div>		
 	</div>
