@@ -16,13 +16,13 @@ class ParametroDetalle extends Model
     public $timestamps = false;
     
     public function getOptionsParametro($id_parametro){
-    	$deportes = ParametroDetalle::select(ParametroDetalle::raw("CONCAT(GROUP_CONCAT('<option value=\"', id_parametro_detalle, '\">', descripcion , '</option>' SEPARATOR '')) AS 'option'"))
+    	$parametro = ParametroDetalle::select(ParametroDetalle::raw("CONCAT(GROUP_CONCAT('<option value=\"', id_parametro_detalle, '\">', descripcion , '</option>' SEPARATOR '')) AS 'option'"))
     	->where([
     		['fk_parametro', $id_parametro],
     		['estado', 1]
     	])
     	->get();
-    	return $deportes;
+    	return $parametro;
     }
     public function getParametros(){
         $parametros = DB::table('parametro')
@@ -43,11 +43,11 @@ class ParametroDetalle extends Model
     	return $localidades;
     }
     public function getUpz($id_localidad){
-    	$municipios = DB::table('tb_upz')
+    	$upz = DB::table('tb_upz')
     	->select(DB::raw("CONCAT(GROUP_CONCAT('<option value=\"', Pk_Id_Upz, '\">', VC_Nombre_Upz , '</option>' SEPARATOR '')) AS 'option'"))
     	->where('FK_Id_Localidad', $id_localidad)
     	->get();
-    	return $municipios;
+    	return $upz;
     }
     public function getMeses(){
         $sql = "SELECT

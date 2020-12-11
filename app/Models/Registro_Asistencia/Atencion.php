@@ -1,11 +1,11 @@
 <?php 
 
-namespace App\Models\Gestion_Grupos;
+namespace App\Models\Registro_Asistencia; 
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Grupos extends Model
+class Atencion extends Model
 {
     /**
     * The table associated with the model.

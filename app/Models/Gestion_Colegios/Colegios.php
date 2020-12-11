@@ -31,26 +31,6 @@ class Colegios extends Model
         $informacion = DB::select($sql);
         return $informacion;
     }
-   /*   public function getInfoUsuario($user_id){
-        $usuario = Users::select(
-            "id",
-            "primer_nombre",
-            "segundo_nombre",
-            "primer_apellido",
-            "segundo_apellido",
-            "fk_tipo_documento as tipo_documento",
-            "identificacion",
-            "fecha_nacimiento",
-            "genero",
-            "email",
-            "celular",
-            "fk_rol as rol"
-        )
-        ->where("id", $user_id)
-        ->get();
-        return $usuario;
-    }
- */ 
     public function getOptionsInstituciones(){
     	$instituciones = Colegios::select(Colegios::raw("CONCAT(GROUP_CONCAT('<option value=\"', Pk_Id_Institucion, '\">', VC_Nombre_Institucion , '</option>' SEPARATOR '')) AS 'option'"))
     	->where([

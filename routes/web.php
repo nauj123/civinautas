@@ -65,9 +65,14 @@ Route::post('/Gestion_Colegios/getInstitucionesEducativas', 'Gestion_Colegios\Co
 Route::post('/Gestion_Colegios/getOptionsInstituciones', 'Gestion_Colegios\ColegiosController@getOptionsInstituciones');
 
 /**
- * Rutas instituciones educativas
+ * Rutas grupos
  */
+Route::post('/Gestion_Grupos/getGruposMediador', 'Gestion_Grupos\GruposController@getGruposMediador');
 Route::post('/Gestion_Grupos/guardarNuevoGrupo', 'Gestion_Grupos\GruposController@guardarNuevoGrupo');
+Route::post('/Gestion_Grupos/getOptionsGruposMediador', 'Gestion_Grupos\GruposController@getOptionsGruposMediador');
+Route::post('/Gestion_Grupos/getBuscarEstudianteSimat', 'Gestion_Grupos\GruposController@getBuscarEstudianteSimat');
+Route::post('/Gestion_Grupos/agregarEstudianteGrupo', 'Gestion_Grupos\GruposController@agregarEstudianteGrupo');
+Route::post('/Gestion_Grupos/getEstudiantesGrupo', 'Gestion_Grupos\GruposController@getEstudiantesGrupo');
 
 /**
  * Rutas gestión simat
