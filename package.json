@@ -33,6 +33,7 @@
         "jquery": "^3.5.1",
         "jszip": "^3.5.0",
         "sweetalert2": "^10.0.2",
-        "vue-bootstrap-selectpicker": "^1.0.6"
+        "vue-bootstrap-selectpicker": "^1.0.6",
+        "xlsx": "^0.16.9"
     }
 }

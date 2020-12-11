@@ -52,6 +52,9 @@ class ParametrosController extends Controller
 		$resultado = $parametro->getUpz($request->id_localidad);
 		return response()->json($resultado[0]);
 	}
-
-	
+	public function getMeses(Request $request){
+		$parametro = new ParametroDetalle;
+		$resultado = $parametro->getMeses();
+		return response()->json($resultado[0]);
+	}
 }

@@ -1,6 +1,7 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/usuarios/usuarios.js') }}" defer></script>
+<script src="../../node_modules/xlsx/dist/xlsx.full.min.js"></script>
+<script src="{{ asset('js/Gestion_Simat/simat.js') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -23,25 +24,28 @@
 				<div class="card" id="nuevo-usuario-contenedor">
 					<div class="card-header bg-dark text-white">Cargar beneficiarios SIMAT</div>
 					<div class="card-body">
-						<form id="form-nuevo-usuario">
+						<form id="form-cargar-simat">
 							<div class="form-group">
 								<div class="row">
 									<div class="col-xs-12 col-md-6 col-lg-6">
-										Mes simat
-										<select class="form-control selectpicker" title="Seleccione una opción" id="tipo-documento" required></select>
+										<span>Mes simat</span>
+										<select class="form-control selectpicker" title="Seleccione una opción" id="mes-simat" required></select>
 									</div>
 									<div class="col-xs-12 col-md-6 col-lg-6">
-										Colegio
-										<select class="form-control selectpicker" title="Seleccione una opción" id="colegio" required></select>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-xs-12 col-md-6 col-lg-6">
-										Cargar archivo
-										<input class="form-control" type="file" id="documento" required>
+										<span>Institución educativa</span>
+										<select class="form-control selectpicker" title="Seleccione una opción" id="institucion" required></select>
 									</div>
 								</div>
 							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-xs-12 col-md-12 col-lg-12">
+										<span>Cargar archivo</span>
+										<input class="form-control" type="file" id="archivo-simat" required>
+									</div>
+								</div>
+							</div>
+							<pre id="result"></pre>
 							<div class="form-group">
 								<div class="col-lg-4 offset-lg-4"><br>
 									<button class="btn btn-block btn-primary" type="submit">Subir Simat</button>
@@ -50,7 +54,6 @@
 						</form>
 					</div>
 				</div>
-
 			</div>
 			<div class="tab-pane" id="consulta_simat" role="tabpanel"><br>
 				<table class="table display" id="tabla-info-usuarios" style="width: 100%;">
@@ -75,6 +78,5 @@
 			</div>
 		</div>
 	</div>
-
 </div>
 @endsection

@@ -45,7 +45,7 @@ Route::post('/administracion/modificarParametroAsociado', 'Administracion\Parame
 Route::post('/administracion/guardarNuevoParametroAsociado', 'Administracion\ParametrosController@guardarNuevoParametroAsociado');
 Route::post('/administracion/getLocalidades', 'Administracion\ParametrosController@getLocalidades');
 Route::post('/administracion/getUpz', 'Administracion\ParametrosController@getUpz');
-
+Route::post('/administracion/getMeses', 'Administracion\ParametrosController@getMeses');
 
 /**
  * Rutas usuarios
@@ -69,3 +69,7 @@ Route::post('/Gestion_Colegios/getOptionsInstituciones', 'Gestion_Colegios\Coleg
  */
 Route::post('/Gestion_Grupos/guardarNuevoGrupo', 'Gestion_Grupos\GruposController@guardarNuevoGrupo');
 
+/**
+ * Rutas gestión simat
+ */
+Route::post('/Gestion_Simat/subirArchivo', 'Gestion_Simat\SimatController@subirArchivo');
