@@ -3,6 +3,7 @@ $(document).ready(function(){
 
 	$("#mes-simat").html(getMeses()).selectpicker("refresh");
 	$("#institucion").html(getOptionsInstituciones()).selectpicker("refresh");
+	$("#consulta-simat-colegio").html(getOptionsInstituciones()).selectpicker("refresh");
 
 	function getOptionsInstituciones(){
 		var options_instituciones = "";
@@ -45,6 +46,20 @@ $(document).ready(function(){
 	$('#form-cargar-simat').on('submit', function (e) {
 		e.preventDefault();
 
+		swal({
+			title: "Cargando...",
+			text: "Espere un poco por favor.",
+			imageUrl: "../../public/images/cargando.gif",
+			imageWidth: 140,
+			imageHeight: 70,
+			showConfirmButton: false,
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+			backdrop: `
+			rgba(0,0,123,0.4)
+			`
+		});
+
 		var file = $("#archivo-simat")[0].files[0];
 
    		// input canceled, return
@@ -73,15 +88,16 @@ $(document).ready(function(){
      			codigo_institucion: $("#institucion").val(),
      		},
      		success: function(data) {
+     			swal.close();
      			swal("Éxito", "Se han creado "+data["creado"]+" estudiantes y actualizado "+data["actualizado"], "success");
      			$("#archivo-simat").val("");
      			$("#mes-simat").selectpicker("val", "");
      			$("#institucion").selectpicker("val", "");
      		},
      		error: function(data){
-     			swal("Error", "No se pudo obtener el listado Tipo de documento, por favor inténtelo nuevamente", "error");
+     			swal("Error", "No se pudo guardar la información, por favor inténtelo nuevamente", "error");
      		},
-     		async: false
+     		async: true
      	});
 
      	//data preview

@@ -16,7 +16,7 @@
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#cargar_simat">Cargar BD SIMAT</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consulta_simat">Consultar SIMAT</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consulta_colegios">Consultar estudiantes SIMAT </a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consulta_colegios">Consultar estudiantes SIMAT</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active col-lg-10 offset-lg-1" id="cargar_simat"><br>
@@ -69,12 +69,39 @@
 				</table>
 			</div>
 			<div class="tab-pane" id="consulta_colegios" role="tabpanel"><br>
-				<div class="row">
-					<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3">
-						<label>Seleccione colegio</label>
-						<select class="form-control selectpicker" title="Seleccione una opción" id="tipo-documento" required></select>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3">
+							<span>Seleccione colegio</span>
+							<select class="form-control selectpicker" title="Seleccione una opción" id="consulta-simat-colegio" required></select>
+						</div>
 					</div>
 				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>1</th>
+										<th>2</th>
+										<th>3</th>
+										<th>4</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td>2</td>
+										<td>3</td>
+										<td>4</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</div>
