@@ -78,3 +78,8 @@ Route::post('/Gestion_Grupos/getEstudiantesGrupo', 'Gestion_Grupos\GruposControl
  * Rutas gestión simat
  */
 Route::post('/Gestion_Simat/subirArchivo', 'Gestion_Simat\SimatController@subirArchivo');
+Route::post('/Gestion_Simat/getInfoArchivosSubidos', 'Gestion_Simat\SimatController@getInfoArchivosSubidos');
+Route::post('/Gestion_Simat/buscarEstudiante', 'Gestion_Simat\SimatController@buscarEstudiante');
+Route::post('/Gestion_Simat/getDatosEstudiante', 'Gestion_Simat\SimatController@getDatosEstudiante');
+Route::post('/Gestion_Simat/modificarEstudiante', 'Gestion_Simat\SimatController@modificarEstudiante');
+Route::post('/Gestion_Simat/getEstudiantesColegioSimat', 'Gestion_Simat\SimatController@getEstudiantesColegioSimat');

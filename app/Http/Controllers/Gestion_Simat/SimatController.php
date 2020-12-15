@@ -9,6 +9,7 @@ use App\Models\Usuarios\UsuarioRol;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Gestion_Simat\EstudianteSimat;
+use Illuminate\Support\Facades\DB;
 use DateTime;
 
 class SimatController extends Controller
@@ -106,6 +107,8 @@ class SimatController extends Controller
 				$estudiante_simat->NUM_CONVENIO = $dato[72];
 				$estudiante_simat->PER_ID = $dato[73];
 				$estudiante_simat->PAIS_ORIGEN = $dato[74];
+				$estudiante_simat->FK_USUARIO_REGISTRO = auth()->user()->id;
+				$estudiante_simat->FECHA_SUBIDA = date("Y-m-d H:i:s");
 				$estudiante_simat->save();
 				if($estudiante_simat){
 					$creado++;
@@ -174,6 +177,8 @@ class SimatController extends Controller
 				$array_update["NUM_CONVENIO"] = $dato[72];
 				$array_update["PER_ID"] = $dato[73];
 				$array_update["PAIS_ORIGEN"] = $dato[74];
+				$array_update["FK_USUARIO_MODIFICACION"] = auth()->user()->id;
+				$array_update["FECHA_MODIFICACION"] = date("Y-m-d H:i:s");
 				$estudiante_simat->where('Pk_Id_Estudiante_Simat', json_decode($estudiante_existe[0]["Pk_Id_Estudiante_Simat"]))->update($array_update);
 				if($estudiante_simat){
 					$actualizado++;
@@ -182,5 +187,86 @@ class SimatController extends Controller
 			}
 		}
 		return $array_respuesta;
+	}
+	public function getInfoArchivosSubidos(Request $request){
+		$informacion = EstudianteSimat::select(EstudianteSimat::raw("
+			date_format(FECHA_SUBIDA, '%d/%m/%Y %h:%i') AS 'Fecha_cargue',
+			NOMBRE_ESTABLECIMIENTO_EDUCATIVO AS 'Colegio',
+			count(Pk_Id_Estudiante_Simat) AS 'Total_estudiantes'
+			"))
+		->whereMonth("FECHA_SUBIDA", $request->mes)
+		->groupBy("CODIGO_ESTABLECIMIENTO_EDUCATIVO")
+		->get();
+		return $informacion;
+	}
+	public function buscarEstudiante(Request $request){
+		$busqueda = "'%".$request->busqueda."%'";
+
+		$sql="SELECT
+		Pk_Id_Estudiante_Simat,
+		NRO_DOCUMENTO,
+		CONCAT(APELLIDO1, ' ' ,APELLIDO2, ' ' ,NOMBRE1, ' ' , NOMBRE2) AS 'Nombre'
+		FROM tb_estudiante_simat
+		WHERE NRO_DOCUMENTO LIKE $busqueda
+		OR LOWER(APELLIDO1) LIKE $busqueda
+		OR LOWER(APELLIDO2) LIKE $busqueda
+		OR LOWER(NOMBRE1) LIKE $busqueda
+		OR LOWER(NOMBRE2) LIKE $busqueda
+		OR LOWER(CONCAT(NOMBRE1, ' ' , APELLIDO1)) LIKE $busqueda
+		OR LOWER(CONCAT(APELLIDO1, ' ' ,APELLIDO2, ' ' ,NOMBRE1, ' ' , NOMBRE2)) LIKE $busqueda
+		OR LOWER(CONCAT(NOMBRE1, ' ' , NOMBRE2, ' ' , APELLIDO1, ' ' ,APELLIDO2)) LIKE $busqueda
+		OR LOWER(CONCAT(APELLIDO1, ' ' ,NOMBRE1, ' ' ,NOMBRE2, ' ' , APELLIDO2)) LIKE $busqueda
+		OR LOWER(CONCAT(NOMBRE2, ' ' , APELLIDO2, ' ' ,NOMBRE1, ' ' ,APELLIDO1)) LIKE $busqueda
+		OR LOWER(CONCAT(APELLIDO2, ' ' ,NOMBRE2, ' ' ,NOMBRE1, ' ' ,APELLIDO1)) LIKE $busqueda
+		OR LOWER(CONCAT(APELLIDO1, ' ' ,NOMBRE2, ' ' ,APELLIDO2, ' ' ,NOMBRE1)) LIKE $busqueda
+		OR LOWER(CONCAT( NOMBRE1, ' ' ,APELLIDO2, ' ' ,NOMBRE2, ' ' ,APELLIDO1)) LIKE $busqueda
+		OR UPPER(APELLIDO1) LIKE $busqueda
+		OR UPPER(APELLIDO2) LIKE $busqueda
+		OR UPPER(NOMBRE1) LIKE $busqueda
+		OR UPPER(NOMBRE2) LIKE $busqueda
+		OR UPPER(CONCAT(NOMBRE1, ' ' , APELLIDO1)) LIKE $busqueda
+		OR UPPER(CONCAT(APELLIDO1, ' ' ,APELLIDO2, ' ' ,NOMBRE1, ' ' , NOMBRE2)) LIKE $busqueda
+		OR UPPER(CONCAT(NOMBRE1, ' ' , NOMBRE2, ' ' , APELLIDO1, ' ' ,APELLIDO2)) LIKE $busqueda
+		OR UPPER(CONCAT(APELLIDO1, ' ' ,NOMBRE1, ' ' ,NOMBRE2, ' ' , APELLIDO2)) LIKE $busqueda
+		OR UPPER(CONCAT(NOMBRE2, ' ' , APELLIDO2, ' ' ,NOMBRE1, ' ' ,APELLIDO1)) LIKE $busqueda
+		OR UPPER(CONCAT(APELLIDO2, ' ' ,NOMBRE2, ' ' ,NOMBRE1, ' ' ,APELLIDO1)) LIKE $busqueda
+		OR UPPER(CONCAT(APELLIDO1, ' ' ,NOMBRE2, ' ' ,APELLIDO2, ' ' ,NOMBRE1)) LIKE $busqueda
+		OR UPPER(CONCAT( NOMBRE1, ' ' ,APELLIDO2, ' ' ,NOMBRE2, ' ' ,APELLIDO1)) LIKE $busqueda";
+
+		$informacion = DB::select($sql);
+		return $informacion;
+	}
+	public function getDatosEstudiante(Request $request){
+		$datos = EstudianteSimat::select("TIPO_DOCUMENTO", "NRO_DOCUMENTO", "NOMBRE1", "NOMBRE2", "APELLIDO1", "APELLIDO2", "DIRECCION_RESIDENCIA", "TEL", "FECHA_NACIMIENTO", "GENERO")
+		->where("Pk_Id_Estudiante_Simat", $request->id_estudiante)
+		->get();
+		return $datos[0];
+	}
+	public function modificarEstudiante(Request $request){
+		$estudiante_simat = new EstudianteSimat;
+
+		$array_update = array();
+		$array_update["TIPO_DOCUMENTO"] = $request->tipo_documento;
+		$array_update["NRO_DOCUMENTO"] = $request->numero_documento;
+		$array_update["NOMBRE1"] = $request->primer_nombre;
+		$array_update["NOMBRE2"] = $request->segundo_nombre;
+		$array_update["APELLIDO1"] = $request->primer_apellido;
+		$array_update["APELLIDO2"] = $request->segundo_apellido;
+		$array_update["FECHA_NACIMIENTO"] = $request->fecha_nacimiento;
+		$array_update["GENERO"] = $request->genero;
+		$array_update["DIRECCION_RESIDENCIA"] = $request->direccion;
+		$array_update["TEL"] = $request->telefono;
+		$array_update["FK_USUARIO_MODIFICACION"] = auth()->user()->id;
+		$array_update["FECHA_MODIFICACION"] = date("Y-m-d H:i:s");
+
+		$estudiante_simat->where('Pk_Id_Estudiante_Simat', $request->id_estudiante)->update($array_update);
+
+		return $estudiante_simat;
+	}
+	public function getEstudiantesColegioSimat(Request $request){
+		$datos = EstudianteSimat::select("*")
+		->where("CODIGO_ESTABLECIMIENTO_EDUCATIVO", $request->id_colegio)
+		->get();
+		return $datos;
 	}
 }
