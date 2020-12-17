@@ -17,41 +17,27 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet">
   <!-- -->
-  <script src="{{ asset('js/index/welcome.js?v=2020.12.08.01') }}" defer></script>
-  <!--Google maps -->
-  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPjto4XGyWcmoIMfdp0g3QRgo5ByAW-L8&callback=initMap&libraries=&v=weekly" defer></script> -->
-  <style type="text/css">
-    .carousel {
-      height: 300px;
-    }
-
-    #map {
-      height: 100%;
-    }
-  </style>
 </head>
 
 <body>
-  <div class="auth-layout-wrap" style="background-image: url(./assets/images/Inicio.jpg)">
+  <div class="auth-layout-wrap" style="background-image: url({{ asset('images/index/background_index.jpg') }})">
     <div class="auth-content">
       <div class="card o-hidden" style="background-color: rgba(255,255,255,0.9)">
         <div class="row">
-          <div class="col-md-5 text-center " style="background-size: cover;background-image: url(./assets/images/patrimonio.jpg)">
+          <div class="col-md-5 text-center" style="background-size: cover; background-image: url({{ asset('images/index/patrimonio.jpg') }})">
             <div class="row">
               <div class="col-lg-12 text-center">
-                <br> <br>
-              
+                <br><br>
               </div>
             </div>            
           </div>
-
           <div class="col-md-7">
-          <br>            
-            <img src="assets/images/Idpc_Logo.png" alt="">
+            <br>            
+            <img src="{{ asset('images/index/logo_idpc.png') }}" class="img-fluid">
             <br><br>
             <div class="row">
               <div class="col-lg-12 text-center">
-                <h4><strong>SISTEMA DE INFROMACIÓN <br>CIVINAUTAS</strong></h4>
+                <h4><strong>SISTEMA DE INFORMACIÓN<br>CIVINAUTAS</strong></h4>
               </div>
             </div>
             <div class="card o-hidden col-md-10 offset-md-1">

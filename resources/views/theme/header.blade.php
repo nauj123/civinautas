@@ -1,6 +1,6 @@
 <div class="main-header">
-	<div class="logo">
-		<img src="../assets/images/logo.jpg" style="width: 90%;" alt="">
+	<div class="logo d-none d-sm-block">
+		<img src="{{ asset('images/civinautas_logo.png') }}" style="width: auto;">
 	</div>
 
 	<div class="menu-toggle">
@@ -9,7 +9,7 @@
 		<div></div>
 	</div>
 	<div style="margin: auto">
-	 <label style="font-size:15px;"><strong>SISTEMA DE INFROMACIÓN - CIVINAUTAS</strong></label>
+	 <label style="font-size:15px;"><strong>SISTEMA DE INFORMACIÓN - CIVINAUTAS</strong></label>
 	</div>
 
 	<div class="header-part-right">
@@ -19,7 +19,7 @@
 		<!-- Full screen toggle -->
 		<i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen></i>
 		<!-- Grid menu Dropdown -->
-		<div class="dropdown">
+		<!-- <div class="dropdown">
 			<i class="i-Safe-Box text-muted header-icon" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"></i>
 			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 				<div class="menu-icon-grid">
@@ -31,7 +31,7 @@
 					<a href="#"><i class="i-Ambulance"></i> Support</a>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<!-- Notificaiton -->
 		<div class="dropdown">
 			<div class="badge-top-container" id="dropdownNotification" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

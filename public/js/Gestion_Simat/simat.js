@@ -289,6 +289,20 @@ $(document).ready(function(){
 	$('#form-estudiantes-colegio-simat').on('submit', function (e) {
 		e.preventDefault();
 
+		swal({
+			title: "Cargando...",
+			text: "Espere un poco por favor.",
+			imageUrl: "../../public/images/cargando.gif",
+			imageWidth: 140,
+			imageHeight: 70,
+			showConfirmButton: false,
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+			backdrop: `
+			rgba(0,0,123,0.4)
+			`
+		});
+
 		tabla_estudiantes_colegio_simat.clear().draw();
 
 		$.ajax({
@@ -302,6 +316,7 @@ $(document).ready(function(){
 			},
 			success: function(data) {
 
+				swal.close();
 				$("#div-consulta-estudiantes-colegio-simat").show();
 
 				data.forEach((value, index) => {
@@ -375,7 +390,7 @@ $(document).ready(function(){
 			error: function(data){
 				swal("Error", "No se pudo obtener la información, por favor inténtelo nuevamente", "error");
 			},
-			async: false
+			async: true
 		});
 
 	});
