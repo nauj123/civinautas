@@ -175,7 +175,7 @@ $(document).ready(function(){
 						info_estudiantes_grupo[index]["IDENTIFICACION"],						
 						info_estudiantes_grupo[index]["FECHA"],
 						info_estudiantes_grupo[index]["GENERO"],
-						"<input id='checkbox_' data-toggle='toggle' data-onstyle='success' name='CH_asistencia_beneficiario[]' data-offstyle='danger' data-on='SI' data-off='NO' type='checkbox' data-id-beneficiario='"+info_estudiantes_grupo[index]["IDENTIFICACION"]+"' class='asistencia_actividad'>"
+						"<input id='checkbox_' data-toggle='toggle' data-onstyle='success' name='CH_asistencia_beneficiario[]' data-offstyle='danger' data-on='SI' data-off='NO' type='checkbox' data-id-beneficiario='"+info_estudiantes_grupo[index]["IDESTUDIANTE"]+"' class='asistencia_actividad'>"
 						]).draw().node();
 						i++
 						$('input[type="checkbox"]').bootstrapToggle();

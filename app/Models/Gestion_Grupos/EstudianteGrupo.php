@@ -16,8 +16,8 @@ class EstudianteGrupo extends Model
     public $timestamps = false;
 
     public function getEstudiantesGrupo($id_Grupo){
-    	$sql = "SELECT 
-        EG.Pk_Id_Estudiante_Grupo AS 'IDESTUDIANTE',
+    	$sql = "SELECT
+        EG.Fk_Id_Estudiante AS 'IDESTUDIANTE',
         ES.NRO_DOCUMENTO AS 'IDENTIFICACION',
         CONCAT(ES.NOMBRE1,' ',ES.NOMBRE2,' ',ES.APELLIDO1,' ',ES.APELLIDO2) AS 'ESTUDIANTE',
         ES.FECHA_NACIMIENTO AS 'FECHA',
