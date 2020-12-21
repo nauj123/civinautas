@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/usuarios/usuarios.js?V=2020.12.11.1') }}" defer></script>
+<script src="{{ asset('js/Registro_Asistencia/asistencia.js?V=2020.12.15.9') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -17,30 +17,87 @@
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consulta_asistencias">Consultar asistencias registradas</a></li>
 		</ul>
 		<div class="tab-content">
-			<div class="tab-pane active col-lg-12" id="registro_asistencia"><br>
+			<div class="tab-pane active col-lg-12" id="registro_asistencia">
+				<form id="form-guardar-actividad">
+					<table id="informacion-atencion" style="width: 100%; border-color: #663399;" border="2">
+						<tr style="text-align: center; background: #EBEDEF">
+							<td style="width: 25%; height: 30px"><strong>Grupo</strong></td>
+							<td style="width: 25%;"><strong>Fecha atención </strong></td>
+							<td style="width: 25%;" colspan="2"><strong>Horario atención</strong></td>
+						</tr>
+						<tr>
+							<td><select class="form-control selectpicker" id="grupo-mediador" title="Seleccione una opción" required></td>
+							<td><input class="form-control" type="date" id="fecha-atencion" required></td>
+							<td><input class="form-control" type="time" id="hora-inicio" required></td>
+							<td><input class="form-control" type="time" id="hora-fin" required></td>
 
-				<table id="informacion-atencion" style="width: 100%;" border="2">
-				<tr style="text-align: center;">
-					<td style="width: 25%; height: 30px"><strong>Grupo</strong></td>
-					<td style="width: 25%;"><strong>Fecha atención </strong></td>
-					<td style="width: 25%;" colspan="2"><strong>Horario atención</strong></td>
-					<td style=" width: 25%;"><strong>Tipo de actividad</strong></td>
-				</tr>
-				<tr>
-					<td style="height: 30px"><select class="form-control selectpicker" id="institucion" title="Seleccione una opción" required></td>
-					<td><input class="form-control" type="date" id="fecha-atencion" required></td>
-					<td><input class="form-control" type="time" id="hora-inicio" required></td>
-					<td><input class="form-control" type="time" id="hora-fin" required></td>
-					<td><select class="form-control selectpicker" id="tipo-actividad" title="Seleccione una opción" required></td>
-				</tr>
-				<tr style="text-align: center;">
-					<td style="width: 25%; height: 30px"><strong>Temática:</strong></td>
-					<td style="width: 75%;" colspan="4"><textarea style="width: 100%;"></textarea></td>
-				</tr>
-				</table>
+						</tr>
+						<tr style="text-align: center; background: #EBEDEF">
+							<td style="height: 30px"><strong>Modalidad de la actividad</strong></td>
+							<td><strong>Tipo de actividad realizada</strong></td>
+							<td colspan="2"><strong>Recursos de apoyo o materiales dispuestos</strong></td>
+						</tr>
+						<tr>
+							<td><select class="form-control selectpicker" id="modalidad-actividad" title="Seleccione una opción" required></td>
+							<td><select class="form-control selectpicker" id="tipo-actividad" title="Seleccione una opción" required></td>
+							<td colspan="2"><select class="form-control selectpicker" id="recursos-materiales" title="Seleccione una opción" required></td>
+
+						</tr>
+						<tr style="text-align: center;">
+							<td style="width: 25%; height: 30px"><strong>Tema desarrollado durante la actividad:</strong></td>
+							<td style="width: 75%;" colspan="4"><textarea style="width: 100%;" id="tema-actividad"></textarea></td>
+						</tr>
+					</table><br>
+
+					<div id="div_estudiantes_grupo" style="display: none;">
+						<div class="p-2 rounded d-flex align-items-center bg-default text-white">
+							<h3 class="text-16 mb-1 text-white">Estudiantes que ya estan en el grupo</h3>
+						</div><br>
+						<table class="table display" id="tabla-estudiantes-grupo" style="width: 100%;">
+							<thead>
+								<tr>
+									<th>N°</th>
+									<th>Nombre Estudiante</th>
+									<th>Identificación</th>
+									<th>Ciclo Vital</th>
+									<th>Genero</th>
+									<th>Asistencia</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+
+						<div class="row">
+							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3">
+								<button type="submit" class="btn btn-success">Registrar actividad</button>
+							</div>
+						</div>
+
+					</div>
+				</form>
 			</div>
 			<div class="tab-pane" id="consulta_asistencias" role="tabpanel"><br>
-				
+				<div class="form-group">
+					<div class="row mb-3">
+					<div class="col-xs-6 col-md-2 col-lg-2 offset-lg-2">
+							<span><strong>Seleccionar Grupo</strong></span>							
+						</div>
+						<div class="col-xs-6 col-md-6 col-lg-6">							
+							<select class="form-control selectpicker" id="consultar-grupo" title="Seleccione una opción" required>
+							</select>
+						</div>
+					</div>
+					<div class="row mb-3">
+					<div class="col-xs-6 col-md-2 col-lg-2 offset-lg-2">
+							<span><strong>Seleccionar actividad</strong></span>							
+						</div>
+						<div class="col-xs-6 col-md-6 col-lg-6">							
+							<select class="form-control selectpicker" id="consultar-actividad" title="Seleccione una opción" required>
+							</select>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>

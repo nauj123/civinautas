@@ -39,6 +39,8 @@ Route::get('/home', 'HomeController@index')->name('home');
  */
 
 Route::post('/administracion/getOptionsParametro', 'Administracion\ParametrosController@getOptionsParametro');
+Route::post('/administracion/getOptionsIDParametroDetalle', 'Administracion\ParametrosController@getOptionsIDParametroDetalle');
+Route::post('/administracion/getTipoActividad', 'Administracion\ParametrosController@getTipoActividad');
 Route::post('/administracion/getParametros', 'Administracion\ParametrosController@getParametros');
 Route::post('/administracion/getParametroAsociados', 'Administracion\ParametrosController@getParametroAsociados');
 Route::post('/administracion/modificarParametroAsociado', 'Administracion\ParametrosController@modificarParametroAsociado');
@@ -78,8 +80,15 @@ Route::post('/Gestion_Grupos/getEstudiantesGrupo', 'Gestion_Grupos\GruposControl
  * Rutas gestión simat
  */
 Route::post('/Gestion_Simat/subirArchivo', 'Gestion_Simat\SimatController@subirArchivo');
+
 Route::post('/Gestion_Simat/getInfoArchivosSubidos', 'Gestion_Simat\SimatController@getInfoArchivosSubidos');
 Route::post('/Gestion_Simat/buscarEstudiante', 'Gestion_Simat\SimatController@buscarEstudiante');
 Route::post('/Gestion_Simat/getDatosEstudiante', 'Gestion_Simat\SimatController@getDatosEstudiante');
 Route::post('/Gestion_Simat/modificarEstudiante', 'Gestion_Simat\SimatController@modificarEstudiante');
 Route::post('/Gestion_Simat/getEstudiantesColegioSimat', 'Gestion_Simat\SimatController@getEstudiantesColegioSimat');
+
+/**
+ * Rutas registro de asistencia
+ */
+Route::post('/Registro_Asistencia/guardarActividadAsistencia', 'Registro_Asistencia\AsistenciaController@guardarActividadAsistencia');
+

@@ -137,12 +137,15 @@ $(document).ready(function () {
 		"</div>"+
 		"</td>"+			
 		"</tr>");
-		$("#TX_UpzSede_" + i).html(getUpz(1)).selectpicker("refresh");
+
+		$("#TX_UpzSede_" + i).html(getUpz()).selectpicker("refresh");
+		
 		$("#TX_LocalidadSede_"+ i).html(options_localidades).change(function(){
 			var localidadsede = $(this).val();
 			console.log(localidadsede);
-			$("#TX_UpzSede_"+ i).html(getUpz(localidadsede)).selectpicker("refresh") }).selectpicker("refresh");	
-		}	
+			$("#TX_UpzSede_" + i).html(getUpz(localidadsede)).selectpicker("refresh") }).selectpicker("refresh");	
+		}
+			
 	});
 
 	$("#form-nueva-institucion").submit(function (e) {
@@ -256,7 +259,7 @@ $(document).ready(function () {
 				});
 			},
 			error: function(data){
-				swal("Error", "No se pudo obtener el listado de tipos de escenario, por favor inténtelo nuevamente", "error");
+				swal("Error", "No se pudo obtener el listado de estudiantes del grupo, por favor inténtelo nuevamente", "error");
 			},
 			async: false
 		});

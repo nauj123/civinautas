@@ -24,6 +24,15 @@ class ParametroDetalle extends Model
     	->get();
     	return $parametro;
     }
+    public function getOptionsIDParametroDetalle($id_parametro){
+    	$parametro = ParametroDetalle::select(ParametroDetalle::raw("CONCAT(GROUP_CONCAT('<option value=\"', id_parametro_detalle, '\">', descripcion , '</option>' SEPARATOR '')) AS 'option'"))
+    	->where([
+    		['in_parametro_detalle', $id_parametro],
+    		['estado', 1]
+    	])
+    	->get();
+    	return $parametro;
+    }
     public function getParametros(){
         $parametros = DB::table('parametro')
         ->select(DB::raw("CONCAT(GROUP_CONCAT('<option value=\"', id_parametro, '\">', nombre, '</option>' SEPARATOR '')) AS 'option'"))
@@ -65,6 +74,13 @@ class ParametroDetalle extends Model
         <option value=\"12\">Diciembre</option>' AS 'option'";
         $informacion = DB::select($sql);
         return $informacion;
+    }
+    public function getTipoActividad($id_parametro_detalle){
+    	$upz = DB::table('tb_tipo_actividad')
+    	->select(DB::raw("CONCAT(GROUP_CONCAT('<option value=\"', Pk_Id_Actividad, '\">', VC_Nombre_Actividad , '</option>' SEPARATOR '')) AS 'option'"))
+    	->where('Fk_Id_Parametro', $id_parametro_detalle)
+    	->get();
+    	return $upz;
     }
 
 }

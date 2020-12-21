@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Gestion_Colegios/colegios.js?v=2020.12.10.8') }}" defer></script>
+<script src="{{ asset('js/Gestion_Colegios/colegios.js?v=2020.12.16.5') }}" defer></script>
 @endsection
 @section('principal')
 @endsection

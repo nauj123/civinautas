@@ -18,6 +18,11 @@ class ParametrosController extends Controller
 		$resultado = $parametro->getOptionsParametro($request->id_parametro);
 		return response()->json($resultado[0]);
 	}
+	public function getOptionsIDParametroDetalle(Request $request){
+		$parametro = new ParametroDetalle;
+		$resultado = $parametro->getOptionsIDParametroDetalle($request->id_parametro);
+		return response()->json($resultado[0]);
+	}
 	public function getParametros(Request $request){
 		$parametro = new ParametroDetalle;
 		$resultado = $parametro->getParametros();
@@ -55,6 +60,11 @@ class ParametrosController extends Controller
 	public function getMeses(Request $request){
 		$parametro = new ParametroDetalle;
 		$resultado = $parametro->getMeses();
+		return response()->json($resultado[0]);
+	}
+	public function getTipoActividad(Request $request){
+		$parametro = new ParametroDetalle;
+		$resultado = $parametro->getTipoActividad($request->id_parametro);
 		return response()->json($resultado[0]);
 	}
 }

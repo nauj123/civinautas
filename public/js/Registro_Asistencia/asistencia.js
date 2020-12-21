@@ -1,5 +1,239 @@
+var options_grupos;
+var options_modalidad_actividad;
 
 $(document).ready(function(){
+
+	getOptionsGruposMediador();
+	getModalidadActividad(8);
+
+	$("#grupo-mediador").html(options_grupos).selectpicker("refresh");
+	
+	$("#modalidad-actividad").html(options_modalidad_actividad).change(function(){
+		$("#tipo-actividad").html(getTipoActividad($("#modalidad-actividad").val())).selectpicker("refresh");
+		$("#recursos-materiales").html(getRecursosMateriales($("#modalidad-actividad").val())).selectpicker("refresh");
+	}).selectpicker("refresh");
+
+	$("#consultar-grupo").html(options_grupos).selectpicker("refresh");
+
+
+
+	function getOptionsGruposMediador() {
+		$.ajax({
+			url: "../Gestion_Grupos/getOptionsGruposMediador",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			success: function(data) {
+				options_grupos += data["option"];
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener el listado de grupos del mediador, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+		return options_grupos;
+	}
+
+	function getModalidadActividad(id_parametro) {
+		$.ajax({
+			url: "../administracion/getOptionsParametro",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data:{
+				id_parametro: id_parametro
+			},
+			success: function(data) {
+				options_modalidad_actividad += data["option"];
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener el listado de tipo de atenciones, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+		return options_modalidad_actividad;
+	}
+
+	function getTipoActividad(id_parametro) {
+		var options_tipo_actividad = "";
+		$.ajax({
+			url: "../administracion/getTipoActividad",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data:{
+				id_parametro: id_parametro
+			},
+			success: function(data) {
+				options_tipo_actividad += data["option"];
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener el listado de tipo de atenciones, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+		return options_tipo_actividad;
+	}
+
+	function getRecursosMateriales(id_parametro) {
+		var options_recursos_materiales = "";
+		$.ajax({
+			url: "../administracion/getOptionsIDParametroDetalle",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data:{
+				id_parametro: id_parametro
+			},
+			success: function(data) {
+				options_recursos_materiales += data["option"];
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener el listado de tipo de atenciones, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+		return options_recursos_materiales;
+	}
+
+	function getListadoActividadesGrupo(id_grupo) {
+		var options_actividad_grupo = "";
+		$.ajax({
+			url: "getListadoActividadesGrupo",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data:{
+				id_grupo: id_grupo
+			},
+			success: function(data) {
+				options_actividad_grupo += data["option"];
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener el listado de tipo de atenciones, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+		return options_actividad_grupo;
+	}
+
+	tabla_estudiantes_grupo = $("#tabla-estudiantes-grupo").DataTable({
+		pageLength: 50,
+		lengthChange: false,
+		responsive: true,
+		dom: 'Bfrtip',
+		buttons: [{
+			extend: 'excel',
+			text: 'Descargar datos',
+			filename: 'Datos'
+		}],
+		"language": {
+			"lengthMenu": "Ver _MENU_ registros por página",
+			"zeroRecords": "No hay información, lo sentimos.",
+			"info": "Mostrando página _PAGE_ de _PAGES_",
+			"infoEmpty": "No hay registros disponibles",
+			"infoFiltered": "(filtrado de un total de _MAX_ registros)",
+			"search": "Filtrar",
+			"paginate": {
+				"first": "Primera",
+				"last": "Última",
+				"next": "Siguiente",
+				"previous": "Anterior"
+			},
+		}
+	});
+
+	$(document).delegate('#grupo-mediador', 'change', function() {
+		$("#div_estudiantes_grupo").show();
+		getEstudiantesGrupo();
+	});	
+
+	function getEstudiantesGrupo() {
+		$.ajax({
+			url: "../Gestion_Grupos/getEstudiantesGrupo",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_Grupo: $("#grupo-mediador").val()
+			},
+			success: function(data) {
+				info_estudiantes_grupo = data;
+				tabla_estudiantes_grupo.clear().draw();
+				var i = 1;
+				info_estudiantes_grupo.forEach((value, index) => {
+
+					rowNode = tabla_estudiantes_grupo.row.add([
+						i,
+						info_estudiantes_grupo[index]["ESTUDIANTE"],
+						info_estudiantes_grupo[index]["IDENTIFICACION"],						
+						info_estudiantes_grupo[index]["FECHA"],
+						info_estudiantes_grupo[index]["GENERO"],
+						"<input id='checkbox_' data-toggle='toggle' data-onstyle='success' name='CH_asistencia_beneficiario[]' data-offstyle='danger' data-on='SI' data-off='NO' type='checkbox' data-id-beneficiario='"+info_estudiantes_grupo[index]["IDENTIFICACION"]+"' class='asistencia_actividad'>"
+						]).draw().node();
+						i++
+						$('input[type="checkbox"]').bootstrapToggle();
+				});
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener el listado de estudiantes del grupo, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	}
+
+	$("#form-guardar-actividad").submit(function (e) {
+		var checkbox_asistencia_estudiante = new Array();
+		$('.asistencia_actividad').each(function() {
+		  var check;
+		  if($(this).is(":checked")){
+			check=1;
+		  }else{
+			check=0;
+		  }
+		  checkbox_asistencia_estudiante.push(new Array($(this).data('id-beneficiario'), check));
+		});
+		e.preventDefault();
+		$.ajax({
+			url: "guardarActividadAsistencia",
+			type: 'POST',
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				grupo: $("#grupo-mediador").val(),
+				fecha: $("#fecha-atencion").val(),
+				inicio: $("#hora-inicio").val(),
+				fin: $("#hora-fin").val(),
+				modalidad_actividad: $("#modalidad-actividad").val(),
+				tipo_actividad: $("#tipo-actividad").val(),
+				recursos_materiales: $("#recursos-materiales").val(),
+				tema: $("#tema-actividad").val(),
+				estudiantes: checkbox_asistencia_estudiante
+			},
+			success: function (data) {
+				if (data == 200) {
+					swal("Éxito", "Se ha guardado exitosamente el registro de la actividad y asistencia de estudaintes, puede ser consultada en el listado de actividades", "success");
+					$(":input").val("");
+					$('.selectpicker').selectpicker('val', '');
+					$("#div_estudiantes_grupo").hide();
+				}
+			},
+			error: function (data) {
+				swal("Error", "No fue posible guardar la información de la institución educativa, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	});
+
+	
 
 
 });
