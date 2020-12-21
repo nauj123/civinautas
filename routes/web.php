@@ -92,3 +92,7 @@ Route::post('/Gestion_Simat/getEstudiantesColegioSimat', 'Gestion_Simat\SimatCon
  */
 Route::post('/Registro_Asistencia/guardarActividadAsistencia', 'Registro_Asistencia\AsistenciaController@guardarActividadAsistencia');
 
+/**
+ * Rutas reporrtes
+ */
+Route::post('/Reportes/getReporteConsolidado', 'Reportes\ReportesController@getReporteConsolidado');

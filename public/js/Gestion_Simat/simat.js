@@ -222,7 +222,6 @@ $(document).ready(function(){
 
 	$("#tabla-resultados-busqueda").on("click", ".modificar-estudiante",  function(){
 		id_estudiante = $(this).attr("data-id-estudiante-simat");
-		console.log(id_estudiante);
 		$.ajax({
 			url: "getDatosEstudiante",
 			type: 'POST',
