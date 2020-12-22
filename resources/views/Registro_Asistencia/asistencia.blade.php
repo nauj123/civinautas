@@ -1,12 +1,12 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Registro_Asistencia/asistencia.js?V=2020.12.15.9') }}" defer></script>
+<script src="{{ asset('js/Registro_Asistencia/asistencia.js?V=2020.12.21.1') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
 @section('contenido')
 <div class="p-2 rounded d-flex align-items-center bg-primary text-white">
-	<h1 class="text-28 mb-1 text-white">Registro de atenciones</h1>
+	<h1 class="text-28 mb-1 text-white">Registro de actividades</h1>
 </div>
 
 <br>
@@ -79,23 +79,66 @@
 			<div class="tab-pane" id="consulta_asistencias" role="tabpanel"><br>
 				<div class="form-group">
 					<div class="row mb-3">
-					<div class="col-xs-6 col-md-2 col-lg-2 offset-lg-2">
-							<span><strong>Seleccionar Grupo</strong></span>							
+						<div class="col-xs-6 col-md-2 col-lg-2">
+							<span><strong>Seleccionar Grupo</strong></span>
 						</div>
-						<div class="col-xs-6 col-md-6 col-lg-6">							
-							<select class="form-control selectpicker" id="consultar-grupo" title="Seleccione una opción" required>
-							</select>
+						<div class="col-xs-6 col-md-4 col-lg-4">
+							<select class="form-control selectpicker" id="consultar-grupo" title="Seleccione una opción" required></select>
 						</div>
-					</div>
-					<div class="row mb-3">
-					<div class="col-xs-6 col-md-2 col-lg-2 offset-lg-2">
-							<span><strong>Seleccionar actividad</strong></span>							
+						<div class="col-xs-6 col-md-2 col-lg-2">
+							<span><strong>Seleccionar actividad</strong></span>
 						</div>
-						<div class="col-xs-6 col-md-6 col-lg-6">							
+						<div class="col-xs-6 col-md-4 col-lg-4">
 							<select class="form-control selectpicker" id="consultar-actividad" title="Seleccione una opción" required>
 							</select>
 						</div>
+
 					</div>
+				</div>
+
+				<div id="div_consulta_atencion" style="display: none;">
+					<table id="informacion-atencion" style="width: 100%; border-color: #663399;" border="2">
+						<tr style="text-align: center; background: #EBEDEF">
+							<td style="width: 25%; height: 30px"><strong>Grupo</strong></td>
+							<td style="width: 25%;"><strong>Fecha atención </strong></td>
+							<td style="width: 25%;"><strong>Horario atención</strong></td>
+						</tr>
+						<tr style="text-align: center">
+							<td><label id="lb-grupo"></label></td>
+							<td><label id="lb-fecha"></label></td>
+							<td><label id="lb-horario"></label></td>
+						</tr>
+						<tr style="text-align: center; background: #EBEDEF">
+							<td style="height: 30px"><strong>Modalidad de la actividad</strong></td>
+							<td><strong>Tipo de actividad realizada</strong></td>
+							<td><strong>Recursos de apoyo o materiales dispuestos</strong></td>
+						</tr>
+						<tr style="text-align: center">
+							<td><label id="lb-modalidad"></label></td>
+							<td><label id="lb-actividad"></label></td>
+							<td><label id="lb-recursos"></label></td>
+
+						</tr>
+						<tr style="text-align: center;">
+							<td style="width: 25%; height: 30px"><strong>Tema desarrollado durante la actividad:</strong></td>
+							<td style="width: 75%;" colspan="3"><label id="lb-tematica"></label></td>
+						</tr>
+					</table><br>
+
+					<table class="table display" id="tabla-asistencia-estudiante" style="width: 100%;">
+						<thead>
+							<tr style="text-align: center;">
+								<th>N°</th>
+								<th>Identificación</th>
+								<th>Nombre Estudiante</th>
+								<th>Genero</th>
+								<th>Ciclo Vital</th>
+								<th>Asistencia</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+
 				</div>
 
 			</div>

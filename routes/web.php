@@ -91,8 +91,14 @@ Route::post('/Gestion_Simat/getEstudiantesColegioSimat', 'Gestion_Simat\SimatCon
  * Rutas registro de asistencia
  */
 Route::post('/Registro_Asistencia/guardarActividadAsistencia', 'Registro_Asistencia\AsistenciaController@guardarActividadAsistencia');
+Route::post('/Registro_Asistencia/getListadoActividadesGrupo', 'Registro_Asistencia\AsistenciaController@getListadoActividadesGrupo');
+Route::post('/Registro_Asistencia/getEncabezadoAtencion', 'Registro_Asistencia\AsistenciaController@getEncabezadoAtencion');
+Route::post('/Registro_Asistencia/getAsistenciaAtencion', 'Registro_Asistencia\AsistenciaController@getAsistenciaAtencion');
+
 
 /**
  * Rutas reporrtes
  */
 Route::post('/Reportes/getReporteConsolidado', 'Reportes\ReportesController@getReporteConsolidado');
+
+

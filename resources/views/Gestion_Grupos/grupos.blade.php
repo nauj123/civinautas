@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2020.12.10.4') }}" defer></script>
+<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2020.12.21.1') }}" defer></script>
 @endsection
 @section('principal')
 @endsection

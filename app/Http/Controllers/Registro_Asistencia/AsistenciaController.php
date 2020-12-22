@@ -56,9 +56,19 @@ class AsistenciaController extends Controller
    public function getListadoActividadesGrupo(Request $request){
 	$atencion = new Atencion;
 	$resultado = $atencion->getListadoActividadesGrupo($request->id_grupo);
-	return response()->json($resultado, 200);
-}
+	return response()->json($resultado[0]);
+	}
 
+	public function getEncabezadoAtencion(Request $request){
+		$encabezadoatencion = new Atencion;
+		$resultado = $encabezadoatencion->getEncabezadoAtencion($request->id_atencion);
+		return response()->json($resultado, 200);
+	}
 
+	public function getAsistenciaAtencion(Request $request){
+		$estudiantegrupo = new Asistencia;
+		$resultado = $estudiantegrupo->getAsistenciaAtencion($request->id_atencion);
+		return response()->json($resultado, 200);
+	}
 
 }

@@ -13,8 +13,11 @@ $(document).ready(function(){
 		$("#recursos-materiales").html(getRecursosMateriales($("#modalidad-actividad").val())).selectpicker("refresh");
 	}).selectpicker("refresh");
 
-	$("#consultar-grupo").html(options_grupos).selectpicker("refresh");
+	//$("#consultar-grupo").html().selectpicker("refresh");
 
+	$("#consultar-grupo").html(options_grupos).change(function(){
+		$("#consultar-actividad").html(getListadoActividadesGrupo($("#consultar-grupo").val())).selectpicker("refresh");
+	}).selectpicker("refresh");
 
 
 	function getOptionsGruposMediador() {
@@ -115,7 +118,7 @@ $(document).ready(function(){
 				options_actividad_grupo += data["option"];
 			},
 			error: function(data){
-				swal("Error", "No se pudo obtener el listado de tipo de atenciones, por favor inténtelo nuevamente", "error");
+				swal("Error", "No se pudo obtener el listado de activiades del grupo, por favor inténtelo nuevamente", "error");
 			},
 			async: false
 		});
@@ -233,7 +236,102 @@ $(document).ready(function(){
 		});
 	});
 
-	
+	tabla_asistencia_estudiante = $("#tabla-asistencia-estudiante").DataTable({
+		pageLength: 50,
+		lengthChange: false,
+		responsive: true,
+		dom: 'Bfrtip',
+		buttons: [{
+			extend: 'excel',
+			text: 'Descargar datos',
+			filename: 'Datos'
+		}],
+		"language": {
+			"lengthMenu": "Ver _MENU_ registros por página",
+			"zeroRecords": "No hay información, lo sentimos.",
+			"info": "Mostrando página _PAGE_ de _PAGES_",
+			"infoEmpty": "No hay registros disponibles",
+			"infoFiltered": "(filtrado de un total de _MAX_ registros)",
+			"search": "Filtrar",
+			"paginate": {
+				"first": "Primera",
+				"last": "Última",
+				"next": "Siguiente",
+				"previous": "Anterior"
+			},
+		}
+	}); 
 
+	$("#consultar-actividad").change(cargarInformacionAtencion);
+
+	function cargarInformacionAtencion() {
+		$("#div_consulta_atencion").show();
+		getEncabezadoAtencion();
+		getAsistenciaAtencion();
+	}
+
+	function getEncabezadoAtencion() {
+		$.ajax({
+			url: "getEncabezadoAtencion",
+			type: 'POST',
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_atencion: $("#consultar-actividad").val()
+			},
+			success: function (data) {
+				$("#lb-idatencion").html("").html(data[0]["IDATENCION"]);
+				$("#lb-grupo").html("").html(data[0]["GRUPO"]);
+				$("#lb-mediador").html("").html(data[0]["MEDIADOR"]);
+				$("#lb-fecha").html("").html(data[0]["FECHA"]);
+				$("#lb-horario").html("").html(data[0]["HORARIO"]);
+				$("#lb-modalidad").html("").html(data[0]["MODALIDAD"]);
+				$("#lb-actividad").html("").html(data[0]["ACTIVIDAD"]);
+				$("#lb-recursos").html("").html(data[0]["RECURSOS"]);
+				$("#lb-tematica").html("").html(data[0]["TEMATICA"]);
+			},
+			error: function (data) {
+				swal("Error", "No se pudo obtener la información de la actividad, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	}
+
+	function getAsistenciaAtencion() {
+
+		$.ajax({
+			url: "getAsistenciaAtencion",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_atencion: $("#consultar-actividad").val()
+			},
+			success: function(data) {
+				info_asistencia_estudiante = data;
+				tabla_asistencia_estudiante.clear().draw();
+				var i = 1;
+				info_asistencia_estudiante.forEach((value, index) => {
+
+					rowNode = tabla_asistencia_estudiante.row.add([
+						"<center>"+i+"</center>",
+						"<center>"+info_asistencia_estudiante[index]["IDENTIFICACION"]+"</center>",
+						"<center>"+info_asistencia_estudiante[index]["ESTUDIANTE"]+"</center>",						
+						"<center>"+info_asistencia_estudiante[index]["GENERO"]+"</center>",
+						"<center>"+info_asistencia_estudiante[index]["FECHA"]+"</center>",
+						"<center><strong>"+info_asistencia_estudiante[index]["ASISTENCIA"]+"</strong></center>"
+						]).draw().node();
+						i++
+				});
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener el listado de asistencia de estudiantes, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	}
 
 });
