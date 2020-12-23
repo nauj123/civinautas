@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Models\Gestion_Grupos;
+namespace App\Models\Gestion_Grupos; 
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -27,10 +27,19 @@ class Grupos extends Model
     public function getBuscarEstudianteSimat($buscar){
     	$sql = "SELECT 
         ES.Pk_Id_Estudiante_Simat AS 'IDSIMAT',
+        ES.TIPO_DOCUMENTO AS 'TIPODOCUMENTO',
         ES.NRO_DOCUMENTO AS 'IDENTIFICACION',
         CONCAT(ES.NOMBRE1,' ',ES.NOMBRE2,' ',ES.APELLIDO1,' ',ES.APELLIDO2) AS 'ESTUDIANTE',
+        ES.NOMBRE1 AS 'PNOMBRE',
+        ES.NOMBRE2 AS 'SNOMBRE',
+        ES.APELLIDO1 AS 'PAPELLIDO',
+        ES.APELLIDO2 AS 'SAPELLIDO',
         ES.FECHA_NACIMIENTO AS 'FECHA',
-        ES.GENERO AS 'GENERO'
+        ES.GENERO AS 'GENERO',
+        (CASE WHEN ES.GENERO = 'M' THEN '1' WHEN ES.GENERO = 'F' THEN '2' END) AS 'IDGENERO',
+        ES.DIRECCION_RESIDENCIA AS 'DIRECCION',
+        ES.TEL AS 'CELULAR',
+        ES.ESTRATO AS 'ESTRATO'
         FROM tb_estudiante_simat AS ES
         WHERE (CONCAT(ES.NOMBRE1,' ',ES.NOMBRE2,' ',ES.APELLIDO1,' ',ES.APELLIDO2) LIKE '%".$buscar."%' OR ES.NRO_DOCUMENTO LIKE '%".$buscar."%')";
         $informacion = DB::select($sql);
@@ -44,15 +53,13 @@ class Grupos extends Model
         GR.VC_Nombre_Grupo AS 'NOMBREGRUPO',
         CONCAT(US.primer_nombre,' ',US.segundo_nombre,' ',US.primer_apellido) AS 'MEDIADOR',
         GR.VC_Docente AS 'DOCENTE',
-        PDA.descripcion AS 'TIPOATENCION',
         PDJ.descripcion AS 'JORNADA',
         (SELECT COUNT(EG.Fk_Id_Estudiante) FROM tb_estudiante_grupo AS EG
         WHERE EG.Fk_Id_Grupo = GR.Pk_Id_Grupo) AS 'ESTUDIANTES'
         FROM tb_grupos AS GR
         JOIN tb_instituciones_educativas AS IE ON GR.Fk_Id_Institucion = IE.Pk_Id_Institucion
         JOIN users AS US ON GR.Fk_Id_Medidador = US.id
-        LEFT JOIN parametro_detalle AS PDA ON GR.Fk_Id_Tipo_Atencion = PDA.id_parametro_detalle AND PDA.fk_parametro = 8
-        LEFT JOIN parametro_detalle AS PDJ ON GR.Fk_Id_Jornada = PDJ.id_parametro_detalle AND PDJ.fk_parametro = 9
+        LEFT JOIN parametro_detalle AS PDJ ON GR.Fk_Id_Jornada = PDJ.id_parametro_detalle
         WHERE GR.Fk_Id_Medidador = $id_Mediador";
         $informacion = DB::select($sql);
         return $informacion;

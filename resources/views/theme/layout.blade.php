@@ -29,6 +29,11 @@
   <link rel="stylesheet" href="{{ asset('assets/styles/css/themes/lite-purple.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/styles/vendor/perfect-scrollbar.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/styles/vendor/sweetalert2.min.css') }}">
+  <style type="text/css">
+    .rojo {
+      color: red;
+    }
+  </style>
 
   @yield('js-import')
 </head>

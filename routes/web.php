@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('Caracterizacion/caracterizacion-estudiantes', 'Caracterizacion\CaracterizacionController@index')->name('caracterizacion-estudiantes')->middleware("PermisosModulos:caracterizacion-estudiantes");
 	Route::get('Reportes/reportes-consultas', 'Reportes\ReportesController@index')->name('reportes-consultas')->middleware("PermisosModulos:reportes-consultas");
 	Route::get('Registro_Asistencia/registro-asistencia', 'Registro_Asistencia\AsistenciaController@index')->name('registro-asistencia')->middleware("PermisosModulos:registro-asistencia");
+	Route::get('Diplomados/diplomados', 'Diplomados\DiplomadosController@index')->name('diplomados')->middleware("PermisosModulos:diplomados");
 });
 
 Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name("logout");
@@ -75,6 +76,7 @@ Route::post('/Gestion_Grupos/getOptionsGruposMediador', 'Gestion_Grupos\GruposCo
 Route::post('/Gestion_Grupos/getBuscarEstudianteSimat', 'Gestion_Grupos\GruposController@getBuscarEstudianteSimat');
 Route::post('/Gestion_Grupos/agregarEstudianteGrupo', 'Gestion_Grupos\GruposController@agregarEstudianteGrupo');
 Route::post('/Gestion_Grupos/getEstudiantesGrupo', 'Gestion_Grupos\GruposController@getEstudiantesGrupo');
+Route::post('/Gestion_Grupos/guardarNuevoEstudiante', 'Gestion_Grupos\GruposController@guardarNuevoEstudiante');
 
 /**
  * Rutas gestión simat

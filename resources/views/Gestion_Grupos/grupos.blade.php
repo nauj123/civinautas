@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2020.12.21.1') }}" defer></script>
+<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2020.12.21.16') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -32,7 +32,7 @@
 							<th>Nombre grupo</th>
 							<th>Nombre mediador</th>
 							<th>Nombre docente</th>
-							<th>Tipo atención</th>
+							<th>Jornada</th>
 							<th>N° estudiantes</th>
 							<th>Inactivar grupo</th>
 						</tr>
@@ -76,7 +76,15 @@
 										</tr>
 									</thead>
 									<tbody></tbody>
-								</table>
+								</table><br>
+								<div class="row">
+									<div class="col-xs-6 col-md-6 col-lg-6">
+									</div>
+									<div class="col-xs-6 col-md-6 col-lg-6">
+										<button class="btn btn-block btn-primary" id="btn-crear-grupo" data-toggle='modal' data-target='#modal-registrar-estudiante'>REGISTRAR ESTUDIANTES</button>
+									</div>
+								</div>
+
 							</div>
 						</div>
 
@@ -106,23 +114,42 @@
 		</div>
 	</div>
 	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-crear-grupo">
-			<div class="modal-dialog modal-lg">
-				<div class="modal-content">
-					<div class="modal-header" style="text-align: center;">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header" style="text-align: center;">
 					<h3 class="modal-title"><strong>REGISTRAR NUEVO GRUPO</strong></h3>
-					</div>
-					<div class="modal-body">
-						<form id="form-nuevo-grupo">
-							@include('Gestion_Grupos.form_grupo')
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-institucion">Cerrar</button>
-						<button type="submit" class="btn btn-primary">Crear Grupo</button>
-					</div>
-					</form>
 				</div>
+				<div class="modal-body">
+					<form id="form-nuevo-grupo">
+						@include('Gestion_Grupos.form_grupo')
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-institucion">Cerrar</button>
+					<button type="submit" class="btn btn-primary">Crear Grupo</button>
+				</div>
+				</form>
 			</div>
 		</div>
+	</div>
+
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-registrar-estudiante">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header" style="text-align: center;">
+					<h3 class="modal-title"><strong>REGISTRO DE ESTUDIANTES</strong></h3>
+				</div>
+				<div class="modal-body">
+					<form id="form-nuevo-estudiante">
+						@include('Gestion_Grupos.form_registrar_estudiante')
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-estudiante">Cerrar</button>
+					<button type="submit" class="btn btn-primary">Registrar Estudiante</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
 	@endauth
 </div>
 @endsection

@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group"> 
 	<div class="row">
 		<div class="col-xs-12 col-md-6 col-lg-6  form-group mb-3">
 			<span>Institución</span>
@@ -6,7 +6,7 @@
 		</div>
 		<div class="col-xs-12 col-md-6 col-lg-6">
 			<span>Nombre del grupo</span>
-			<input type="text" class="form-control" id="nombre-grupo">
+			<input type="text" class="form-control" id="nombre-grupo" required>
 		</div>
 	</div>
 	<div class="row">
@@ -20,10 +20,6 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xs-12 col-md-6 col-lg-6">
-			<span>Tipo de atención</span>
-			<select class="form-control selectpicker" title="Seleccione una opción" id="tipo-atencion" required></select>
-		</div>
 		<div class="col-xs-12 col-md-6 col-lg-6">
 			<span>Jornada</span>
 			<select class="form-control selectpicker" title="Seleccione una opción" id="jornada" required></select>
