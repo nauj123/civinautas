@@ -104,3 +104,16 @@ Route::post('/Registro_Asistencia/getAsistenciaAtencion', 'Registro_Asistencia\A
 Route::post('/Reportes/getReporteConsolidado', 'Reportes\ReportesController@getReporteConsolidado');
 
 
+/**
+ * Rutas Diplomados 
+ */
+Route::post('/Diplomados/guardarNuevoDiplomado', 'Diplomados\DiplomadosController@guardarNuevoDiplomado');
+Route::post('/Diplomados/getDiplomadosMediador', 'Diplomados\DiplomadosController@getDiplomadosMediador');
+Route::post('/Diplomados/getOptionsDiplomadosMediador', 'Diplomados\DiplomadosController@getOptionsDiplomadosMediador');
+
+
+
+
+
+
+
