@@ -21,9 +21,8 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Gull - Laravel + Bootstrap 4 admin template</title>
+
   <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet">
 
   <link rel="stylesheet" href="{{ asset('assets/styles/css/themes/lite-purple.min.css') }}">
@@ -66,10 +65,10 @@
         <div class="col-lg-4 col-md-4 col-sm-12">
           <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
             <div class="card-body text-center">
-              <i class="i-Video-Photographer"></i>
+              <i class="fas fa-4x fa-school"></i>
               <div class="content">
                 <p class="text-muted mt-2 mb-0">COLEGIOS</p>
-                <p class="text-primary text-24 line-height-1 mb-2">205</p>
+                <p class="text-primary text-24 line-height-1 mb-2" id="cantidad-colegios"></p>
               </div>
             </div>
           </div>
@@ -78,10 +77,10 @@
         <div class="col-lg-4 col-md-4 col-sm-12">
           <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
             <div class="card-body text-center">
-              <i class="i-Loading-3"></i>
+              <i class="fas fa-4x fa-users"></i>
               <div class="content">
                 <p class="text-muted mt-2 mb-0">GRUPOS</p>
-                <p class="text-primary text-24 line-height-1 mb-2">123</p>
+                <p class="text-primary text-24 line-height-1 mb-2" id="cantidad-grupos"></p>
               </div>
             </div>
           </div>
@@ -90,31 +89,45 @@
         <div class="col-lg-4 col-md-4 col-sm-12">
           <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
             <div class="card-body text-center">
-              <i class="i-Administrator"></i>
+              <i class="fas fa-4x fa-user"></i>
               <div class="content">
                 <p class="text-muted mt-2 mb-0">BENEFICIARIOS</p>
-                <p class="text-primary text-24 line-height-1 mb-2">2000</p>
+                <p class="text-primary text-24 line-height-1 mb-2" id="cantidad-beneficiarios"></p>
               </div>
             </div>
           </div>
         </div>
-
-
       </div>
       <div class="row">
         <div class="col-lg-8 col-md-12">
           <div class="card mb-4">
             <div class="card-body">
               <div class="card-title">Total de atenciones por mes</div>
-              <div id="echartBar" style="height: 300px;"></div>
+              <div id="echart-total-atenciones" style="height: 300px;"></div>
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-sm-12">
+        <!-- <div class="col-lg-8 col-md-12">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="card-title">Total de atenciones por mes</div>
+              <div id="echartBar" style="height: 300px;"></div>
+            </div>
+          </div>
+        </div> -->
+        <!-- <div class="col-lg-4 col-sm-12">
           <div class="card mb-4">
             <div class="card-body">
               <div class="card-title">Enfoque poblacional</div>
               <div id="echartPie" style="height: 300px;"></div>
+            </div>
+          </div>
+        </div> -->
+        <div class="col-lg-4 col-sm-12">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="card-title">Total beneficiarios por género</div>
+              <div id="echart-beneficiarios-por-genero" style="height: 300px;"></div>
             </div>
           </div>
         </div>
@@ -127,7 +140,7 @@
   </div>
 </div>
 <script src="{{ asset ('assets/js/vendor/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ asset('js/home/home.js') }}" defer></script>
+<script src="{{ asset ('js/home/home.js?v=2020.12.24.02') }}" defer></script>
 <!-- <script src="{{ asset ('assets/js/vendor/bootstrap.bundle.min.js') }}"></script> -->
 <script src="{{ asset ('assets/js/vendor/perfect-scrollbar.min.js') }}"></script>
 <script src="{{ asset ('assets/js/vendor/echarts.min.js') }}"></script>

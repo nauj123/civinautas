@@ -97,12 +97,19 @@ Route::post('/Registro_Asistencia/getListadoActividadesGrupo', 'Registro_Asisten
 Route::post('/Registro_Asistencia/getEncabezadoAtencion', 'Registro_Asistencia\AsistenciaController@getEncabezadoAtencion');
 Route::post('/Registro_Asistencia/getAsistenciaAtencion', 'Registro_Asistencia\AsistenciaController@getAsistenciaAtencion');
 
-
 /**
  * Rutas reporrtes
  */
 Route::post('/Reportes/getReporteConsolidado', 'Reportes\ReportesController@getReporteConsolidado');
 
+/**
+ * Rutas gráficas home
+ */
+Route::post('getTotalColegios', 'HomeController@getTotalColegios');
+Route::post('getTotalGrupos', 'HomeController@getTotalGrupos');
+Route::post('getTotalBeneficiarios', 'HomeController@getTotalBeneficiarios');
+Route::post('getTotalBeneficiariosPorGenero', 'HomeController@getTotalBeneficiariosPorGenero');
+Route::post('getTotalAtenciones', 'HomeController@getTotalAtenciones');
 
 /**
  * Rutas Diplomados 
