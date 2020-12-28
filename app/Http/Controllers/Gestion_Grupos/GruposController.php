@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Http\Controllers\Gestion_Grupos;
+namespace App\Http\Controllers\Gestion_Grupos; 
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -29,7 +29,6 @@ class GruposController extends Controller
 		$resultado = $grupos->getGruposMediador($id_mediador);
 		return response()->json($resultado, 200);
 	}
-
 	public function guardarNuevoGrupo(Request $request){
 		$grupos = new Grupos;
 		$grupos->Fk_Id_Institucion = $request->institucion;
@@ -42,8 +41,18 @@ class GruposController extends Controller
 		$grupos->DT_Created_at = date("Y-m-d H:i:s");
 		$grupos->IN_Estado = '1';
 		if($grupos->save())
+
+		$idgrupo = $grupos->id;
+		$gruposnom = new Grupos;
+		$array_update = [];
+		$array_update["VC_Nombre_Grupo"] = $request->nombre_grupo.'-'.$idgrupo;
+		$gruposnom->where('Pk_Id_Grupo', $idgrupo)
+		->update($array_update);
+		if($gruposnom){
 			return 200;
+		}
 	}
+
 	public function getOptionsGruposMediador(Request $request){
 		$grupos = new Grupos;
 		$id_mediador = auth()->user()->id;

@@ -1,4 +1,4 @@
-var tabla_info_grupos; 
+var tabla_info_grupos;
 var info_grupos;
 var options_instituciones;
 var options_tipo_atencion;
@@ -58,7 +58,9 @@ $(document).ready(function(){
 		$("#enfoque").html(options_enfoque).selectpicker("refresh");		
 	});
 
-
+	$(document).delegate('#institucion', 'change', function() {
+		getInicialesIdLocalidad();
+	});	 
 
 
 	function getOptionsInstituciones() {
@@ -98,6 +100,29 @@ $(document).ready(function(){
 			async: false
 		});
 		return options_jornada;
+	}
+
+
+	function getInicialesIdLocalidad() {
+		$.ajax({
+			url: "../Gestion_Colegios/getInicialesIdLocalidad",
+			type: 'POST',
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_atencion: $("#institucion").val()
+			},
+			success: function (data) {
+				$("#nombre-grupo").val("").val(data[0]["CODIGO"]);
+
+			},
+			error: function (data) {
+				swal("Error", "No se pudo obtener la información de la actividad, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
 	}
 
 	function getGruposMediador() {
@@ -149,8 +174,7 @@ $(document).ready(function(){
 			success: function (data) {
 				if (data == 200) {
 					swal("Éxito", "Grupo del mediador registrado correctamente, ya puede ser consultado en el listado", "success");
-					$(":input").val("");
-					$('.selectpicker').selectpicker('val', '');
+					LimpiarFormularioGrupo();
 					$("#modal-crear-grupo").modal('hide');
 					getGruposMediador();
 				}
@@ -208,7 +232,7 @@ $(document).ready(function(){
 	$(document).delegate('#grupo-mediador', 'change', function() {
 		$("#beneficiarios_grupo").show();
 		getEstudiantesGrupo();
-	});	
+	});
 
 	function getEstudiantesGrupo() {
 		$.ajax({
@@ -487,6 +511,15 @@ $(document).ready(function(){
 		$("#enfoque").selectpicker("refresh");
 		$("#estrato").val("");
 		$("#estrato").selectpicker("refresh");
+	}
+
+	function LimpiarFormularioGrupo() {
+		$("#institucion").val("");
+		$("#institucion").selectpicker("refresh");
+		$("#nombre-grupo").val("");
+		$("#docente").val("");
+		$("#jornada").val("");
+		$("#jornada").selectpicker("refresh");
 	}
 
 

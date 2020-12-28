@@ -39,4 +39,13 @@ class Colegios extends Model
     	->get();
     	return $instituciones;
     }
+
+    public function getInicialesIdLocalidad($id_atencion) {
+        $sql = "SELECT 
+        CONCAT(IE.VC_Iniciales,'-0',IE.Fk_Id_Localidad) AS 'CODIGO'
+        FROM tb_instituciones_educativas AS IE 
+        WHERE IE.Pk_Id_Institucion = $id_atencion"; 
+       $informacion = DB::select($sql);
+       return $informacion;
+      }
 }

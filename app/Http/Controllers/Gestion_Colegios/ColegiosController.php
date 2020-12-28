@@ -47,6 +47,11 @@ class ColegiosController extends Controller
 		$resultado = $parametro->getOptionsInstituciones();
 		return response()->json($resultado[0]);
 	}
+	public function getInicialesIdLocalidad(Request $request){
+		$iniciales = new Colegios;
+		$resultado = $iniciales->getInicialesIdLocalidad($request->id_atencion);
+		return response()->json($resultado, 200);
+	}
 
 
 }
