@@ -19,7 +19,7 @@ class EstudianteGrupo extends Model
     	$sql = "SELECT
         EG.Fk_Id_Estudiante AS 'IDESTUDIANTE',
         ES.IN_Identificacion AS 'IDENTIFICACION',
-        CONCAT(ES.VC_Primer_Nombre,' ',ES.VC_Segundo_Nombre,' ',ES.VC_Primer_Apellido,' ',ES.VC_Segundo_Apellido) AS 'ESTUDIANTE',
+        CONCAT_WS(' ', ES.VC_Primer_Nombre,ES.VC_Segundo_Nombre, ES.VC_Primer_Apellido,ES.VC_Segundo_Apellido) AS 'ESTUDIANTE',
         ES.DD_F_Nacimiento AS 'FECHA',
         (CASE WHEN ES.IN_Genero = '1' THEN 'MASCULINO' WHEN ES.IN_Genero = '2' THEN 'FEMENINO' END) AS 'GENERO',
         EG.DT_Fecha_Ingreso AS 'FECHAINGRESO',

@@ -1,4 +1,4 @@
-var tabla_info_instituciones;
+var tabla_info_instituciones; 
 var info_instituciones;
 var options_tipo_institucion;
 var options_localidades;
@@ -38,6 +38,12 @@ $(document).ready(function () {
 
 	$("#localidad").html(options_localidades).change(function(){
 		$("#upz").html(getUpz($("#localidad").val())).selectpicker("refresh");
+	}).selectpicker("refresh");
+
+	$("#tipo-institucion-m").html(options_tipo_institucion).selectpicker("refresh");
+
+	$("#localidad-m").html(options_localidades).change(function(){
+		$("#upz-m").html(getUpz($("#localidad-m").val())).selectpicker("refresh");
 	}).selectpicker("refresh");
 
 	function getTipoInstitucion(id_parametro) {
@@ -80,6 +86,7 @@ $(document).ready(function () {
 	}
 
 	function getUpz(id_localidad) {
+		console.log(id_localidad);
 		var options_upz = "";
 		$.ajax({
 			url: "../administracion/getUpz",
@@ -150,9 +157,11 @@ $(document).ready(function () {
 
 	$("#form-nueva-institucion").submit(function (e) {
 		var sedes_instituciones = new Array();
+		i=1;
 		$('.nombre_sede').each(function() {
-			console.log($(this).val('.localidad_sede')); 
-			//sedes_instituciones.push(new Array($(this).val('.localidad_sede'), $(this).val('.upz_sede'), $(this).val('.nombre_sede'), $(this).val('.dane_sede')));
+			sedes_instituciones.push(new Array($("#TX_LocalidadSede_"+i).val(),$("#TX_UpzSede_"+i).val(),$("#TX_Sede_"+i).val(),$("#TX_Dane12_"+i).val(),));
+			console.log(sedes_instituciones); 
+			i++
 		});
 		e.preventDefault();
 		$.ajax({
@@ -170,7 +179,7 @@ $(document).ready(function () {
 				codigo_dane: $("#codigo-dane").val(),
 				iniciales_institucion: $("#iniciales-institucion").val(),
 				sede: $("#Numero-sedes").val(),
-				//sedes: sedes_instituciones
+				sedes: sedes_instituciones
 			},
 			success: function (data) {
 				if (data == 200) {
@@ -188,52 +197,6 @@ $(document).ready(function () {
 		});
 	});
 
-	
-	
-	$("#form-registrar-asistencia").submit(function(e){
-		var checkbox_asistencia_beneficiario = new Array();
-		$('.asistencia_actividad').each(function() {
-			var check;
-			if($(this).is(":checked")){
-				check=1;
-			}else{
-				check=0;
-			}
-			checkbox_asistencia_beneficiario.push(new Array($(this).data('id-beneficiario'), check));
-		});
-		//checkbox_asistencia_beneficiario = JSON.stringify(checkbox_asistencia_beneficiario);
-		e.preventDefault();		
-		$.ajax({
-			url: "registrarAsistencia",
-			type: 'POST',
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			},
-			data:{
-				id_municipio: $("#id_municipio").val(),
-				id_escenario: $("#id_escenario").val(),
-				id_grupo: $("#grupos_asistencia").val(),
-				fecha: $("#fecha_actividad").val(),
-				hora_inicio: $("#hora_inicio").val(),
-				hora_fin: $("#hora_fin").val(),
-				nombre_actividad: $("#nombre_actividad").val(),
-				beneficiarios: checkbox_asistencia_beneficiario
-			},
-			success: function(data) {
-				if(data == 200){
-					Swal.fire("Éxito", "Se registró correctamente la asistencia", "success");
-					$(":input").val('');
-					$("#grupos_asistencia").selectpicker("refresh");
-					$("#div_registro_asistencia").hide();
-				}
-			},
-			error: function(data){
-				Swal.fire("Error", "No se pudo registrar la asistencia, por favor inténtelo nuevamente", "error");
-			},
-			async: false
-		});		
-	});
-	
 
 	function getInstitucionesEducativas() {
 		$.ajax({
@@ -254,7 +217,7 @@ $(document).ready(function () {
 						"<center>"+info_instituciones[index]["NOMBRE"]+"</center>",
 						"<center>"+info_instituciones[index]["CODIGODANE"]+"</center>",
 						"<center>"+info_instituciones[index]["SEDES"]+"</center>",
-						"<center><buton type='button' class='btn btn-warning editar' data-id-usuario='"+info_instituciones[index]["IDINSTITUCIONAL"]+"' data-toggle='modal' data-target='#modal-editar-usuario'>Actualizar</buton></center>"
+						"<center><buton type='button' class='btn btn-warning editar' data-id-institucion='"+info_instituciones[index]["IDINSTITUCIONAL"]+"' data-toggle='modal' data-target='#modal-actualizar-institucion'>Actualizar</buton></center>"
 						]).draw().node();
 				});
 			},
@@ -264,5 +227,130 @@ $(document).ready(function () {
 			async: false
 		});
 	}
+
+	$("#tabla-info-instituciones").on("click", ".editar",  function(){
+		getInformacionInstitucion($(this).attr("data-id-institucion"));
+	});
+
+	function getInformacionInstitucion(institucion) {
+		$.ajax({
+			url: "getInformacionInstitucion",
+			type: 'POST',
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data:{
+				id_institucion: institucion
+			},
+			success: function(data) {
+				$("#id-institucion-m").val(data["Pk_Id_Institucion"]);
+				$("#tipo-institucion-m").val(data["Fk_Tipo_Institucion"]).selectpicker("refresh").trigger("change");
+				$("#nombre-institucion-m").val(data["VC_Nombre_Institucion"]);
+				$("#codigo-dane-m").val(data["VC_Codigo_Dane"]);
+				$("#iniciales-institucion-m").val(data["VC_Iniciales"]);
+				$("#localidad-m").val(data["Fk_Id_Localidad"]).selectpicker("refresh").trigger("change");
+				$("#upz-m").val(data["Fk_Id_Upz"]).selectpicker("refresh").trigger("change");
+				$("#Numero-sedes-m").val(data["IN_Sedes"]).selectpicker("refresh").trigger("change"); 
+			},
+			error: function(data){
+				Swal.fire("Error", "No se pudo obtener la información de la institución, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	}
+
+
+	$("#Numero-sedes-m").on("change", function() {
+		$("#registrar_sedes_m").html("");
+		var Numero_sedesm = $(this).val();
+		$("#registrar_sedes_m").append("<table class='table' style='width:100%' id='tabla_Sedes_Colegio'>"+
+			"<thead><tr>"+
+			"<th style='width: 2%; vertical-align: middle;'>#</th>"+
+			"<th style='width: 25%'>Localidad</th>"+
+			"<th style='width: 25%'>Upz</th>"+
+			"<th style='width: 24%'>Nombre de la sede</th>"+
+			"<th style='width: 24%'>Dane 12</th>"+
+			"</tr></thead><tbody></tbody></table>");
+		for(i=1 ; i<=Numero_sedesm; i++){
+			$("#tabla_Sedes_Colegio").append("<tr id='" + i + "'>"+
+				"<td style='width: 2%; vertical-align: middle;'>"+i+"</td>"+
+				"<td style='width: 24%'>"+
+				"<div class='form-group'>"+
+				"<select class='form-control selectpicker localidad_sedem' title='Seleccione una opción' id='TX_LocalidadSedem_"+i+"' name='TX_LocalidadSedem_"+i+"' required></select>"+
+				"</div>"+
+				"</td>"+
+				"<td style='width: 24%'>"+
+				"<div class='form-group'>"+
+				"<select class='form-control selectpicker upz_sedem' title='Seleccione una opción' id='TX_UpzSedem_"+i+"' name='TX_UpzSedem_"+i+"'></select>"+
+				"</div>"+
+				"</td>"+
+				"<td style='width: 25%'>"+
+				"<div class='form-group'>"+
+				"<input type='text' class='form-control nombre_sedem' placeholder='Nombre de la sede' id='TX_Sedem_"+i+"' name='TX_Sedem_"+i+"' required>"+
+				"</div>"+
+				"</td>"+
+				"<td style='width: 25%'>"+
+				"<div class='form-group'>"+
+				"<input type='text' class='form-control dane_sedem' placeholder='Dane 12' id='TX_Dane12m_"+i+"' name='TX_Dane12m_"+i+"'>"+
+				"</div>"+
+				"</td>"+			
+				"</tr>");
+
+			$("#TX_LocalidadSedem_"+i).html(options_localidades).selectpicker("refresh");
+			$("#TX_UpzSedem_"+i).selectpicker("refresh");
+		}
+	});
+
+	$("#modal-actualizar-institucion").on("change", ".selectpicker.localidad_sedem", function(){
+		let id_elemento =  $(this).attr("id").split("_")[2];
+		console.log(id_elemento);
+		let id_localidad = $(this).val();
+		$("#TX_UpzSedem_"+id_elemento).html(getUpz(id_localidad)).selectpicker("refresh");
+	});
+
+
+	$("#form-editar-institucion").submit(function (e) {
+		var sedes_instituciones = new Array();
+		i=1;
+		$('.nombre_sede').each(function() {
+			sedes_instituciones.push(new Array($("#TX_LocalidadSedem_"+i).val(),$("#TX_UpzSedem_"+i).val(),$("#TX_Sedem_"+i).val(),$("#TX_Dane12m_"+i).val(),));
+			console.log(sedes_instituciones); 
+			i++
+		});
+		e.preventDefault();
+		$.ajax({
+			url: "actualizarInformacionInstitucion",
+			type: 'POST',
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_institucion_m: $("#id-institucion-m").val(),
+				tipo_institucion_m: $("#tipo-institucion-m").val(),
+				localidad_m: $("#localidad-m").val(),
+				upz_m: $("#upz-m").val(),
+				nombre_colegio_m: $("#nombre-institucion-m").val(),
+				codigo_dane_m: $("#codigo-dane-m").val(),
+				iniciales_institucion_m: $("#iniciales-institucion-m").val(),
+				sede_m: $("#Numero-sedes-m").val(),
+				sedes_m: sedes_instituciones
+			},
+			success: function (data) {
+				if (data == 200) {
+					swal("Éxito", "Institución educativa registrada correctamente, ya puede ser consultado en el listado", "success");
+					$(":input").val("");
+					$('.selectpicker').selectpicker('val', '');
+					$("#modal-actualizar-institucion").modal('hide');
+					getInstitucionesEducativas();
+				}
+			},
+			error: function (data) {
+				swal("Error", "No fue posible guardar la información de la institución educativa, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	});
 
 });

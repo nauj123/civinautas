@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Gestion_Colegios/colegios.js?v=2020.12.16.5') }}" defer></script>
+<script src="{{ asset('js/Gestion_Colegios/colegios.js?v=2020.12.29.3') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -57,6 +57,25 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-actualizar-institucion">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header" style="text-align: center;">
+					<h3 class="modal-title"><strong>ACTUALIZAR INFORMACIÓN DE LA INSTITUCIÓN EDUCATIVA</strong></h3>
+					</div>
+					<div class="modal-body">
+						<form id="form-editar-institucion">
+							@include('Gestion_Colegios.edit_colegio')
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-actualizar-institucion">Cerrar</button>
+						<button type="submit" class="btn btn-primary">Actualizar Institucion</button>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>		
 
 	</div>
 </div>
