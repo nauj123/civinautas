@@ -79,4 +79,62 @@ class ReportesController extends Controller
 		$informacion = DB::select($sql);
 		return $informacion;
 	}
+	function getConsolidadoCicloVital(Request $request){
+		$mes = $request->mes;
+		$sql="SELECT
+		NOMBRE_INSTITUCION,
+		LOCALIDAD,
+		COALESCE(HOMBRES_0_6, 0) AS HOMBRES_0_6, 
+		COALESCE(MUJERES_0_6, 0) AS MUJERES_0_6, 
+		COALESCE(HOMBRES_7_13, 0) AS HOMBRES_7_13, 
+		COALESCE(MUJERES_7_13, 0) AS MUJERES_7_13, 
+		COALESCE(HOMBRES_14_17, 0) AS HOMBRES_14_17, 
+		COALESCE(MUJERES_14_17, 0) AS MUJERES_14_17, 
+		COALESCE(HOMBRES_18_26, 0) AS HOMBRES_18_26, 
+		COALESCE(MUJERES_18_26, 0) AS MUJERES_18_26, 
+		COALESCE(HOMBRES_27_59, 0) AS HOMBRES_27_59, 
+		COALESCE(MUJERES_27_59, 0) AS MUJERES_27_59, 
+		COALESCE(HOMBRES_60, 0) AS HOMBRES_60, 
+		COALESCE(MUJERES_60, 0) AS MUJERES_60, 
+		COALESCE(SUBTOTAL_HOMBRES, 0) AS SUBTOTAL_HOMBRES, 
+		COALESCE(SUBTOTAL_MUJERES, 0) AS SUBTOTAL_MUJERES, 
+		COALESCE(TOTAL, 0) AS TOTAL 
+		FROM
+		(SELECT
+		ie.Pk_Id_Institucion AS ID_INSTITUCION,
+		ie.VC_Nombre_Institucion AS NOMBRE_INSTITUCION,
+		l.VC_Nom_Localidad AS LOCALIDAD
+		FROM tb_instituciones_educativas ie 
+		JOIN tb_localidades l ON l.Pk_Id_Localidad=ie.Fk_Id_Localidad
+		WHERE ie.IN_Estado=1) AS PRIMERA LEFT JOIN
+		(
+		SELECT
+		g.Fk_Id_Institucion,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 0 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 6 AND e.IN_Genero=1 THEN 1 END) AS HOMBRES_0_6,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 0 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 6 AND e.IN_Genero=2 THEN 1 END) AS MUJERES_0_6,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 7 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 13 AND e.IN_Genero=1 THEN 1 END) AS HOMBRES_7_13,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 7 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 13 AND e.IN_Genero=2 THEN 1 END) AS MUJERES_7_13,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 14 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 17 AND e.IN_Genero=1 THEN 1 END) AS HOMBRES_14_17,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 14 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 17 AND e.IN_Genero=2 THEN 1 END) AS MUJERES_14_17,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 18 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 26 AND e.IN_Genero=1 THEN 1 END) AS HOMBRES_18_26,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 18 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 26 AND e.IN_Genero=2 THEN 1 END) AS MUJERES_18_26,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 27 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 59 AND e.IN_Genero=1 THEN 1 END) AS HOMBRES_27_59,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 27 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 59 AND e.IN_Genero=2 THEN 1 END) AS MUJERES_27_59,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 60 AND e.IN_Genero=1 THEN 1 END) AS HOMBRES_60,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 60 AND e.IN_Genero=2 THEN 1 END) AS MUJERES_60,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 0 AND e.IN_Genero=1 THEN 1 END) AS SUBTOTAL_HOMBRES,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 0 AND e.IN_Genero=2 THEN 1 END) AS SUBTOTAL_MUJERES,
+		COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 0 THEN 1 END) AS TOTAL
+		FROM tb_asistencia a
+		JOIN tb_estudiantes e ON e.Pk_Id_Beneficiario=a.Fk_Id_Estudiante
+		JOIN tb_atenciones ate ON ate.Pk_Id_Atencion=a.Fk_Id_Atencion
+		JOIN tb_grupos g ON g.Pk_Id_Grupo=ate.Fk_Id_Grupo
+		WHERE a.IN_Asistencia=1";
+		if(isset($_POST["mes"])){
+			$sql .= " AND MONTH(ate.DT_Fecha_Atencion)=$mes";
+		}
+		$sql .= " GROUP BY g.Fk_Id_Institucion) AS SEGUNDA ON PRIMERA.ID_INSTITUCION=SEGUNDA.Fk_Id_Institucion";
+		$informacion = DB::select($sql);
+		return $informacion;
+	}
 }

@@ -108,6 +108,7 @@ Route::post('/Registro_Asistencia/getAsistenciaAtencion', 'Registro_Asistencia\A
  * Rutas reporrtes
  */
 Route::post('/Reportes/getReporteConsolidado', 'Reportes\ReportesController@getReporteConsolidado');
+Route::post('/Reportes/getConsolidadoCicloVital', 'Reportes\ReportesController@getConsolidadoCicloVital');
 
 /**
  * Rutas gráficas home
@@ -117,6 +118,8 @@ Route::post('getTotalGrupos', 'HomeController@getTotalGrupos');
 Route::post('getTotalBeneficiarios', 'HomeController@getTotalBeneficiarios');
 Route::post('getTotalBeneficiariosPorGenero', 'HomeController@getTotalBeneficiariosPorGenero');
 Route::post('getTotalAtenciones', 'HomeController@getTotalAtenciones');
+Route::post('getTotalBeneficiariosAtendidosPorGenero', 'HomeController@getTotalBeneficiariosAtendidosPorGenero');
+Route::post('getTotalCiclosVitales', 'HomeController@getTotalCiclosVitales');
 
 /**
  * Rutas Diplomados 

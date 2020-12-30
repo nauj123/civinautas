@@ -13,8 +13,9 @@
 <div class="container-fluid">
 	<div class="panel-body">
 		<ul class="nav nav-tabs" role="tablist">
-			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#reporte_consolidado">Reporte consolidado</a></li>
-			<!-- <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consulta_usuario">Consultar y edición de usuarios</a></li> -->
+			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#reporte_consolidado">Reporte mesa intersectorial</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consolidado-mensual-ciclo-vital">Consolidado mensual ciclo vital</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consolidado-global-ciclo-vital">Consolidado global ciclo vital</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active col-lg-10 offset-lg-1" id="reporte_consolidado"><br>
@@ -82,11 +83,104 @@
 					</div>
 				</div>
 			</div>
-			<!-- <div class="tab-pane" id="consulta_usuario" role="tabpanel"><br>
-				<div class="card">
-					<div class="card-header bg-primary text-white">Información de escenarios creados</div>
+			<div class="tab-pane" id="consolidado-mensual-ciclo-vital" role="tabpanel"><br>
+				<form id="form-consolidado-mensual-ciclo-vital">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3">
+								<select class="form-control selectpicker" title="Seleccione un mes" id="mes-reporte-consolidado-mensual-ciclo-vital" required></select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3">
+								<button class="btn btn-block btn-primary" type="submit">Consultar</button>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-lg-12">
+							<table id="tabla-reporte-consolidado-mensual-ciclo-vital" class="table table-hover table-bordered display" style="width: 100%;">
+								<thead>
+									<tr>
+										<th rowspan="2">Colegio</th>
+										<th rowspan="2">Localidad</th>
+										<th colspan="2">Primera Infancia (0 - 6 años)</th>
+										<th colspan="2">Infancia (7 a 13 años)</th>
+										<th colspan="2">Adolescencia (14 -17 años)</th>
+										<th colspan="2">Juventud (18 -26 años)</th>
+										<th colspan="2">Adultez (27 - 59 años)</th>
+										<th colspan="2">Adulto Mayor (Más de 60 años)</th>
+										<th colspan="2">Subtotal</th>
+										<th rowspan="2">Total asistentes</th>
+									</tr>
+									<tr>
+										<th>Hombres</th>
+										<th>Mujeres</th>
+										<th>Hombres</th>
+										<th>Mujeres</th>
+										<th>Hombres</th>
+										<th>Mujeres</th>
+										<th>Hombres</th>
+										<th>Mujeres</th>
+										<th>Hombres</th>
+										<th>Mujeres</th>
+										<th>Hombres</th>
+										<th>Mujeres</th>
+										<th>Hombres</th>
+										<th>Mujeres</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
+					</div>
 				</div>
-			</div> -->
+			</div>
+			<div class="tab-pane" id="consolidado-global-ciclo-vital" role="tabpanel"><br>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-lg-12">
+							<table id="tabla-reporte-consolidado-global-ciclo-vital" class="table table-hover table-bordered display" style="width: 100%;">
+								<thead>
+									<tr>
+										<th rowspan="2">Colegio</th>
+										<th rowspan="2">Localidad</th>
+										<th colspan="2">Primera Infancia (0 - 6 años)</th>
+										<th colspan="2">Infancia (7 a 13 años)</th>
+										<th colspan="2">Adolescencia (14 -17 años)</th>
+										<th colspan="2">Juventud (18 -26 años)</th>
+										<th colspan="2">Adultez (27 - 59 años)</th>
+										<th colspan="2">Adulto Mayor (Más de 60 años)</th>
+										<th colspan="2">Subtotal</th>
+										<th rowspan="2">Total asistentes</th>
+									</tr>
+									<tr>
+										<th>Hombres</th>
+										<th>Mujeres</th>
+										<th>Hombres</th>
+										<th>Mujeres</th>
+										<th>Hombres</th>
+										<th>Mujeres</th>
+										<th>Hombres</th>
+										<th>Mujeres</th>
+										<th>Hombres</th>
+										<th>Mujeres</th>
+										<th>Hombres</th>
+										<th>Mujeres</th>
+										<th>Hombres</th>
+										<th>Mujeres</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

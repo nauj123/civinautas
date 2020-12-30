@@ -54,11 +54,28 @@
     @include("theme/aside")
 
 
+
+
     <!-- ============ Body content start ============= -->
     <div class="main-content-wrap sidenav-open d-flex flex-column">    
-      <div class="breadcrumb"><br><br></div>
+      <div class="breadcrumb"><br><br>
+      </div>
+
       @section('principal')
+
       <div class="separator-breadcrumb border-top"></div>
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-lg-4">
+            <span>Seleccione un año:</span>
+            <select id="filtro-anio">
+              <option value="2020">2020</option>
+              <option value="2021">2021</option>
+            </select>
+          </div>    
+        </div>
+      </div>
 
       <div class="row">
         <!-- ICON BG -->
@@ -103,31 +120,52 @@
           <div class="card mb-4">
             <div class="card-body">
               <div class="card-title">Total de atenciones por mes</div>
-              <div id="echart-total-atenciones" style="height: 300px;"></div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div id="echart-total-atenciones" style="height: 300px;"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <!-- <div class="col-lg-8 col-md-12">
-          <div class="card mb-4">
-            <div class="card-body">
-              <div class="card-title">Total de atenciones por mes</div>
-              <div id="echartBar" style="height: 300px;"></div>
-            </div>
-          </div>
-        </div> -->
-        <!-- <div class="col-lg-4 col-sm-12">
-          <div class="card mb-4">
-            <div class="card-body">
-              <div class="card-title">Enfoque poblacional</div>
-              <div id="echartPie" style="height: 300px;"></div>
-            </div>
-          </div>
-        </div> -->
         <div class="col-lg-4 col-sm-12">
           <div class="card mb-4">
             <div class="card-body">
-              <div class="card-title">Total beneficiarios por género</div>
-              <div id="echart-beneficiarios-por-genero" style="height: 300px;"></div>
+              <div class="card-title">Total beneficiarios SIMAT por género</div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div id="echart-beneficiarios-por-genero" style="height: 300px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8 col-md-12">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="card-title">Total beneficiarios atendidos por ciclo vital</div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div id="echart-total-beneficiarios-ciclo-vital" style="height: 300px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="card-title">Total beneficiarios atendidos por género</div>
+              <div id="echart-beneficiarios-atendidos-por-genero" style="height: 300px;"></div>
             </div>
           </div>
         </div>
