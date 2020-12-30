@@ -2,10 +2,10 @@ var options_diplomados;
 var options_localidades;
 var options_instituciones;
 var options_enfoque;
-
+var id_diplomado;
 $(document).ready(function(){
 
-	tabla_info_diplomados = $("#tabla-info-diplomados").DataTable({
+	tabla_config = {
 		pageLength: 50,
 		lengthChange: false,
 		responsive: true,
@@ -15,6 +15,28 @@ $(document).ready(function(){
 			text: 'Descargar datos',
 			filename: 'Datos'
 		}],
+		"language": {
+			"lengthMenu": "Ver _MENU_ registros por página",
+			"zeroRecords": "No hay información, lo sentimos.",
+			"info": "Mostrando página _PAGE_ de _PAGES_",
+			"infoEmpty": "No hay registros disponibles",
+			"infoFiltered": "(filtrado de un total de _MAX_ registros)",
+			"search": "Filtrar",
+			"paginate": {
+				"first": "Primera",
+				"last": "Última",
+				"next": "Siguiente",
+				"previous": "Anterior"
+			},
+		}
+	};
+
+	tabla_info_diplomados = $("#tabla-info-diplomados").DataTable(tabla_config);
+	tabla_participantes_diplomado = $("#tabla-participantes-diplomado").DataTable(tabla_config);
+	tabla_participantes_asistencia_diplomado = $("#tabla-participantes-asistencia-diplomado").DataTable({
+		pageLength: 50,
+		lengthChange: false,
+		responsive: true,
 		"language": {
 			"lengthMenu": "Ver _MENU_ registros por página",
 			"zeroRecords": "No hay información, lo sentimos.",
@@ -102,8 +124,6 @@ $(document).ready(function(){
 		return options_enfoque;
 	}
 
-	
-
 	$("#form-nuevo-diplomado").submit(function (e){
 		e.preventDefault();
 		$.ajax({
@@ -152,8 +172,8 @@ $(document).ready(function(){
 						informacion_diplomados[index]["NOMBRE"],
 						informacion_diplomados[index]["DURACION"],
 						informacion_diplomados[index]["TEMATICA"],
-						informacion_diplomados[index]["ESTADO"],
-						"<center><buton type='button' class='btn btn-primary agregar' data-id-diplomado='"+informacion_diplomados[index]["IDDIPLOMADO"]+"' data-toggle='modal' data-target='#modal-registrar-participante'>Agregar participante</buton></center>"
+						"<a href='#' class='btn btn-secondary participantes' data-id-diplomado='"+informacion_diplomados[index]["IDDIPLOMADO"]+"' data-toggle='modal' data-target='#modal-participantes-diplomado'>"+informacion_diplomados[index]["PARTICIPANTES"]+"</a>",
+						"<buton type='button' class='btn btn-block btn-primary agregar' data-id-diplomado='"+informacion_diplomados[index]["IDDIPLOMADO"]+"' data-toggle='modal' data-target='#modal-registrar-participante'>Agregar participante</buton>"
 						]).draw().node();
 				});
 			},
@@ -182,6 +202,103 @@ $(document).ready(function(){
 		return options_diplomados;
 	}
 
+	$(".agregar").on("click", function(){
+		id_diplomado = $(this).attr("data-id-diplomado");
+	});
+
+	$(".participantes").on("click", function(){
+		id_diplomado = $(this).attr("data-id-diplomado");
+		$.ajax({
+			url: "getInfoParticipantesDiplomado",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data:{
+				id_diplomado: id_diplomado
+			},
+			success: function(data) {
+				tabla_participantes_diplomado.clear().draw();
+				data.forEach((value, index) => {
+					rowNode = tabla_participantes_diplomado.row.add([
+						data[index]["IDENTIFICACION"],
+						data[index]["NOMBRE"],
+						data[index]["CORREO"],
+						data[index]["TELEFONO"]
+						]).draw().node();
+				});
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener la información de los participantes del diplomado, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	});
+
+	$("#diplomado-asistencia").on("change", function(){
+		$("#div-participantes-asistencia-diplomado").show();
+		id_diplomado = $(this).val();
+		$.ajax({
+			url: "getInfoParticipantesDiplomado",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data:{
+				id_diplomado: id_diplomado
+			},
+			success: function(data) {
+				tabla_participantes_asistencia_diplomado.clear().draw();
+				data.forEach((value, index) => {
+					rowNode = tabla_participantes_asistencia_diplomado.row.add([
+						data[index]["IDENTIFICACION"],
+						data[index]["NOMBRE"],
+						"<input data-toggle='toggle' data-onstyle='success' data-offstyle='danger' data-on='SI' data-off='NO' type='checkbox' data-id-participante='"+data[index]["IDPARTICIPANTE"]+"' class='asistencia_diplomado'>"
+						]).draw().node();
+				});
+				$('input[type="checkbox"]').bootstrapToggle();
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener la información de los participantes del diplomado, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	});
+
+	$("#form-asistencia-diplomado").submit(function (e){
+		e.preventDefault();
+
+		var array_datos_asistencia = new Array();
+
+		$('.asistencia_diplomado').each(function() {
+			var check;
+			check = $(this).is(":checked") ? 1 : 0;
+			array_datos_asistencia.push(new Array($("#diplomado-asistencia").val(), $("#fecha-asistencia").val(), $(this).attr("data-id-participante"), check));
+		});
+
+		$.ajax({
+			url: "guardarAsistenciaDiplomado",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data:{
+				array_datos_asistencia: array_datos_asistencia
+			},
+			success: function(data) {
+				swal("Éxito", "Se ha guardado la asistencia correctamente", "success");
+				$("#div-participantes-asistencia-diplomado").hide();
+				$("#diplomado-asistencia").selectpicker("val", "");
+				$("#fecha-asistencia").val("")
+			},
+			error: function(data){
+				swal("Error", "No se pudo guardar la asistencia, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+
+	});
+
 	$("#form-participantes").submit(function (e){
 		e.preventDefault();
 		$.ajax({
@@ -192,6 +309,7 @@ $(document).ready(function(){
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
 			data: {
+				id_diplomado: id_diplomado,
 				identificacion: $("#identificacion").val(),
 				correo: $("#correo").val(),
 				nombres: $("#nombres").val(),
@@ -204,15 +322,13 @@ $(document).ready(function(){
 				sector_social: $("#sector-social").val()
 			},
 			success: function (data) {
-				if (data == 200) {
-					swal("Éxito", "Se agrego correctamente el participante al diplomado", "success");
-					//$(":input").val("");
-					//$('.selectpicker').selectpicker('val', '');
-					//$("#modal-crear-diplomado").modal('hide');
-				}
+				swal("Éxito", "Se agrego correctamente el participante al diplomado", "success");
+				$("#form-participantes :input").val("");
+				$("#form-participantes .selectpicker").selectpicker("val", "");
+				$("#modal-registrar-participante").modal("hide");
 			},
 			error: function (data) {
-				swal("Error", "No fue posible guardar la información del grupo, por favor inténtelo nuevamente", "error");
+				swal("Error", "No se pudo agregar el participante al diplomado, por favor inténtelo nuevamente", "error");
 			},
 			async: false
 		});

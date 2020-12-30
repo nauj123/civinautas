@@ -14,17 +14,15 @@ class Diplomados extends Model
     */
     protected $table = 'tb_diplomados';
     public $timestamps = false;
- 
-    public function getDiplomadosMediador($id_Mediador){
-    	$sql = "SELECT 
-        DI.Pk_Id_Diplomado AS 'IDDIPLOMADO',
-        DI.VC_Nombre_Diplomado AS 'NOMBRE',
-        CONCAT(DI.DT_Fecha_Inicio,' hasta ',DI.DT_Fecha_fin) AS 'DURACION',
-        DI.VC_Tematica AS 'TEMATICA',
-        (CASE WHEN DI.IN_Estado = '1' THEN 'ACTIVO' WHEN DI.IN_Estado = '0' THEN 'CERRADO' END) AS 'ESTADO'
-        FROM tb_diplomados AS DI 
-        WHERE Fk_Mediador = $id_Mediador";
-        $informacion = DB::select($sql);
+
+    public function getDiplomadosMediador($id_mediador){
+        $informacion = Diplomados::select("Pk_Id_Diplomado AS IDDIPLOMADO",
+           "VC_Nombre_Diplomado AS NOMBRE", 
+           "VC_Tematica AS TEMATICA",
+           Diplomados::raw("CONCAT(DT_Fecha_Inicio,' hasta ',DT_Fecha_fin) AS 'DURACION'"),
+           Diplomados::raw("(SELECT COUNT(Pk_Id_Participante) FROM tb_participantes_diplomado WHERE Fk_Id_Diplomado=Pk_Id_Diplomado) AS PARTICIPANTES"))
+        ->where("Fk_Mediador", $id_mediador)
+        ->get();
         return $informacion;
     }
     public function getOptionsDiplomadosMediador($id_mediador){

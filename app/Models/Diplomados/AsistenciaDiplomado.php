@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Models\Gestion_Grupos;
+namespace App\Models\Diplomados;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +12,7 @@ class AsistenciaDiplomado extends Model
     *
     * @var string
     */
-    protected $table = '';
+    protected $table = 'tb_asistencia_diplomado';
     public $timestamps = false;
 
 }

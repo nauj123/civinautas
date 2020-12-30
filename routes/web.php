@@ -128,6 +128,8 @@ Route::post('/Diplomados/guardarNuevoDiplomado', 'Diplomados\DiplomadosControlle
 Route::post('/Diplomados/getDiplomadosMediador', 'Diplomados\DiplomadosController@getDiplomadosMediador');
 Route::post('/Diplomados/getOptionsDiplomadosMediador', 'Diplomados\DiplomadosController@getOptionsDiplomadosMediador');
 Route::post('/Diplomados/guardarParticipantesDiplomado', 'Diplomados\DiplomadosController@guardarParticipantesDiplomado');
+Route::post('/Diplomados/getInfoParticipantesDiplomado', 'Diplomados\DiplomadosController@getInfoParticipantesDiplomado');
+Route::post('/Diplomados/guardarAsistenciaDiplomado', 'Diplomados\DiplomadosController@guardarAsistenciaDiplomado');
 
 
 

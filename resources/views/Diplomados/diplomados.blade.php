@@ -32,7 +32,7 @@
 							<th>Nombre diplomado</th>
 							<th>Duración </th>
 							<th>Tematica o descripción</th>
-							<th>No. de inscritos</th>
+							<th>No. de participantes</th>
 							<th>Agregar participantes</th>
 						</tr>
 					</thead>
@@ -40,54 +40,49 @@
 				</table>
 			</div>
 			<div class="tab-pane" id="agregar_estudiantes" role="tabpanel"><br>
-				<div class="form-group">
-					<div class="row mb-3">
-						<div class="col-xs-6 col-md-2 col-lg-2">
-							<span><strong>Seleccionar Diplomado</strong></span>
-						</div>
-						<div class="col-xs-6 col-md-4 col-lg-4">
-							<select class="form-control selectpicker" id="diplomado-asistencia" title="Seleccione una opción" required></select>
-						</div>
-						<div class="col-xs-6 col-md-2 col-lg-2">
-							<span><strong>Seleccionar fecha</strong></span>
-						</div>
-						<div class="col-xs-6 col-md-4 col-lg-4">
-							<input class="form-control" type="date" id="fecha-asistencia" required>
+				<form id="form-asistencia-diplomado">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-lg-4 offset-lg-4">
+								<span>Seleccionar Diplomado:</span>
+								<select class="form-control selectpicker" id="diplomado-asistencia" title="Seleccione una opción" required></select>
+							</div>
 						</div>
 					</div>
-				</div>
-				<table class="table" style="width:100%" id="tabla_Titulos_Registro">
-									<thead>
-										<tr>
-											<th style="width: 2%; vertical-align: middle;">#</th>
-											<th style="width: 12%">Identificación</th>
-											<th style="width: 12%">Nombres</th>
-											<th style="width: 12%">Apellidos</th>
-											<th style="width: 12%">Correo</th>
-											<th style="width: 12%">Entidad</th>
-											<th style="width: 12%">Rol</th>
-											<th style="width: 12%">Localidad</th>
-											<th style="width: 12%">Celular</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td style="width: 2%; vertical-align: middle;">1</td>
-											<td><input type="text" class="form-control identificacion" placeholder="Identificación" id="TX_Identificacion_1" name="TX_Identificacion_1"></td>
-											<td><input type="text" class="form-control identificacion" placeholder="Identificación" id="TX_Identificacion_1" name="TX_Identificacion_1"></td>
-											<td><input type="text" class="form-control identificacion" placeholder="Identificación" id="TX_Identificacion_1" name="TX_Identificacion_1"></td>
-											<td><input type="text" class="form-control identificacion" placeholder="Identificación" id="TX_Identificacion_1" name="TX_Identificacion_1"></td>
-											<td><input type="text" class="form-control identificacion" placeholder="Identificación" id="TX_Identificacion_1" name="TX_Identificacion_1"></td>
-											<td><input type="text" class="form-control identificacion" placeholder="Identificación" id="TX_Identificacion_1" name="TX_Identificacion_1"></td>
-											<td><input type="text" class="form-control identificacion" placeholder="Identificación" id="TX_Identificacion_1" name="TX_Identificacion_1"></td>
-											<td><input type="text" class="form-control identificacion" placeholder="Identificación" id="TX_Identificacion_1" name="TX_Identificacion_1"></td>
-										</tr>
-									</tbody>
-								</table>
-								<a id="btn_Agregar" class="btn btn-primary " Title="Agregar" data-toggle='tooltip'  data-placement="right">Agregar</a>
-								<a id="btn_Quitar"  class="btn btn-danger " Title="Quitar" data-toggle='tooltip'  data-placement="right">Quitar</a>
-
-
+					<div class="form-group">
+						<div class="row">
+							<div class="col-lg-4 offset-lg-4">
+								<span>Seleccionar fecha:</span>
+								<input class="form-control" type="date" id="fecha-asistencia" required>
+							</div>
+						</div>
+					</div>
+					<div id="div-participantes-asistencia-diplomado" style="display: none;">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-lg-12">
+									<table class="table display" style="width: 100%;" id="tabla-participantes-asistencia-diplomado">
+										<thead>
+											<tr>
+												<th>Identificación</th>
+												<th>Nombres</th>
+												<th>Asitencia</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>		
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-lg-4 offset-lg-4">
+									<button type="submit" class="btn btn-block btn-primary">Registrar asistencia</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -100,16 +95,15 @@
 				<div class="modal-body">
 					<form id="form-nuevo-diplomado">
 						@include('Diplomados.form_diplomado')
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-diplomado">Cerrar</button>
-					<button type="submit" class="btn btn-primary">Crear Diplomado</button>
-				</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-diplomado">Cerrar</button>
+						<button type="submit" class="btn btn-primary">Crear Diplomado</button>
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-
 	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-registrar-participante">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -119,17 +113,45 @@
 				<div class="modal-body">
 					<form id="form-participantes">
 						@include('Diplomados.form_participante_diplomado')
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-participante-diplomado">Cerrar</button>
-					<button type="submit" class="btn btn-primary">Agregar participante</button>
-				</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-participante-diplomado">Cerrar</button>
+						<button type="submit" class="btn btn-primary">Agregar participante</button>
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 
-
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-participantes-diplomado">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title"><strong>Participantes registrados</strong></h3>
+				</div>
+				<div class="modal-body">
+					<table class="table display" style="width: 100%;" id="tabla-participantes-diplomado">
+						<thead>
+							<tr>
+								<th>Identificación</th>
+								<th>Nombre</th>
+								<th>Correo</th>
+								<th>Teléfono</th>
+								<!-- <th>Localidad en la que habita</th>
+								<th>Entidad a la que pertenece</th>
+								<th>Rol</th>
+								<th>Pertenencia étnica</th>
+								<th>Sectores sociales</th> -->
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	@endauth
 </div>
 @endsection

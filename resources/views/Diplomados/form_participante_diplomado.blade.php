@@ -1,6 +1,6 @@
 <div class="form-group"> 
 	<div class="row">
-		<div class="col-xs-12 col-md-6 col-lg-6 form-group mb-3">
+		<div class="col-xs-12 col-md-6 col-lg-6">
 			<span>Identificación</span><span class="rojo">(*)</span>
 			<input class="form-control" type="number" id="identificacion" required>
 		</div>
@@ -9,8 +9,10 @@
 			<input class="form-control" type="email" id="correo" required>
 		</div>
 	</div>
+</div>
+<div class="form-group">
 	<div class="row">
-		<div class="col-xs-12 col-md-6 col-lg-6 form-group mb-3">
+		<div class="col-xs-12 col-md-6 col-lg-6">
 			<span>Nombres completos</span><span class="rojo">(*)</span>
 			<input class="form-control" type="text" id="nombres" required>
 		</div>
@@ -19,17 +21,18 @@
 			<input class="form-control" type="text" id="apellidos" required>
 		</div>
 	</div>
+</div>
+<div class="form-group">
 	<div class="row">
-		<div class="col-xs-12 col-md-6 col-lg-6 form-group mb-3">
-			<span>Entidad a la que pertenece</span>
-			<select class="form-control selectpicker" id="entidad" title="Seleccione una opción" required>
-			</select>
+		<div class="col-xs-12 col-md-6 col-lg-6">
+			<span>Entidad a la que pertenece</span><span class="rojo">(*)</span>
+			<select class="form-control selectpicker" id="entidad" title="Seleccione una opción" required></select>
 		</div>
 		<div class="col-xs-12 col-md-6 col-lg-6">
-			<span>ROL</span>
+			<span>Rol</span><span class="rojo">(*)</span>
 			<select class="form-control selectpicker" id="rol" title="Seleccione una opción" required>
 				<option value="1">Contratista</option>
-				<option value="2">Padre/ madre de familia- Cuidador</option>
+				<option value="2">Padre/ madre de familia - Cuidador</option>
 				<option value="3">Docente</option>
 				<option value="4">Orientador/a</option>
 				<option value="5">Directivo/a</option>
@@ -37,22 +40,24 @@
 			</select>
 		</div>
 	</div>
+</div>
+<div class="form-group">
 	<div class="row">
-		<div class="col-xs-12 col-md-6 col-lg-6 form-group mb-3">
+		<div class="col-xs-12 col-md-6 col-lg-6">
 			<span>Localidad en la que habita</span><span class="rojo">(*)</span>
-			<select class="form-control selectpicker" id="localidad" title="Seleccione una opción" required>
-			</select>
+			<select class="form-control selectpicker" id="localidad" title="Seleccione una opción" required></select>
 		</div>
 		<div class="col-xs-12 col-md-6 col-lg-6">
 			<span>Número telefónico de contacto</span><span class="rojo">(*)</span>
 			<input class="form-control" type="text" id="telefono" required>
 		</div>
-	</div>
+	</div>		
+</div>
+<div class="form-group">
 	<div class="row">
-		<div class="col-xs-12 col-md-6 col-lg-6 form-group mb-3">
+		<div class="col-xs-12 col-md-6 col-lg-6">
 			<span>Pertenencia étnica</span>
-			<select class="form-control selectpicker" id="etnia" title="Seleccione una opción">
-			</select>
+			<select class="form-control selectpicker" id="etnia" title="Seleccione una opción"></select>
 		</div>
 		<div class="col-xs-12 col-md-6 col-lg-6">
 			<span>Sectores sociales</span>
@@ -65,5 +70,4 @@
 			</select>
 		</div>
 	</div>
-
 </div>
