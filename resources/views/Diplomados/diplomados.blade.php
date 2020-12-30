@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Diplomados/diplomados.js?v=2020.12.23.03') }}" defer></script>
+<script src="{{ asset('js/Diplomados/diplomados.js?v=2020.12.29.03') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -32,7 +32,8 @@
 							<th>Nombre diplomado</th>
 							<th>Duración </th>
 							<th>Tematica o descripción</th>
-							<th>Estado</th>
+							<th>No. de inscritos</th>
+							<th>Agregar participantes</th>
 						</tr>
 					</thead>
 					<tbody></tbody>
@@ -103,6 +104,25 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-diplomado">Cerrar</button>
 					<button type="submit" class="btn btn-primary">Crear Diplomado</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-registrar-participante">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header" style="text-align: center;">
+					<h3 class="modal-title"><strong>REGISTRAR PARTICIPANTE AL DIPLOMADO</strong></h3>
+				</div>
+				<div class="modal-body">
+					<form id="form-participantes">
+						@include('Diplomados.form_participante_diplomado')
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-participante-diplomado">Cerrar</button>
+					<button type="submit" class="btn btn-primary">Agregar participante</button>
 				</div>
 				</form>
 			</div>

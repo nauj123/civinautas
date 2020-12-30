@@ -124,7 +124,7 @@ Route::post('getTotalAtenciones', 'HomeController@getTotalAtenciones');
 Route::post('/Diplomados/guardarNuevoDiplomado', 'Diplomados\DiplomadosController@guardarNuevoDiplomado');
 Route::post('/Diplomados/getDiplomadosMediador', 'Diplomados\DiplomadosController@getDiplomadosMediador');
 Route::post('/Diplomados/getOptionsDiplomadosMediador', 'Diplomados\DiplomadosController@getOptionsDiplomadosMediador');
-
+Route::post('/Diplomados/guardarParticipantesDiplomado', 'Diplomados\DiplomadosController@guardarParticipantesDiplomado');
 
 
 
