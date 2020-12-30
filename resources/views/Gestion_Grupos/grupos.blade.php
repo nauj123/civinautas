@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2020.12.28.1') }}" defer></script>
+<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2020.12.29.24') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -9,6 +9,11 @@
 	<h1 class="text-28 mb-1 text-white">Gestión de grupos</h1>
 </div>
 <br>
+<style>
+.red {
+  background-color: red !important;
+}
+</style>
 <div class="container-fluid">
 	@auth
 	<div class="panel-body">
@@ -25,7 +30,7 @@
 						<button class="btn btn-block btn-success" id="btn-crear-grupo" data-toggle='modal' data-target='#modal-crear-grupo'>Crear nuevo grupo</button>
 					</div>
 				</div>
-				<table class="table display" id="tabla-info-grupos" style="width: 100%;">
+				<table class="display table table-striped table-bordered" id="tabla-info-grupos" style="width: 100%;">
 					<thead>
 						<tr>
 							<th>Institución</th>
@@ -65,7 +70,7 @@
 								</div>
 							</div>
 							<div id="concidencias_simat" style="display: none;">
-								<table class="table display" id="tabla-estudiantes-coincidencias" style="width: 100%;">
+								<table class="display table table-striped table-bordered" id="tabla-estudiantes-coincidencias" style="width: 100%;">
 									<thead>
 										<tr>
 											<th>Identificación</th>
@@ -95,7 +100,7 @@
 					<div class="p-2 rounded d-flex align-items-center bg-success text-white">
 						<h3 class="text-18 mb-1 text-white">Estudiantes que ya estan en el grupo</h3>
 					</div><br>
-					<table class="table display" id="tabla-estudiantes-grupo" style="width: 100%;">
+					<table class="display table table-striped table-bordered" id="tabla-estudiantes-grupo" style="width: 100%;">
 						<thead>
 							<tr>
 								<th>Identificación</th>
@@ -145,6 +150,53 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-estudiante">Cerrar</button>
 					<button type="submit" class="btn btn-primary">Registrar Estudiante</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-inactivar-estudiante">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header" style="text-align: center;">
+					<h3 class="modal-title"><strong>INACTIVAR ESTUDIANTE</strong></h3>
+				</div>
+				<div class="modal-body">
+					<form id="form-inactivar-estudiante">					
+					¿Esta seguro de inactivar el estudiante <strong><label id="lb-estudiante"></label></strong> del grupo <strong> <label id="lb-grupo"></label></strong>? <br> Por favor ingrese el motivo de retiro.<br>
+					<div class="form-group">
+					<div class="row">
+						<div class="col-xs-12 col-md-12 col-lg-12">
+						<input class="form-control" type="text" id="observacion" required>
+						</div>
+					</div>
+					</div>
+					<input class="form-control" type="hidden" id="id-estudiante" required>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-inactivar-estudiante">Cerrar</button>
+					<button type="submit" class="btn btn-primary">Inactivar Estudiante</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-activar-estudiante">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header" style="text-align: center;">
+					<h3 class="modal-title"><strong>ACTIVAR ESTUDIANTE</strong></h3>
+				</div>
+				<div class="modal-body">
+					<form id="form-activar-estudiante">					
+					¿Esta seguro de activar nuevamente el estudiante <strong><label id="lb-estudiante"></label></strong> en el grupo <strong> <label id="lb-grupo"></label></strong>
+					<input class="form-control" type="hidden" id="id-estudiante" required>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-activar-estudiante">Cerrar</button>
+					<button type="submit" class="btn btn-primary">Activar Estudiante</button>
 				</div>
 				</form>
 			</div>

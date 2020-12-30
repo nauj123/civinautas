@@ -15,4 +15,17 @@ class Sedes_Colegio extends Model
     protected $table = 'tb_sedes_instituciones';
     public $timestamps = false;
 
+
+    public function getSedesInstitucion($id_institucion){
+        $liga = Sedes_Colegio::select(
+          "Fk_Id_Institucion",
+          "Fk_Id_Localidad",
+          "Fk_Id_Upz",
+          "VC_Nombre_Sede",
+          "VC_Dane12"
+        )        
+        ->where("Fk_Id_Institucion", $id_institucion)
+        ->get();
+        return $liga;
+      } 
 }

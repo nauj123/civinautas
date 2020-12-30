@@ -110,6 +110,7 @@ $(document).ready(function () {
 
 	$("#Numero-sedes").on("change", function() {
 		$("#registrar_sedes").html("");
+		$("#registrar_sedes_m").html("");
 		var Numero_sedes = $(this).val();
 		$("#registrar_sedes").append("<table class='table' style='width:100%' id='tabla_Sedes_Colegio'>"+
 			"<thead><tr>"+
@@ -156,7 +157,7 @@ $(document).ready(function () {
 	});
 
 	$("#form-nueva-institucion").submit(function (e) {
-		var sedes_instituciones = new Array();
+		var sedes_instituciones = new Array();		
 		i=1;
 		$('.nombre_sede').each(function() {
 			sedes_instituciones.push(new Array($("#TX_LocalidadSede_"+i).val(),$("#TX_UpzSede_"+i).val(),$("#TX_Sede_"+i).val(),$("#TX_Dane12_"+i).val(),));
@@ -222,7 +223,7 @@ $(document).ready(function () {
 				});
 			},
 			error: function(data){
-				swal("Error", "No se pudo obtener el listado de estudiantes del grupo, por favor inténtelo nuevamente", "error");
+				swal("Error", "No se pudo obtener el listado de instituciones educativas, por favor inténtelo nuevamente", "error");
 			},
 			async: false
 		});
@@ -263,6 +264,7 @@ $(document).ready(function () {
 
 	$("#Numero-sedes-m").on("change", function() {
 		$("#registrar_sedes_m").html("");
+		$("#registrar_sedes").html("");
 		var Numero_sedesm = $(this).val();
 		$("#registrar_sedes_m").append("<table class='table' style='width:100%' id='tabla_Sedes_Colegio'>"+
 			"<thead><tr>"+

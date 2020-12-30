@@ -80,6 +80,10 @@ Route::post('/Gestion_Grupos/getBuscarEstudianteSimat', 'Gestion_Grupos\GruposCo
 Route::post('/Gestion_Grupos/agregarEstudianteGrupo', 'Gestion_Grupos\GruposController@agregarEstudianteGrupo');
 Route::post('/Gestion_Grupos/getEstudiantesGrupo', 'Gestion_Grupos\GruposController@getEstudiantesGrupo');
 Route::post('/Gestion_Grupos/guardarNuevoEstudiante', 'Gestion_Grupos\GruposController@guardarNuevoEstudiante');
+Route::post('/Gestion_Grupos/getEstadoEstudiante', 'Gestion_Grupos\GruposController@getEstadoEstudiante');
+Route::post('/Gestion_Grupos/InactivarEstudiante', 'Gestion_Grupos\GruposController@InactivarEstudiante');
+Route::post('/Gestion_Grupos/ActivarEstudiante', 'Gestion_Grupos\GruposController@ActivarEstudiante');
+
 
 /**
  * Rutas gestión simat

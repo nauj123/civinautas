@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Gestion_Colegios/colegios.js?v=2020.12.29.3') }}" defer></script>
+<script src="{{ asset('js/Gestion_Colegios/colegios.js?v=2020.12.29.4') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -23,7 +23,7 @@
 					<button class="btn btn-block btn-success" id="btn-crear-institucion" data-toggle='modal' data-target='#modal-crear-institucion'>Crear institución educativa</button>
 					</div>
 				</div>
-				<table class="table display" id="tabla-info-instituciones" style="width: 100%;">
+				<table class="display table table-striped table-bordered" id="tabla-info-instituciones" style="width: 100%;">
 					<thead>
 						<tr>
 							<th>Localdiad</th>

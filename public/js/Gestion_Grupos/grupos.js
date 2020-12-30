@@ -1,4 +1,4 @@
-var tabla_info_grupos;
+var tabla_info_grupos; 
 var info_grupos;
 var options_instituciones;
 var options_tipo_atencion;
@@ -205,6 +205,9 @@ $(document).ready(function(){
 	}
 
 	tabla_estudiantes_grupo = $("#tabla-estudiantes-grupo").DataTable({
+		autoWidth: false,
+		paging: false,
+		aaSorting: [],
 		pageLength: 50,
 		lengthChange: false,
 		responsive: true,
@@ -249,15 +252,28 @@ $(document).ready(function(){
 				tabla_estudiantes_grupo.clear().draw();
 				info_estudiantes_grupo.forEach((value, index) => {
 
+				if (info_estudiantes_grupo[index]["IDESTADO"] == 1) {
+				
+					rowNode = tabla_estudiantes_grupo.row.add([						
+						"<center>"+info_estudiantes_grupo[index]["IDENTIFICACION"]+"</center>",
+						"<center>"+info_estudiantes_grupo[index]["ESTUDIANTE"]+"</center>",
+						"<center>"+info_estudiantes_grupo[index]["FECHA"]+"</center>",
+						"<center>"+info_estudiantes_grupo[index]["GENERO"]+"</center>",
+						"<center>"+info_estudiantes_grupo[index]["FECHAINGRESO"]+"</center>",
+						"<center><strong>"+info_estudiantes_grupo[index]["ESTADO"]+"<strong></center>",
+						"<center><buton type='button' class='btn btn-danger estado' data-id-estudiante='"+info_estudiantes_grupo[index]["IDESTUDIANTE"]+"' data-toggle='modal' data-target='#modal-inactivar-estudiante'>Inactivar</buton></center>"
+						]).draw().node();				
+				} else {
 					rowNode = tabla_estudiantes_grupo.row.add([
-						info_estudiantes_grupo[index]["IDENTIFICACION"],
-						info_estudiantes_grupo[index]["ESTUDIANTE"],
-						info_estudiantes_grupo[index]["FECHA"],
-						info_estudiantes_grupo[index]["GENERO"],
-						info_estudiantes_grupo[index]["FECHAINGRESO"],
-						info_estudiantes_grupo[index]["ESTADO"],
-						"<buton type='button' class='btn btn-danger retirar' data-id-estudiante='"+info_estudiantes_grupo[index]["IDESTUDIANTE"]+"' data-toggle='modal' data-target='#modal-editar-usuario'>Retirar</buton>"
-						]).draw().node();
+						"<center>"+info_estudiantes_grupo[index]["IDENTIFICACION"]+"</center>",
+						"<center>"+info_estudiantes_grupo[index]["ESTUDIANTE"]+"</center>",
+						"<center>"+info_estudiantes_grupo[index]["FECHA"]+"</center>",
+						"<center>"+info_estudiantes_grupo[index]["GENERO"]+"</center>",
+						"<center>"+info_estudiantes_grupo[index]["FECHAINGRESO"]+"</center>",
+						"<center><strong>"+info_estudiantes_grupo[index]["ESTADO"]+"</strong></center>",
+						"<center><buton type='button' class='btn btn-success estado' data-id-estudiante='"+info_estudiantes_grupo[index]["IDESTUDIANTE"]+"' data-toggle='modal' data-target='#modal-activar-estudiante'>Activar</buton></center>"
+						]).draw().node();					
+				}
 				});
 			},
 			error: function(data){
@@ -522,5 +538,86 @@ $(document).ready(function(){
 		$("#jornada").selectpicker("refresh");
 	}
 
+	$("#tabla-estudiantes-grupo").on("click", ".estado",  function(){
+		getEstadoEstudiante($(this).attr("data-id-estudiante"));
+	}); 
+
+	function getEstadoEstudiante(estudiante) {
+		$.ajax({
+			url: "getEstadoEstudiante",
+			type: 'POST',
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data:{
+				id_estudiante: estudiante
+			},
+			success: function(data) {
+				$("#id-estudiante").val(data[0]["IDESTUDIANTE"]);
+				$("#lb-grupo").html("").html(data[0]["GRUPO"]);
+				$("#lb-estudiante").html("").html(data[0]["ESTUDIANTE"]);
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener la información del estudainte que desea inactivar, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	}
+
+	$("#form-inactivar-estudiante").submit(function (e) {
+		e.preventDefault();
+		$.ajax({
+			url: "InactivarEstudiante",
+			type: 'POST',
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_estudiante: $("#id-estudiante").val(),
+				observacion: $("#observacion").val()
+			},
+			success: function (data) {
+				if (data == 200) {
+					swal("Éxito", "Se inactivo correctamente el estudiante del grupo, ya no aparecerá en el listado de asistencia", "success");
+					$("#modal-inactivar-estudiante").modal('hide');
+					getEstudiantesGrupo();
+					
+				}
+			},
+			error: function (data) {
+				swal("Error", "No fue posible guardar la información de la institución educativa, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	});
+
+	$("#form-activar-estudiante").submit(function (e) {
+		e.preventDefault();
+		$.ajax({
+			url: "ActivarEstudiante",
+			type: 'POST',
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_estudiante: $("#id-estudiante").val()
+			},
+			success: function (data) {
+				if (data == 200) {
+					swal("Éxito", "Se activo nuevamente el estudiante al grupo, desde este momento aparecerá en el listado de asistencia", "success");
+					$("#modal-activar-estudiante").modal('hide');
+					getEstudiantesGrupo();
+					
+				}
+			},
+			error: function (data) {
+				swal("Error", "No fue posible guardar la información de la institución educativa, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	});	
 
 });

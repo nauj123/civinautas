@@ -1,4 +1,4 @@
-<?php 
+<?php  
 
 namespace App\Http\Controllers\Gestion_Grupos; 
 
@@ -116,6 +116,45 @@ class GruposController extends Controller
 		if($estudiantegrupo->save())		
 		return 200;
 	}
+
+	public function getEstadoEstudiante(Request $request){
+		$colegio = new EstudianteGrupo;
+		$resultado = $colegio->getEstadoEstudiante($request->id_estudiante);
+		return response()->json($resultado, 200);
+	}
+
+	public function InactivarEstudiante(Request $request){
+		$estudiantegrupo = new EstudianteGrupo;
+		$estudiante_id =  $request->id_estudiante;
+		$array_update = [];
+		$array_update["DT_Fecha_Retiro"] = date("Y-m-d H:i:s");
+		$user_id = auth()->user()->id;
+		$array_update["Fk_Usuario_Retiro"] = $user_id;
+		$array_update["IN_Estado"] = 0;
+		$array_update["VC_Observaciones"] = $request->observacion;
+		$estudiantegrupo->where('Pk_Id_Estudiante_Grupo', $estudiante_id)
+		->update($array_update);
+		if($estudiantegrupo){
+			return 200;
+		}
+	}
+
+	public function ActivarEstudiante(Request $request){
+		$estudiantegrupo = new EstudianteGrupo;
+		$estudiante_id =  $request->id_estudiante;
+		$array_update = [];
+		$array_update["IN_Estado"] = 1;
+		$estudiantegrupo->where('Pk_Id_Estudiante_Grupo', $estudiante_id)
+		->update($array_update);
+		if($estudiantegrupo){
+			return 200;
+		}
+	}
+
+	
+
+
+
 
 
 }

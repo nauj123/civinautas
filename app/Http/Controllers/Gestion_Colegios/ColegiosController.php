@@ -35,9 +35,13 @@ class ColegiosController extends Controller
 		$instituciones->FK_Usuario_Registro = $user_id;
 		$instituciones->DT_Created_at = date("Y-m-d H:i:s");
 		$instituciones->IN_Estado = '1';
-		if($instituciones->save())		
-		$idInstitucion = $instituciones->id;  
+		if($instituciones->save())
+				
+		$idInstitucion = $instituciones->id;
+
 		$sede = $request->sedes;
+
+		if(isset($_POST['sedes'])){
 
 		foreach ($sede as $infosede) {
 			$sedeinstitucion = new Sedes_Colegio;
@@ -51,6 +55,7 @@ class ColegiosController extends Controller
 			$sedeinstitucion->IN_Estado = '1';
 			$sedeinstitucion->save();
 		}
+	}
 		return 200;
 	}
 	public function getInstitucionesEducativas(Request $request){
@@ -109,6 +114,13 @@ class ColegiosController extends Controller
 		return 200;
 	}
 
+	public function getSedesInstitucion(Request $request){
+		$colegio = new Sedes_Colegio;
+		$id_institucion =  $request->id_institucion;
+		$resultado = $colegio->getSedesInstitucion($id_institucion);
+		return response()->json($resultado[0], 200);
+	}
 
+	
 
 }
