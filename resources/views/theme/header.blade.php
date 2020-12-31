@@ -1,6 +1,8 @@
 <div class="main-header">
 	<div class="logo d-none d-sm-block">
-		<img src="{{ asset('images/civinautas_logo.png') }}" style="width: auto;">
+		<a href="{{ URL::to('home') }}">
+			<img src="{{ asset('images/civinautas_logo.png') }}" style="width: auto;">
+		</a>
 	</div>
 
 	<div class="menu-toggle">
@@ -9,13 +11,13 @@
 		<div></div>
 	</div>
 	<div style="margin: auto">
-	 <label style="font-size:15px;"><strong>SISTEMA DE INFORMACIÓN - CIVINAUTAS</strong></label>
+		<label style="font-size:15px;"><strong>SISTEMA DE INFORMACIÓN - CIVINAUTAS</strong></label>
 	</div>
 
 	<div class="header-part-right">
 		@auth
 		{{ Auth::user()->primer_nombre }} {{ Auth::user()->primer_apellido }}
-		
+
 		<!-- Full screen toggle -->
 		<i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen></i>
 		<!-- Grid menu Dropdown -->
@@ -34,12 +36,12 @@
 		</div> -->
 		<!-- Notificaiton -->
 		<div class="dropdown">
-			<div class="badge-top-container" id="dropdownNotification" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<!-- <div class="badge-top-container" id="dropdownNotification" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<span class="badge badge-primary">3</span>
 				<i class="i-Bell text-muted header-icon"></i>
-			</div>
+			</div> -->
 			<!-- Notification dropdown -->
-			<div class="dropdown-menu rtl-ps-none dropdown-menu-right notification-dropdown" aria-labelledby="dropdownNotification" data-perfect-scrollbar data-suppress-scroll-x="true">
+			<!-- <div class="dropdown-menu rtl-ps-none dropdown-menu-right notification-dropdown" aria-labelledby="dropdownNotification" data-perfect-scrollbar data-suppress-scroll-x="true">
 				<div class="dropdown-item d-flex">
 					<div class="notification-icon">
 						<i class="i-Speach-Bubble-6 text-primary mr-1"></i>
@@ -96,7 +98,7 @@
 						<p class="text-small text-muted m-0">Server rebooted successfully</p>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<!-- Notificaiton End -->
 
@@ -106,45 +108,20 @@
 				<img src="../assets/images/faces/1.jpg" id="userDropdown" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-					<div class="dropdown-header">
+					<!-- <div class="dropdown-header">
 						<i class="i-Lock-User mr-1"></i> Timothy Carlson
 					</div>
 					<a class="dropdown-item">Account settings</a>
 					<a class="dropdown-item">Billing history</a>
-					<a class="dropdown-item" href="signin.html">Sign out</a>
+					<a class="dropdown-item" href="signin.html">Sign out</a> -->
+					<a class="dropdown-item" href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
+					document.getElementById('logout-form').submit();">Cerrar Sesión</a>
 				</div>
 			</div>
 		</div>
 		@endauth
 	</div>
+	<form id="logout-form" action="{{route('logout')}}" method="POST" class="d-none">
+		@csrf
+	</form>
 </div>
-
-<!--
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
-	<ul class="navbar-nav">
-		<li class="nav-item">
-			<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-		</li>
-	</ul>
-	<span class="navbar-text ml-auto">
-		Sistema de información - CIVINAUTAS
-	</span>
-	<ul class="navbar-nav ml-auto">
-		@auth
-		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				{{ Auth::user()->primer_nombre }} {{ Auth::user()->primer_apellido }}
-			</a>
-			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-				<a class="dropdown-item" href="{{ route('perfil-usuario') }}">Perfil de usuario</a>
-				<a class="dropdown-item" href="#">Cambiar contraseña</a>
-				<a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
-				document.getElementById('logout-form').submit();">Cerrar Sesión</a>
-			</div>
-		</li>
-		@endauth
-	</ul>
-</nav>
-<form id="logout-form" action="{{route('logout')}}" method="POST" class="d-none">
-	@csrf
-</form> -->

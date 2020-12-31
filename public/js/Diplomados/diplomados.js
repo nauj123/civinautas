@@ -326,6 +326,7 @@ $(document).ready(function(){
 				$("#form-participantes :input").val("");
 				$("#form-participantes .selectpicker").selectpicker("val", "");
 				$("#modal-registrar-participante").modal("hide");
+				getDiplomadosMediador(); 
 			},
 			error: function (data) {
 				swal("Error", "No se pudo agregar el participante al diplomado, por favor inténtelo nuevamente", "error");

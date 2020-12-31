@@ -220,121 +220,41 @@ class HomeController extends Controller
         $anio = $request->anio;
         $sql="SELECT
         CONCAT('{
-        \"dataset\": {
-        \"source\": [[',
-        COUNT(
-        CASE
-        WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 0 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 6 THEN 1
-        END
-        ),
-        ',\"Primera Infancia (0 - 6 años)\"],[',
-        COUNT(
-        CASE
-        WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 7 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 13 THEN 1
-        END
-        ),
-        ',\"Infancia (7 a 13 años)\"],[',
-        COUNT(
-        CASE
-        WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 14 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 17 THEN 1
-        END
-        ),
-        ',\"Adolescencia (14 -17 años)\"],[',
-        COUNT(
-        CASE
-        WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 18 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 26 THEN 1
-        END
-        ),
-        ',\"Juventud (18 -26 años)\"],[',
-        COUNT(
-        CASE
-        WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 27 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 59 THEN 1
-        END
-        ),
-        ',\"Adultez (27 - 59 años)\"],[',
-        COUNT(
-        CASE
-        WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 60 THEN 1
-        END
-        ),
-        ',\"Adulto Mayor (Más de 60 años)\"]]},\"grid\": {\"containLabel\": \"true\"},
-        \"xAxis\": {\"name\": \"Total\"},
-        \"yAxis\": {\"type\": \"category\"},
+        \"tooltip\": {
+        \"trigger\": \"axis\",
+        \"axisPointer\": {
+        \"type\": \"shadow\"
+        }
+        },
+        \"grid\": {
+        \"containLabel\": \"true\"
+        },
+        \"xAxis\": {
+        \"type\": \"value\",
+        \"boundaryGap\": [0, 0.01]
+        },
+        \"yAxis\": {
+        \"type\": \"category\",
+        \"data\": [\"Primera Infancia (0 - 6 años)\", \"Infancia (7 a 13 años)\", \"Adolescencia (14 -17 años)\", \"Juventud (18 -26 años)\", \"Adultez (27 - 59 años)\", \"Adulto Mayor (Más de 60 años)\"]
+        },
         \"itemStyle\": {
         \"color\": \"#7569b3\"
         },
         \"series\": [
         {
+        \"name\": \"Total\",
         \"type\": \"bar\",
-        \"encode\": {
-        \"x\": \"Total\",
-        \"y\": \"product\"
-        }
-        }
-        ]
-        }') AS 'json'
+        \"data\": [',
+        COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 0 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 6 THEN 1 END),',',
+        COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 7 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 13 THEN 1 END),',',
+        COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 14 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 17 THEN 1 END),',',
+        COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 18 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 26 THEN 1 END),',',
+        COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 27 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 59 THEN 1 END),',',
+        COUNT(CASE WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 60 THEN 1 END),']}]}') AS 'json'
         FROM tb_asistencia a
         JOIN tb_estudiantes e ON e.Pk_Id_Beneficiario=a.Fk_Id_Estudiante
         JOIN tb_atenciones ate ON ate.Pk_Id_Atencion=a.Fk_Id_Atencion
         WHERE YEAR(ate.DT_Fecha_Atencion)=$anio";
-        // $sql="SELECT
-        // CONCAT('{
-        // \"xAxis\": {
-        // \"type\": \"category\",
-        // \"data\": [\"Primera Infancia (0 - 6 años)\", \"Infancia (7 a 13 años)\", \"Adolescencia (14 -17 años)\", \"Juventud (18 -26 años)\", \"Adultez (27 - 59 años)\", \"Adulto Mayor (Más de 60 años)\"]
-        // },
-        // \"yAxis\": {
-        // \"type\": \"value\"
-        // },
-        // \"itemStyle\": {
-        // \"color\": \"#7569b3\"
-        // },
-        // \"series\": [{
-        // \"data\":[',
-        // COUNT(
-        // CASE
-        // WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 0 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 6 THEN 1
-        // END
-        // ),
-        // ',',
-        // COUNT(
-        // CASE
-        // WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 7 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 13 THEN 1
-        // END
-        // ),
-        // ',',
-        // COUNT(
-        // CASE
-        // WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 14 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 17 THEN 1
-        // END
-        // ),
-        // ',',
-        // COUNT(
-        // CASE
-        // WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 18 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 26 THEN 1
-        // END
-        // ),
-        // ',',
-        // COUNT(
-        // CASE
-        // WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 27 AND TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) <= 59 THEN 1
-        // END
-        // ),
-        // ',',
-        // COUNT(
-        // CASE
-        // WHEN TIMESTAMPDIFF(YEAR,e.DD_F_Nacimiento,ate.DT_Fecha_Atencion) >= 60 THEN 1
-        // END
-        // ),
-        // '],
-        // \"type\": \"bar\"
-        // }]
-        // }') AS 'json'
-        // FROM tb_asistencia a
-        // JOIN tb_estudiantes e ON e.Pk_Id_Beneficiario=a.Fk_Id_Estudiante
-        // JOIN tb_atenciones ate ON ate.Pk_Id_Atencion=a.Fk_Id_Atencion
-        // WHERE YEAR(ate.DT_Fecha_Atencion)=$anio";
-
         $informacion = DB::select($sql);
         return response()->json($informacion[0]);
     }
