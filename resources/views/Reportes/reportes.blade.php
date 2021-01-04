@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/reportes/reportes.js') }}" defer></script>
+<script src="{{ asset('js/reportes/reportes.js?v=2021.01.4.2') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -16,6 +16,7 @@
 			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#reporte_consolidado">Reporte mesa intersectorial</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consolidado-mensual-ciclo-vital">Consolidado mensual ciclo vital</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consolidado-global-ciclo-vital">Consolidado global ciclo vital</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consulta-completa-asistencias">Consulta completa asistencias</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active col-lg-10 offset-lg-1" id="reporte_consolidado"><br>
@@ -181,6 +182,42 @@
 					</div>
 				</div>
 			</div>
+			
+			<div class="tab-pane" id="consulta-completa-asistencias" role="tabpanel"><br>
+			<div class="p-2 rounded d-flex align-items-center bg-success text-white">
+					<h3 class="text-18 mb-1 text-white">Consulta completa de registros de asistencia CIVINAUTAS </h3>
+				</div><br>
+				<table class="display table table-striped table-bordered" id="tabla-consultar-grupos">
+					<thead>
+						<tr>
+						<th>Localidad</th>
+						<th>Tipo Institución</th>
+						<th>Nombre Institución</th>
+						<th>DANE</th>
+						<th>Nombre Grupo</th>
+						<th>Mediador</th>
+						<th>Fecha Atención</th>
+						<th>Horario</th>
+						<th>Modalidad</th>
+						<th>Tipo actividad</th>
+						<th>Recursos</th>
+						<th>Identificación</th>
+						<th>Nombres</th>
+						<th>Apellidos</th>
+						<th>Dirección</th>
+						<th>Correo</th>
+						<th>Celular</th>
+						<th>Enfoque</th>
+						<th>Esthato</th>
+						<th>Fecha de Nacimiento</th>
+						<th>Genero</th>
+						<th>Asistencia</th>
+					</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+
 		</div>
 	</div>
 </div>

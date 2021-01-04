@@ -47,7 +47,7 @@ class EstudianteGrupo extends Model
 
       public function getEstudiantesGrupoAsistencia($id_Grupo){
     	$sql = "SELECT
-        EG.Pk_Id_Estudiante_Grupo AS 'IDESTUDIANTE',
+        EG.Fk_Id_Estudiante AS 'IDESTUDIANTE',
         ES.IN_Identificacion AS 'IDENTIFICACION',
         CONCAT_WS(' ', ES.VC_Primer_Nombre,ES.VC_Segundo_Nombre, ES.VC_Primer_Apellido,ES.VC_Segundo_Apellido) AS 'ESTUDIANTE',
         ES.DD_F_Nacimiento AS 'FECHA',

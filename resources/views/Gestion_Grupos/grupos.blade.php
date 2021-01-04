@@ -10,9 +10,9 @@
 </div>
 <br>
 <style>
-.red {
-  background-color: red !important;
-}
+	.red {
+		background-color: red !important;
+	}
 </style>
 <div class="container-fluid">
 	@auth
@@ -67,8 +67,8 @@
 										<input type="text" class="form-control mayuscula" placeholder="Nombres Apellidos  o Documento del estudiante" id="TB_buscar_usuario">
 									</div>
 								</div>
-								<div class="col-xs-12 col-md-2 col-lg-2">					
-										<button class="btn btn-block btn-success" id="btn-buscar">BUSCAR</button>									
+								<div class="col-xs-12 col-md-2 col-lg-2">
+									<button class="btn btn-block btn-success" id="btn-buscar">BUSCAR</button>
 								</div>
 							</div>
 							<div id="concidencias_simat" style="display: none;">
@@ -118,14 +118,14 @@
 					</table>
 				</div>
 			</div>
-			<div class="tab-panecol-lg-12" id="consultar_grupos">
 
+			<div class="tab-pane" id="consultar_grupos" role="tabpanel"><br>	
 				<div class="p-2 rounded d-flex align-items-center bg-success text-white">
-						<h3 class="text-18 mb-1 text-white">Listado del total de grupos en el sistema CIVINAUTAS </h3>
+					<h3 class="text-18 mb-1 text-white">Listado del total de grupos en el sistema CIVINAUTAS </h3>
 				</div><br>
-					<table class="display table table-striped table-bordered" id="tabla-consultar-grupos" style="width: 100%;">
-						<thead>
-							<tr>
+				<table class="display table table-striped table-bordered" id="tabla-consultar-grupos" style="width: 100%;">
+					<thead>
+						<tr>
 							<th>N°.</th>
 							<th>Localidad</th>
 							<th>Tipo de Institución</th>
@@ -135,14 +135,15 @@
 							<th>mediador</th>
 							<th>Docente</th>
 							<th>Jornada</th>
-							<th>Fecha de creación</th> 
+							<th>Fecha de creación</th>
 							<th>Estado</th>
-						    </tr>
-						</thead>
-						<tbody></tbody>
-					</table>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
 
-			</div>	
+			</div>
+
 		</div>
 	</div>
 	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-crear-grupo">
@@ -190,16 +191,16 @@
 					<h3 class="modal-title"><strong>INACTIVAR ESTUDIANTE</strong></h3>
 				</div>
 				<div class="modal-body">
-					<form id="form-inactivar-estudiante">					
-					¿Esta seguro de inactivar el estudiante <strong><label id="lb-estudiante"></label></strong> del grupo <strong> <label id="lb-grupo"></label></strong>? <br> Por favor ingrese el motivo de retiro.<br>
-					<div class="form-group">
-					<div class="row">
-						<div class="col-xs-12 col-md-12 col-lg-12">
-						<input class="form-control" type="text" id="observacion" required>
+					<form id="form-inactivar-estudiante">
+						¿Esta seguro de inactivar el estudiante <strong><label id="lb-estudiante"></label></strong> del grupo <strong> <label id="lb-grupo"></label></strong>? <br> Por favor ingrese el motivo de retiro.<br>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-xs-12 col-md-12 col-lg-12">
+									<input class="form-control" type="text" id="observacion" required>
+								</div>
+							</div>
 						</div>
-					</div>
-					</div>
-					<input class="form-control" type="hidden" id="id-estudiante" required>
+						<input class="form-control" type="hidden" id="id-estudiante" required>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-inactivar-estudiante">Cerrar</button>
@@ -217,9 +218,9 @@
 					<h3 class="modal-title"><strong>ACTIVAR ESTUDIANTE</strong></h3>
 				</div>
 				<div class="modal-body">
-					<form id="form-activar-estudiante">					
-					¿Esta seguro de activar nuevamente el estudiante <strong><label id="lb-estudiante"></label></strong> en el grupo <strong> <label id="lb-grupo"></label></strong>
-					<input class="form-control" type="hidden" id="id-estudiante" required>
+					<form id="form-activar-estudiante">
+						¿Esta seguro de activar nuevamente el estudiante <strong><label id="lb-estudiante"></label></strong> en el grupo <strong> <label id="lb-grupo"></label></strong>
+						<input class="form-control" type="hidden" id="id-estudiante" required>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-activar-estudiante">Cerrar</button>
@@ -237,16 +238,16 @@
 					<h3 class="modal-title"><strong>INACTIVAR GRUPO</strong></h3>
 				</div>
 				<div class="modal-body">
-					<form id="form-inactivar-grupo">					
-					¿Esta seguro de inactivar el grupo <strong><label id="lb-grupo-inactivar"></label></strong>?, por favor ingrese el motivo de la inactivación.<br><br>
-					<div class="form-group">
-					<div class="row">
-						<div class="col-xs-12 col-md-12 col-lg-12">
-						<input class="form-control" type="text" id="observacion-grupo" required>
+					<form id="form-inactivar-grupo">
+						¿Esta seguro de inactivar el grupo <strong><label id="lb-grupo-inactivar"></label></strong>?, por favor ingrese el motivo de la inactivación.<br><br>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-xs-12 col-md-12 col-lg-12">
+									<input class="form-control" type="text" id="observacion-grupo" required>
+								</div>
+							</div>
 						</div>
-					</div>
-					</div>
-					<input class="form-control" type="hidden" id="id-grupo" required>
+						<input class="form-control" type="hidden" id="id-grupo" required>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-inactivar-grupo">Cerrar</button>

@@ -4,10 +4,7 @@ namespace App\Http\Controllers\Reportes;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Usuarios\Users;
-use App\Models\Usuarios\UsuarioRol;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Reportes\Reportes;
 use Illuminate\Support\Facades\DB;
 
 class ReportesController extends Controller
@@ -136,5 +133,11 @@ class ReportesController extends Controller
 		$sql .= " GROUP BY g.Fk_Id_Institucion) AS SEGUNDA ON PRIMERA.ID_INSTITUCION=SEGUNDA.Fk_Id_Institucion";
 		$informacion = DB::select($sql);
 		return $informacion;
+	}
+
+	public function getConsultaCompleta(Request $request){
+		$grupos = new Reportes;
+		$resultado = $grupos->getConsultaCompleta();
+		return response()->json($resultado, 200);
 	}
 }
