@@ -79,10 +79,13 @@ Route::post('/Gestion_Grupos/getOptionsGruposMediador', 'Gestion_Grupos\GruposCo
 Route::post('/Gestion_Grupos/getBuscarEstudianteSimat', 'Gestion_Grupos\GruposController@getBuscarEstudianteSimat');
 Route::post('/Gestion_Grupos/agregarEstudianteGrupo', 'Gestion_Grupos\GruposController@agregarEstudianteGrupo');
 Route::post('/Gestion_Grupos/getEstudiantesGrupo', 'Gestion_Grupos\GruposController@getEstudiantesGrupo');
+Route::post('/Gestion_Grupos/getEstudiantesGrupoAsistencia', 'Gestion_Grupos\GruposController@getEstudiantesGrupoAsistencia');
 Route::post('/Gestion_Grupos/guardarNuevoEstudiante', 'Gestion_Grupos\GruposController@guardarNuevoEstudiante');
 Route::post('/Gestion_Grupos/getEstadoEstudiante', 'Gestion_Grupos\GruposController@getEstadoEstudiante');
 Route::post('/Gestion_Grupos/InactivarEstudiante', 'Gestion_Grupos\GruposController@InactivarEstudiante');
 Route::post('/Gestion_Grupos/ActivarEstudiante', 'Gestion_Grupos\GruposController@ActivarEstudiante');
+Route::post('/Gestion_Grupos/InactivarGrupo', 'Gestion_Grupos\GruposController@InactivarGrupo');
+Route::post('/Gestion_Grupos/getTotalGrupos', 'Gestion_Grupos\GruposController@getTotalGrupos');
 
 
 /**

@@ -158,7 +158,7 @@ $(document).ready(function(){
 
 	function getEstudiantesGrupo() {
 		$.ajax({
-			url: "../Gestion_Grupos/getEstudiantesGrupo",
+			url: "../Gestion_Grupos/getEstudiantesGrupoAsistencia",
 			type: 'POST',
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -193,6 +193,7 @@ $(document).ready(function(){
 
 	$("#form-guardar-actividad").submit(function (e) {
 		var checkbox_asistencia_estudiante = new Array();
+		var idsRecursos = "";
 		$('.asistencia_actividad').each(function() {
 		  var check;
 		  if($(this).is(":checked")){
@@ -202,6 +203,13 @@ $(document).ready(function(){
 		  }
 		  checkbox_asistencia_estudiante.push(new Array($(this).data('id-beneficiario'), check));
 		});
+		$('#recursos-materiales :selected').each(function(i, selected) {
+			if (idsRecursos == "") {
+			 idsRecursos = $(selected).val() + ",";
+		   }else{
+			 idsRecursos += $(selected).val() + "," ;
+		   }
+		 });
 		e.preventDefault();
 		$.ajax({
 			url: "guardarActividadAsistencia",
@@ -217,7 +225,7 @@ $(document).ready(function(){
 				fin: $("#hora-fin").val(),
 				modalidad_actividad: $("#modalidad-actividad").val(),
 				tipo_actividad: $("#tipo-actividad").val(),
-				recursos_materiales: $("#recursos-materiales").val(),
+				recursos_materiales: idsRecursos,
 				tema: $("#tema-actividad").val(),
 				estudiantes: checkbox_asistencia_estudiante
 			},

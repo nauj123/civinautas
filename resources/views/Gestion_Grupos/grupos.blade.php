@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2020.12.29.24') }}" defer></script>
+<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2021.01.4.1') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -20,6 +20,7 @@
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#grupos_mediador">Grupos mediador</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#agregar_estudiantes">Agregar estudiantes</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consultar_grupos">Consultar grupos</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active col-lg-12" id="grupos_mediador"><br>
@@ -35,7 +36,6 @@
 						<tr>
 							<th>Institución</th>
 							<th>Nombre grupo</th>
-							<th>Nombre mediador</th>
 							<th>Nombre docente</th>
 							<th>Jornada</th>
 							<th>N° estudiantes</th>
@@ -62,11 +62,13 @@
 								<div class="col-xs-12 col-md-3 col-lg-3 form-group mb-3">
 									Buscar estudiante
 								</div>
-								<div class="col-xs-12 col-md-9 col-lg-9">
+								<div class="col-xs-12 col-md-7 col-lg-7">
 									<div class="input-group">
-										<input type="text" class="form-control" placeholder="Nombres Apellidos  o Documento del estudiante" id="TB_buscar_usuario">
-										<i class="text-20 i-Search-on-Cloud"></i>
+										<input type="text" class="form-control mayuscula" placeholder="Nombres Apellidos  o Documento del estudiante" id="TB_buscar_usuario">
 									</div>
+								</div>
+								<div class="col-xs-12 col-md-2 col-lg-2">					
+										<button class="btn btn-block btn-success" id="btn-buscar">BUSCAR</button>									
 								</div>
 							</div>
 							<div id="concidencias_simat" style="display: none;">
@@ -116,6 +118,31 @@
 					</table>
 				</div>
 			</div>
+			<div class="tab-panecol-lg-12" id="consultar_grupos">
+
+				<div class="p-2 rounded d-flex align-items-center bg-success text-white">
+						<h3 class="text-18 mb-1 text-white">Listado del total de grupos en el sistema CIVINAUTAS </h3>
+				</div><br>
+					<table class="display table table-striped table-bordered" id="tabla-consultar-grupos" style="width: 100%;">
+						<thead>
+							<tr>
+							<th>N°.</th>
+							<th>Localidad</th>
+							<th>Tipo de Institución</th>
+							<th>Nombre de la Institución</th>
+							<th>Nombre del grupo</th>
+							<th>Número de estudaintes</th>
+							<th>mediador</th>
+							<th>Docente</th>
+							<th>Jornada</th>
+							<th>Fecha de creación</th> 
+							<th>Estado</th>
+						    </tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+
+			</div>	
 		</div>
 	</div>
 	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-crear-grupo">
@@ -197,6 +224,33 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-activar-estudiante">Cerrar</button>
 					<button type="submit" class="btn btn-primary">Activar Estudiante</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-inactivar-grupo">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header" style="text-align: center;">
+					<h3 class="modal-title"><strong>INACTIVAR GRUPO</strong></h3>
+				</div>
+				<div class="modal-body">
+					<form id="form-inactivar-grupo">					
+					¿Esta seguro de inactivar el grupo <strong><label id="lb-grupo-inactivar"></label></strong>?, por favor ingrese el motivo de la inactivación.<br><br>
+					<div class="form-group">
+					<div class="row">
+						<div class="col-xs-12 col-md-12 col-lg-12">
+						<input class="form-control" type="text" id="observacion-grupo" required>
+						</div>
+					</div>
+					</div>
+					<input class="form-control" type="hidden" id="id-grupo" required>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-inactivar-grupo">Cerrar</button>
+					<button type="submit" class="btn btn-primary">Inactivar Grupo</button>
 				</div>
 				</form>
 			</div>

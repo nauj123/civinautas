@@ -1,4 +1,4 @@
-var tabla_info_grupos; 
+var tabla_info_grupos;
 var info_grupos;
 var options_instituciones;
 var options_tipo_atencion;
@@ -11,10 +11,36 @@ var info_estudiante;
 var options_tipo_identificacion;
 var options_localidades;
 var options_enfoque;
+var tabla_consultar_grupos;
+var info_consultar_grupos;
 
 $(document).ready(function(){
 
+	$("body").on("keyup",".mayuscula", function(){
+		$(this).val($(this).val().toUpperCase());
+	  });
+
+	  function mostrarCargando(){
+		swal({
+			title: "Cargando...",
+			text: "Espere un poco por favor.",
+			imageUrl: "../../public/images/cargando.gif",
+			imageWidth: 140,
+			imageHeight: 70,
+			showConfirmButton: false,
+			allowOutsideClick: false,
+			allowEscapeKey: false
+			});
+	}
+
+	function cerrarCargando(){
+		swal.close();
+	}
+
 	tabla_info_grupos = $("#tabla-info-grupos").DataTable({
+		autoWidth: false,
+		paging: false,
+		aaSorting: [],
 		pageLength: 50,
 		lengthChange: false,
 		responsive: true,
@@ -137,15 +163,26 @@ $(document).ready(function(){
 				tabla_info_grupos.clear().draw();
 				info_grupos.forEach((value, index) => {
 
-					rowNode = tabla_info_grupos.row.add([
-						info_grupos[index]["INSTITUCION"],
-						info_grupos[index]["NOMBREGRUPO"],
-						info_grupos[index]["MEDIADOR"],
-						info_grupos[index]["DOCENTE"],
-						info_grupos[index]["JORNADA"],
-						"<center>"+info_grupos[index]["ESTUDIANTES"]+"</center>",
-						"<center><buton type='button' class='btn btn-danger retirar' data-id-estudiante='"+info_grupos[index]["IDGRUPO"]+"' data-toggle='modal' data-target='#modal-editar-usuario'>Inactivar Grupo</buton></center>"
-						]).draw().node();
+					if (info_grupos[index]["ESTADO"] == 1) {
+						rowNode = tabla_info_grupos.row.add([
+							info_grupos[index]["INSTITUCION"],
+							info_grupos[index]["NOMBREGRUPO"],
+							info_grupos[index]["DOCENTE"],
+							info_grupos[index]["JORNADA"],
+							"<center>"+info_grupos[index]["ESTUDIANTES"]+"</center>",
+							"<center><buton type='button' class='btn btn-danger inactivargrupo' data-id-grupo='"+info_grupos[index]["IDGRUPO"]+"' data-nombre-grupo='"+info_grupos[index]["NOMBREGRUPO"]+"' data-toggle='modal' data-target='#modal-inactivar-grupo'>Inactivar Grupo</buton></center>"
+							]).draw().node();
+				
+					} else {
+						rowNode = tabla_info_grupos.row.add([
+							info_grupos[index]["INSTITUCION"],
+							info_grupos[index]["NOMBREGRUPO"],
+							info_grupos[index]["DOCENTE"],
+							info_grupos[index]["JORNADA"],
+							"<center>"+info_grupos[index]["ESTUDIANTES"]+"</center>",
+							"<center>GRUPO INACTIVO</center>"
+							]).draw().node();
+					}
 				});
 			},
 			error: function(data){
@@ -187,6 +224,7 @@ $(document).ready(function(){
 	});
 
 	function getOptionsGruposMediador() {
+		options_grupos = "";
 		$.ajax({
 			url: "getOptionsGruposMediador",
 			type: 'POST',
@@ -316,18 +354,21 @@ $(document).ready(function(){
 
 	$(document).delegate('#TB_buscar_usuario', 'change', function() {
 		$("#concidencias_simat").show();
+		
 		getBuscarEstudianteSimat();
 	});	
 
-	function getBuscarEstudianteSimat() {
-		$.ajax({
+	function getBuscarEstudianteSimat() {	
+		mostrarCargando();
+		$.ajax({			
 			url: "getBuscarEstudianteSimat",
 			type: 'POST',
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
 			data: {
-				buscar: $("#TB_buscar_usuario").val()
+				buscar: $("#TB_buscar_usuario").val(),
+				id_Grupo: $("#grupo-mediador").val()
 			},
 			success: function(data) {
 				info_estudiante = data;
@@ -343,6 +384,7 @@ $(document).ready(function(){
 						"<buton type='button' class='btn btn-success agregar' data-tipo-identificacion='"+info_estudiante[index]["TIPODOCUMENTO"]+"' data-identificacion='"+info_estudiante[index]["IDENTIFICACION"]+"' data-pnombre='"+info_estudiante[index]["PNOMBRE"]+"' data-snombre='"+info_estudiante[index]["SNOMBRE"]+"' data-papellido='"+info_estudiante[index]["PAPELLIDO"]+"' data-sapellido='"+info_estudiante[index]["SAPELLIDO"]+"' data-fecha='"+info_estudiante[index]["FECHA"]+"' data-genero='"+info_estudiante[index]["IDGENERO"]+"' data-direccion='"+info_estudiante[index]["DIRECCION"]+"' data-celular='"+info_estudiante[index]["CELULAR"]+"' data-estrato='"+info_estudiante[index]["ESTRATO"]+"' data-toggle='modal' data-target='#modal-editar-usuario'>Agregar</buton>"
 						]).draw().node();
 				});
+				cerrarCargando();
 			},
 			error: function(data){
 				swal("Error", "No se pudo obtener las coincidencias de los datos ingresados en SIMAT, por favor inténtelo nuevamente", "error");
@@ -619,5 +661,110 @@ $(document).ready(function(){
 			async: false
 		});
 	});	
+
+	$("#tabla-info-grupos").on("click", ".inactivargrupo",  function(){
+		$("#id-grupo").val($(this).attr("data-id-grupo"));
+		$("#lb-grupo-inactivar").html("").html($(this).attr("data-nombre-grupo"));
+	}); 
+
+	$("#form-inactivar-grupo").submit(function (e) {
+		e.preventDefault();
+		$.ajax({
+			url: "InactivarGrupo",
+			type: 'POST',
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_grupo: $("#id-grupo").val(),
+				observacion: $("#observacion-grupo").val()
+			},
+			success: function (data) {
+				if (data == 200) {
+					swal("Éxito", "Se inactivo correctamente el grupo, ya no estará disponible para agregar estudiantes ni registrar asistencia", "success");
+					$("#modal-inactivar-grupo").modal('hide');
+					getGruposMediador();
+					
+				}
+			},
+			error: function (data) {
+				swal("Error", "No fue posible inactivar el grupo, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	});
+
+	tabla_consultar_grupos = $("#tabla-consultar-grupos").DataTable({
+		autoWidth: false,
+		paging: false,
+		aaSorting: [],
+		pageLength: 50,
+		lengthChange: false,
+		responsive: true,
+		dom: 'Bfrtip',
+		buttons: [{
+			extend: 'excel',
+			text: 'Descargar datos',
+			filename: 'Datos'
+		}],
+		"language": {
+			"lengthMenu": "Ver _MENU_ registros por página",
+			"zeroRecords": "No hay información, lo sentimos.",
+			"info": "Mostrando página _PAGE_ de _PAGES_",
+			"infoEmpty": "No hay registros disponibles",
+			"infoFiltered": "(filtrado de un total de _MAX_ registros)",
+			"search": "Filtrar",
+			"paginate": {
+				"first": "Primera",
+				"last": "Última",
+				"next": "Siguiente",
+				"previous": "Anterior"
+			},
+		}
+	});
+
+	$('a[href="#consultar_grupos"]').on('shown.bs.tab', function(e){
+		getTotalGrupos();
+	});
+
+
+	function getTotalGrupos() {
+		$.ajax({
+			url: "getTotalGrupos",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_Grupo: $("#grupo-mediador").val()
+			},
+			success: function(data) {
+				info_consultar_grupos = data;
+				tabla_consultar_grupos.clear().draw();
+				info_consultar_grupos.forEach((value, index) => {				
+					rowNode = tabla_consultar_grupos.row.add([		
+						
+						"<center>"+info_consultar_grupos[index]["IDGRUPO"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["LOCALIDAD"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["TIPOINSTITUCION"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["INSTITUCION"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["NOMGRUPO"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["ESTUDIANTES"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["MEDIADOR"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["DOCENTE"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["JORNADA"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["FCREACION"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["ESTADO"]+"</center>"
+						]).draw().node();				
+
+				});
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener el listado de los estudiantes del grupo, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	}
 
 });

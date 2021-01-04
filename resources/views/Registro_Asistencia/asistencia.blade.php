@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Registro_Asistencia/asistencia.js?V=2020.12.21.1') }}" defer></script>
+<script src="{{ asset('js/Registro_Asistencia/asistencia.js?V=2021.01.3.2') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -40,7 +40,7 @@
 						<tr>
 							<td><select class="form-control selectpicker" id="modalidad-actividad" title="Seleccione una opción" required></td>
 							<td><select class="form-control selectpicker" id="tipo-actividad" title="Seleccione una opción" required></td>
-							<td colspan="2"><select class="form-control selectpicker" id="recursos-materiales" title="Seleccione una opción" required></td>
+							<td colspan="2"><select class="form-control selectpicker"  multiple data-actions-box="true" id="recursos-materiales" title="Seleccion multiple" required></td>
 
 						</tr>
 						<tr style="text-align: center;">

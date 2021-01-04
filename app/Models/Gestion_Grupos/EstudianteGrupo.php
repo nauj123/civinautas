@@ -45,5 +45,20 @@ class EstudianteGrupo extends Model
        return $informacion;
       } 
 
+      public function getEstudiantesGrupoAsistencia($id_Grupo){
+    	$sql = "SELECT
+        EG.Pk_Id_Estudiante_Grupo AS 'IDESTUDIANTE',
+        ES.IN_Identificacion AS 'IDENTIFICACION',
+        CONCAT_WS(' ', ES.VC_Primer_Nombre,ES.VC_Segundo_Nombre, ES.VC_Primer_Apellido,ES.VC_Segundo_Apellido) AS 'ESTUDIANTE',
+        ES.DD_F_Nacimiento AS 'FECHA',
+        (CASE WHEN ES.IN_Genero = '1' THEN 'MASCULINO' WHEN ES.IN_Genero = '2' THEN 'FEMENINO' END) AS 'GENERO',
+        EG.DT_Fecha_Ingreso AS 'FECHAINGRESO'
+        FROM tb_estudiante_grupo AS EG
+        JOIN tb_estudiantes AS ES ON EG.Fk_Id_Estudiante = ES.Pk_Id_Beneficiario
+        WHERE EG.IN_Estado = '1' AND EG.Fk_Id_Grupo = $id_Grupo ORDER BY ESTUDIANTE";
+        $informacion = DB::select($sql);
+        return $informacion;
+    } 
+
 
 }

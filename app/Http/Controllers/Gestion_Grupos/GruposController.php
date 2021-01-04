@@ -62,7 +62,7 @@ class GruposController extends Controller
 
 	public function getBuscarEstudianteSimat(Request $request){
 		$estudiante = new Grupos;
-		$resultado = $estudiante->getBuscarEstudianteSimat($request->buscar);
+		$resultado = $estudiante->getBuscarEstudianteSimat($request->buscar, $request->id_Grupo);
 		return response()->json($resultado, 200);
 	}
 
@@ -118,8 +118,8 @@ class GruposController extends Controller
 	}
 
 	public function getEstadoEstudiante(Request $request){
-		$colegio = new EstudianteGrupo;
-		$resultado = $colegio->getEstadoEstudiante($request->id_estudiante);
+		$estudiante = new EstudianteGrupo;
+		$resultado = $estudiante->getEstadoEstudiante($request->id_estudiante);
 		return response()->json($resultado, 200);
 	}
 
@@ -151,8 +151,33 @@ class GruposController extends Controller
 		}
 	}
 
-	
+	public function InactivarGrupo(Request $request){
+		$grupo = new Grupos;
+		$grupo_id =  $request->id_grupo;
+		$array_update = [];
+		$array_update["IN_Estado"] = 0;
+		$user_id = auth()->user()->id;
+		$Observaciones = 'Usuario: '.$user_id.'; Motivo Inactivación: '.$request->observacion.'; Fecha Inactivación: '.date("Y-m-d H:i:s");
+		$array_update["VC_Observaciones"] = $Observaciones;
+		$grupo->where('Pk_Id_Grupo', $grupo_id)
+		->update($array_update);
+		if($grupo){
+			return 200;
+		}
+	}	
 
+	public function getEstudiantesGrupoAsistencia(Request $request){
+		$estudiante = new EstudianteGrupo;
+		$resultado = $estudiante->getEstudiantesGrupoAsistencia($request->id_Grupo);
+		return response()->json($resultado, 200);
+	}
+
+	public function getTotalGrupos(Request $request){
+		$grupos = new Grupos;
+		$id_mediador = auth()->user()->id;
+		$resultado = $grupos->getTotalGrupos($id_mediador);
+		return response()->json($resultado, 200);
+	}
 
 
 

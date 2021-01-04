@@ -15,17 +15,6 @@ class Atencion extends Model
     protected $table = 'tb_atenciones';
     public $timestamps = false;
 
-  /*  public function getListadoActividadesGrupo($id_grupo) {
-        $sql = "SELECT 
-        AC.Pk_Id_Atencion AS 'IDATENCION',
-        CONCAT(PD.descripcion,' (',AC.DT_Fecha_Atencion,')') AS ACTIVIDAD
-        FROM tb_atenciones AS AC 
-        JOIN parametro_detalle AS PD ON AC.IN_Modalidad = PD.id_parametro_detalle AND PD.fk_parametro = 8
-        WHERE FK_Id_Grupo = $id_grupo"; 
-       $informacion = DB::select($sql);
-       return $informacion;
-      } */
-
     public function getListadoActividadesGrupo($id_grupo){
     	$informacion = Atencion::select(Atencion::raw("CONCAT(GROUP_CONCAT('<option value=\"', Pk_Id_Atencion, '\">', DT_Fecha_Atencion , '</option>' SEPARATOR '')) AS 'option'"))
     	->where([
@@ -44,7 +33,9 @@ class Atencion extends Model
         CONCAT(AC.TM_Hora_Inicio,' A ',AC.TM_Hora_Fin) AS 'HORARIO',
         PDM.descripcion AS 'MODALIDAD',
         TA.VC_Nombre_Actividad AS 'ACTIVIDAD',
-        PDR.descripcion AS 'RECURSOS',
+        (SELECT GROUP_CONCAT(CONCAT(' ',PDR.descripcion,' ') SEPARATOR ','  )
+  			FROM parametro_detalle PDR
+  			WHERE FIND_IN_SET(PDR.id_parametro_detalle, AC.IN_Recursos_Materiales) > 0)  AS 'RECURSOS',
         AC.VC_Tematica AS 'TEMATICA'
         FROM tb_atenciones AS AC 
         JOIN tb_grupos AS GR ON AC.Fk_Id_Grupo = GR.Pk_Id_Grupo
