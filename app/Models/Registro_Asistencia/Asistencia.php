@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Models\Registro_Asistencia; 
+namespace App\Models\Registro_Asistencia;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +15,10 @@ class Asistencia extends Model
     protected $table = 'tb_asistencia';
     public $timestamps = false;
 
+    public function atencion(){
+        return $this->belongsTo("App\Models\Registro_Asistencia\Atencion", "Fk_Id_Atencion", "Pk_Id_Atencion");
+    }
+
     public function getAsistenciaAtencion($id_atencion) {
         $sql = "SELECT 
         ES.Pk_Id_Estudiante_Simat AS 'IDESTUDAINTE',
@@ -26,11 +30,7 @@ class Asistencia extends Model
         FROM tb_asistencia AS NA
         JOIN tb_estudiante_simat AS ES ON NA.Fk_Id_Estudiante = ES.Pk_Id_Estudiante_Simat
         WHERE Fk_Id_Atencion = $id_atencion"; 
-       $informacion = DB::select($sql);
-       return $informacion;
-      } 
-
-
-
-
+        $informacion = DB::select($sql);
+        return $informacion;
+    }
 }

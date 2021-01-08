@@ -24,6 +24,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet">
+  <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
 
   <link rel="stylesheet" href="{{ asset('assets/styles/css/themes/lite-purple.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/styles/vendor/perfect-scrollbar.css') }}">
@@ -187,7 +188,10 @@
 <script src="{{ asset ('assets/js/es5/script.min.js') }}"></script>
 <script src="{{ asset ('assets/js/es5/sidebar.large.script.min.js') }}"></script>
 <script src="{{ asset ('assets/js/vendor/sweetalert2.min.js') }}"></script>
-<script src="{{ asset ('assets/js/sweetalert.script.js') }}"></script> 
+<script src="{{ asset ('assets/js/sweetalert.script.js') }}"></script>
+<script src="https://cdn.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://cdn.amcharts.com/lib/3/ammap.js"></script>
+
 </body>
 
 </html>

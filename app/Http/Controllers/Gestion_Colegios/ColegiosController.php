@@ -15,7 +15,10 @@ class ColegiosController extends Controller
      *
      * @return void
      */
-	public function __construct(){
+
+	protected $colegiosRepository;
+
+	public function __construct(ColegiosRepository $colegiosRepository){
 		$this->middleware('auth');
 	}
 	public function index(){
@@ -36,26 +39,26 @@ class ColegiosController extends Controller
 		$instituciones->DT_Created_at = date("Y-m-d H:i:s");
 		$instituciones->IN_Estado = '1';
 		if($instituciones->save())
-				
-		$idInstitucion = $instituciones->id;
+
+			$idInstitucion = $instituciones->id;
 
 		$sede = $request->sedes;
 
 		if(isset($_POST['sedes'])){
 
-		foreach ($sede as $infosede) {
-			$sedeinstitucion = new Sedes_Colegio;
-			$sedeinstitucion->Fk_Id_Institucion = $idInstitucion;
-			$sedeinstitucion->Fk_Id_Localidad = $infosede[0];
-			$sedeinstitucion->Fk_Id_Upz = $infosede[1];
-			$sedeinstitucion->VC_Nombre_Sede = $infosede[2];
-			$sedeinstitucion->VC_Dane12 = $infosede[3];
-			$sedeinstitucion->FK_Usuario_Registro = $user_id;
-			$sedeinstitucion->DT_Created_at = date("Y-m-d H:i:s");
-			$sedeinstitucion->IN_Estado = '1';
-			$sedeinstitucion->save();
+			foreach ($sede as $infosede) {
+				$sedeinstitucion = new Sedes_Colegio;
+				$sedeinstitucion->Fk_Id_Institucion = $idInstitucion;
+				$sedeinstitucion->Fk_Id_Localidad = $infosede[0];
+				$sedeinstitucion->Fk_Id_Upz = $infosede[1];
+				$sedeinstitucion->VC_Nombre_Sede = $infosede[2];
+				$sedeinstitucion->VC_Dane12 = $infosede[3];
+				$sedeinstitucion->FK_Usuario_Registro = $user_id;
+				$sedeinstitucion->DT_Created_at = date("Y-m-d H:i:s");
+				$sedeinstitucion->IN_Estado = '1';
+				$sedeinstitucion->save();
+			}
 		}
-	}
 		return 200;
 	}
 	public function getInstitucionesEducativas(Request $request){

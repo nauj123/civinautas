@@ -108,7 +108,7 @@ Route::post('/Registro_Asistencia/getEncabezadoAtencion', 'Registro_Asistencia\A
 Route::post('/Registro_Asistencia/getAsistenciaAtencion', 'Registro_Asistencia\AsistenciaController@getAsistenciaAtencion');
 
 /**
- * Rutas reporrtes
+ * Rutas reportes
  */
 Route::post('/Reportes/getReporteConsolidado', 'Reportes\ReportesController@getReporteConsolidado');
 Route::post('/Reportes/getConsolidadoCicloVital', 'Reportes\ReportesController@getConsolidadoCicloVital');
@@ -134,6 +134,16 @@ Route::post('/Diplomados/getOptionsDiplomadosMediador', 'Diplomados\DiplomadosCo
 Route::post('/Diplomados/guardarParticipantesDiplomado', 'Diplomados\DiplomadosController@guardarParticipantesDiplomado');
 Route::post('/Diplomados/getInfoParticipantesDiplomado', 'Diplomados\DiplomadosController@getInfoParticipantesDiplomado');
 Route::post('/Diplomados/guardarAsistenciaDiplomado', 'Diplomados\DiplomadosController@guardarAsistenciaDiplomado');
+
+/**
+ * Rutas caracterización 
+ */
+Route::post('/Caracterizacion/getInfoColegiosEstudiantes', 'Caracterizacion\CaracterizacionController@getInfoColegiosEstudiantes');
+Route::post('/Caracterizacion/getInfoColegiosEstudiantes', 'Caracterizacion\CaracterizacionController@getInfoColegiosEstudiantes');
+Route::post('/Caracterizacion/getInfoGruposEstudiantes', 'Caracterizacion\CaracterizacionController@getInfoGruposEstudiantes');
+Route::post('/Caracterizacion/getInfoEstudiantes', 'Caracterizacion\CaracterizacionController@getInfoEstudiantes');
+Route::post('/Caracterizacion/getInfoEstudiante', 'Caracterizacion\CaracterizacionController@getInfoEstudiante');
+
 
 
 

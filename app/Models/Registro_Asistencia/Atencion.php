@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Models\Registro_Asistencia; 
+namespace App\Models\Registro_Asistencia;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -15,13 +15,20 @@ class Atencion extends Model
     protected $table = 'tb_atenciones';
     public $timestamps = false;
 
+    public function grupo(){
+        return $this->belongsTo("App\Models\Gestion_Grupos\Grupos", "Fk_Id_Grupo", "Pk_Id_Grupo");
+    }
+    public function asistencias(){
+        return $this->hasMany("App\Models\Registro_Asistencia\Asistencia", "Fk_Id_Atencion", "Pk_Id_Atencion");
+    }
+
     public function getListadoActividadesGrupo($id_grupo){
-    	$informacion = Atencion::select(Atencion::raw("CONCAT(GROUP_CONCAT('<option value=\"', Pk_Id_Atencion, '\">', DT_Fecha_Atencion , '</option>' SEPARATOR '')) AS 'option'"))
-    	->where([
-    		['FK_Id_Grupo', $id_grupo]
-    	])
-    	->get();
-    	return $informacion;
+        $informacion = Atencion::select(Atencion::raw("CONCAT(GROUP_CONCAT('<option value=\"', Pk_Id_Atencion, '\">', DT_Fecha_Atencion , '</option>' SEPARATOR '')) AS 'option'"))
+        ->where([
+            ['FK_Id_Grupo', $id_grupo]
+        ])
+        ->get();
+        return $informacion;
     }
 
     public function getEncabezadoAtencion($id_atencion) {
@@ -34,8 +41,8 @@ class Atencion extends Model
         PDM.descripcion AS 'MODALIDAD',
         TA.VC_Nombre_Actividad AS 'ACTIVIDAD',
         (SELECT GROUP_CONCAT(CONCAT(' ',PDR.descripcion,' ') SEPARATOR ','  )
-  			FROM parametro_detalle PDR
-  			WHERE FIND_IN_SET(PDR.id_parametro_detalle, AC.IN_Recursos_Materiales) > 0)  AS 'RECURSOS',
+        FROM parametro_detalle PDR
+        WHERE FIND_IN_SET(PDR.id_parametro_detalle, AC.IN_Recursos_Materiales) > 0)  AS 'RECURSOS',
         AC.VC_Tematica AS 'TEMATICA'
         FROM tb_atenciones AS AC 
         JOIN tb_grupos AS GR ON AC.Fk_Id_Grupo = GR.Pk_Id_Grupo
@@ -44,7 +51,7 @@ class Atencion extends Model
         JOIN parametro_detalle AS PDR ON AC.IN_Recursos_Materiales = PDR.id_parametro_detalle
         JOIN tb_tipo_actividad AS TA ON AC.IN_Tipo_Actividad = TA.Pk_Id_Actividad
         WHERE AC.Pk_Id_Atencion = $id_atencion"; 
-       $informacion = DB::select($sql);
-       return $informacion;
-      } 
+        $informacion = DB::select($sql);
+        return $informacion;
+    } 
 }

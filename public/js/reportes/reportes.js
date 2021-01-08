@@ -13,9 +13,11 @@ $(document).ready(function(){
 		paging: false,
 		info: false,
 		dom: 'Bfrtip',
-		buttons: [
-		'excel'
-		],
+		buttons: [{
+			extend: 'excel',
+			text: 'Descargar datos',
+			filename: 'Datos'
+		}],
 		"language": {
 			"lengthMenu": "Ver _MENU_ registros por página",
 			"zeroRecords": "No hay información, lo sentimos.",
@@ -29,6 +31,7 @@ $(document).ready(function(){
 	var tabla_reporte_consolidado = $("#tabla-reporte-consolidado").DataTable(tabla_config);
 	var tabla_reporte_consolidado_mensual_ciclo_vital = $("#tabla-reporte-consolidado-mensual-ciclo-vital").DataTable(tabla_config);
 	var tabla_reporte_consolidado_global_ciclo_vital = $("#tabla-reporte-consolidado-global-ciclo-vital").DataTable(tabla_config);
+	var tabla_reporte_asistencias = $("#tabla-reporte-asistencias").DataTable(tabla_config);
 
 	function getMeses(){
 		options_meses = "";
@@ -64,7 +67,7 @@ $(document).ready(function(){
 				mes: $("#mes-reporte-consolidado").val(),
 			},
 			success: function(data) {
-				// $("#div-consulta-archivos-simat").show();
+				$("#div-tabla-reporte-consolidado").show();
 				data.forEach((value, index) => {
 					rowNode = tabla_reporte_consolidado.row.add([
 						data[index]["CODIGO_DANE"],
@@ -103,6 +106,9 @@ $(document).ready(function(){
 						data[index]["NOVEDAD DE REPORTE"],
 						]).draw().node();
 				});
+				$($.fn.dataTable.tables(true)).DataTable()
+				.columns.adjust()
+				.responsive.recalc();
 			},
 			error: function(data){
 				swal("Error", "No se pudo obtener la información, por favor inténtelo nuevamente", "error");
@@ -127,10 +133,9 @@ $(document).ready(function(){
 				mes: $("#mes-reporte-consolidado-mensual-ciclo-vital").val(),
 			},
 			success: function(data) {
-				// $("#div-consulta-archivos-simat").show();
+				$("#div-tabla-reporte-consolidado-mensual-ciclo-vital").show();
 				data.forEach((value, index) => {
 					rowNode = tabla_reporte_consolidado_mensual_ciclo_vital.row.add([
-
 						data[index]["NOMBRE_INSTITUCION"],
 						data[index]["LOCALIDAD"],
 						data[index]["HOMBRES_0_6"],
@@ -157,11 +162,6 @@ $(document).ready(function(){
 			async: false
 		});
 	});
-
-	$('a[href="#registrar-sistematizacion"]').click(function() {
-		limpiarCajasTexto('#form-guardar-sistematizacion')
-	});
-
 
 	$("a[href='#consolidado-global-ciclo-vital']").click(function(){
 		tabla_reporte_consolidado_global_ciclo_vital.clear().draw();
@@ -173,10 +173,8 @@ $(document).ready(function(){
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
 			success: function(data) {
-				// $("#div-consulta-archivos-simat").show();
 				data.forEach((value, index) => {
 					rowNode = tabla_reporte_consolidado_global_ciclo_vital.row.add([
-
 						data[index]["NOMBRE_INSTITUCION"],
 						data[index]["LOCALIDAD"],
 						data[index]["HOMBRES_0_6"],
@@ -202,43 +200,13 @@ $(document).ready(function(){
 			},
 			async: false
 		});
-	})
-
-	tabla_consultar_grupos = $("#tabla-consultar-grupos").DataTable({
-		autoWidth: false,
-		paging: false,
-		aaSorting: [],
-		pageLength: 50,
-		lengthChange: false,
-		responsive: true,
-		dom: 'Bfrtip',
-		buttons: [{
-			extend: 'excel',
-			text: 'Descargar datos',
-			filename: 'Datos'
-		}],
-		"language": {
-			"lengthMenu": "Ver _MENU_ registros por página",
-			"zeroRecords": "No hay información, lo sentimos.",
-			"info": "Mostrando página _PAGE_ de _PAGES_",
-			"infoEmpty": "No hay registros disponibles",
-			"infoFiltered": "(filtrado de un total de _MAX_ registros)",
-			"search": "Filtrar",
-			"paginate": {
-				"first": "Primera",
-				"last": "Última",
-				"next": "Siguiente",
-				"previous": "Anterior"
-			},
-		}
 	});
 
-	$('a[href="#consulta-completa-asistencias"]').on('shown.bs.tab', function(e){
-		getConsultaCompleta();
-	});
+	$('#form-reporte-asistencias').on('submit', function (e) {
+		e.preventDefault();
 
+		tabla_reporte_asistencias.clear().draw();
 
-	function getConsultaCompleta() {
 		$.ajax({
 			url: "getConsultaCompleta",
 			type: 'POST',
@@ -246,46 +214,45 @@ $(document).ready(function(){
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
 			data: {
-				id_Grupo: $("#grupo-mediador").val()
+				id_Grupo: $("#grupo-mediador").val(),
+				anio: $("#mes-reporte-asistencias").val()
 			},
 			success: function(data) {
-				info_consultar_grupos = data;
-				tabla_consultar_grupos.clear().draw();
-				info_consultar_grupos.forEach((value, index) => {				
-					rowNode = tabla_consultar_grupos.row.add([		
-						
-						"<center>"+info_consultar_grupos[index]["LOCALIDAD"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["TIPO_INSTITUCION"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["INSTITUCION"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["DANE"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["NOMBRE_GRUPO"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["MEDIADOR"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["FECHA_ATENCION"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["HORARIO"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["MODALIDAD"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["TIPO_ACTIVIDAD"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["RECURSOS"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["IDENTIFICACION"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["NOMBRES"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["APELLIDOS"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["DIRECCION"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["CORREO"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["CELULAR"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["ENFOQUE"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["ESTRATO"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["FECHANACIMIENTO"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["GENERO"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["ASISTENCIA"]+"</center>",
+				$("#div-tabla-reporte-asistencias").show("");
+				data.forEach((value, index) => {				
+					rowNode = tabla_reporte_asistencias.row.add([		
+						data[index]["LOCALIDAD"],
+						data[index]["TIPO_INSTITUCION"],
+						data[index]["INSTITUCION"],
+						data[index]["DANE"],
+						data[index]["NOMBRE_GRUPO"],
+						data[index]["MEDIADOR"],
+						data[index]["FECHA_ATENCION"],
+						data[index]["HORARIO"],
+						data[index]["MODALIDAD"],
+						data[index]["TIPO_ACTIVIDAD"],
+						data[index]["RECURSOS"],
+						data[index]["IDENTIFICACION"],
+						data[index]["NOMBRES"],
+						data[index]["APELLIDOS"],
+						data[index]["DIRECCION"],
+						data[index]["CORREO"],
+						data[index]["CELULAR"],
+						data[index]["ENFOQUE"],
+						data[index]["ESTRATO"],
+						data[index]["FECHANACIMIENTO"],
+						data[index]["GENERO"],
+						data[index]["ASISTENCIA"]
 						]).draw().node();				
-
 				});
+				$($.fn.dataTable.tables(true)).DataTable()
+				.columns.adjust()
+				.responsive.recalc();
 			},
 			error: function(data){
-				swal("Error", "No se pudo obtener el listado de los estudiantes del grupo, por favor inténtelo nuevamente", "error");
+				swal("Error", "No se pudo obtener la información, por favor inténtelo nuevamente", "error");
 			},
 			async: false
 		});
-	}
-
-
+	})
 });

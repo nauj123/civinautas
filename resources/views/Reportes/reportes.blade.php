@@ -6,7 +6,7 @@
 @endsection
 @section('contenido')
 <div class="p-2 rounded d-flex align-items-center bg-primary text-white">
-	<h1 class="text-28 mb-1 text-white">Gestión de Usuarios</h1>
+	<h1 class="text-28 mb-1 text-white">Reportes y consultas</h1>
 </div>
 
 <br>
@@ -19,27 +19,27 @@
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consulta-completa-asistencias">Consulta completa asistencias</a></li>
 		</ul>
 		<div class="tab-content">
-			<div class="tab-pane active col-lg-10 offset-lg-1" id="reporte_consolidado"><br>
+			<div class="tab-pane active" id="reporte_consolidado"><br>
 				<form id="form-reporte-consolidado">
 					<div class="form-group">
 						<div class="row">
-							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3">
+							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3 offset-md-3">
 								<select class="form-control selectpicker" title="Seleccione un mes" id="mes-reporte-consolidado" required></select>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="row">
-							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3">
+							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3 offset-md-3">
 								<button class="btn btn-block btn-primary" type="submit">Consultar</button>
 							</div>
 						</div>
 					</div>
 				</form>
-				<div class="form-group">
+				<div class="form-group" id="div-tabla-reporte-consolidado" style="display: none;">
 					<div class="row">
 						<div class="col-lg-12">
-							<table id="tabla-reporte-consolidado" class="table display" style="width: 100%;">
+							<table id="tabla-reporte-consolidado" class="table table-hover table-striped table-bordered display" style="width: 100%;">
 								<thead>
 									<tr>
 										<th>CODIGO_DANE</th>
@@ -88,55 +88,57 @@
 				<form id="form-consolidado-mensual-ciclo-vital">
 					<div class="form-group">
 						<div class="row">
-							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3">
+							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3 offset-md-3">
 								<select class="form-control selectpicker" title="Seleccione un mes" id="mes-reporte-consolidado-mensual-ciclo-vital" required></select>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="row">
-							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3">
+							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3 offset-md-3">
 								<button class="btn btn-block btn-primary" type="submit">Consultar</button>
 							</div>
 						</div>
 					</div>
 				</form>
-				<div class="form-group">
+				<div class="form-group" id="div-tabla-reporte-consolidado-mensual-ciclo-vital" style="display: none;">
 					<div class="row">
 						<div class="col-lg-12">
-							<table id="tabla-reporte-consolidado-mensual-ciclo-vital" class="table table-hover table-bordered display" style="width: 100%;">
-								<thead>
-									<tr>
-										<th rowspan="2">Colegio</th>
-										<th rowspan="2">Localidad</th>
-										<th colspan="2">Primera Infancia (0 - 6 años)</th>
-										<th colspan="2">Infancia (7 a 13 años)</th>
-										<th colspan="2">Adolescencia (14 -17 años)</th>
-										<th colspan="2">Juventud (18 -26 años)</th>
-										<th colspan="2">Adultez (27 - 59 años)</th>
-										<th colspan="2">Adulto Mayor (Más de 60 años)</th>
-										<th colspan="2">Subtotal</th>
-										<th rowspan="2">Total asistentes</th>
-									</tr>
-									<tr>
-										<th>Hombres</th>
-										<th>Mujeres</th>
-										<th>Hombres</th>
-										<th>Mujeres</th>
-										<th>Hombres</th>
-										<th>Mujeres</th>
-										<th>Hombres</th>
-										<th>Mujeres</th>
-										<th>Hombres</th>
-										<th>Mujeres</th>
-										<th>Hombres</th>
-										<th>Mujeres</th>
-										<th>Hombres</th>
-										<th>Mujeres</th>
-									</tr>
-								</thead>
-								<tbody></tbody>
-							</table>
+							<div class="table-responsive">
+								<table id="tabla-reporte-consolidado-mensual-ciclo-vital" class="table table-hover table-striped table-bordered display" style="width: 100%;">
+									<thead>
+										<tr>
+											<th rowspan="2">Colegio</th>
+											<th rowspan="2">Localidad</th>
+											<th colspan="2">Primera Infancia (0 - 6 años)</th>
+											<th colspan="2">Infancia (7 a 13 años)</th>
+											<th colspan="2">Adolescencia (14 -17 años)</th>
+											<th colspan="2">Juventud (18 -26 años)</th>
+											<th colspan="2">Adultez (27 - 59 años)</th>
+											<th colspan="2">Adulto Mayor (Más de 60 años)</th>
+											<th colspan="2">Subtotal</th>
+											<th rowspan="2">Total asistentes</th>
+										</tr>
+										<tr>
+											<th>Hombres</th>
+											<th>Mujeres</th>
+											<th>Hombres</th>
+											<th>Mujeres</th>
+											<th>Hombres</th>
+											<th>Mujeres</th>
+											<th>Hombres</th>
+											<th>Mujeres</th>
+											<th>Hombres</th>
+											<th>Mujeres</th>
+											<th>Hombres</th>
+											<th>Mujeres</th>
+											<th>Hombres</th>
+											<th>Mujeres</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -145,79 +147,101 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-lg-12">
-							<table id="tabla-reporte-consolidado-global-ciclo-vital" class="table table-hover table-bordered display" style="width: 100%;">
-								<thead>
-									<tr>
-										<th rowspan="2">Colegio</th>
-										<th rowspan="2">Localidad</th>
-										<th colspan="2">Primera Infancia (0 - 6 años)</th>
-										<th colspan="2">Infancia (7 a 13 años)</th>
-										<th colspan="2">Adolescencia (14 -17 años)</th>
-										<th colspan="2">Juventud (18 -26 años)</th>
-										<th colspan="2">Adultez (27 - 59 años)</th>
-										<th colspan="2">Adulto Mayor (Más de 60 años)</th>
-										<th colspan="2">Subtotal</th>
-										<th rowspan="2">Total asistentes</th>
-									</tr>
-									<tr>
-										<th>Hombres</th>
-										<th>Mujeres</th>
-										<th>Hombres</th>
-										<th>Mujeres</th>
-										<th>Hombres</th>
-										<th>Mujeres</th>
-										<th>Hombres</th>
-										<th>Mujeres</th>
-										<th>Hombres</th>
-										<th>Mujeres</th>
-										<th>Hombres</th>
-										<th>Mujeres</th>
-										<th>Hombres</th>
-										<th>Mujeres</th>
-									</tr>
-								</thead>
-								<tbody></tbody>
-							</table>
+							<div class="table-responsive">
+								<table id="tabla-reporte-consolidado-global-ciclo-vital" class="table table-hover table-striped table-bordered display" style="width: 100%;">
+									<thead>
+										<tr>
+											<th rowspan="2">Colegio</th>
+											<th rowspan="2">Localidad</th>
+											<th colspan="2">Primera Infancia (0 - 6 años)</th>
+											<th colspan="2">Infancia (7 a 13 años)</th>
+											<th colspan="2">Adolescencia (14 -17 años)</th>
+											<th colspan="2">Juventud (18 -26 años)</th>
+											<th colspan="2">Adultez (27 - 59 años)</th>
+											<th colspan="2">Adulto Mayor (Más de 60 años)</th>
+											<th colspan="2">Subtotal</th>
+											<th rowspan="2">Total asistentes</th>
+										</tr>
+										<tr>
+											<th>Hombres</th>
+											<th>Mujeres</th>
+											<th>Hombres</th>
+											<th>Mujeres</th>
+											<th>Hombres</th>
+											<th>Mujeres</th>
+											<th>Hombres</th>
+											<th>Mujeres</th>
+											<th>Hombres</th>
+											<th>Mujeres</th>
+											<th>Hombres</th>
+											<th>Mujeres</th>
+											<th>Hombres</th>
+											<th>Mujeres</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			
 			<div class="tab-pane" id="consulta-completa-asistencias" role="tabpanel"><br>
-			<div class="p-2 rounded d-flex align-items-center bg-success text-white">
-					<h3 class="text-18 mb-1 text-white">Consulta completa de registros de asistencia CIVINAUTAS </h3>
-				</div><br>
-				<table class="display table table-striped table-bordered" id="tabla-consultar-grupos">
-					<thead>
-						<tr>
-						<th>Localidad</th>
-						<th>Tipo Institución</th>
-						<th>Nombre Institución</th>
-						<th>DANE</th>
-						<th>Nombre Grupo</th>
-						<th>Mediador</th>
-						<th>Fecha Atención</th>
-						<th>Horario</th>
-						<th>Modalidad</th>
-						<th>Tipo actividad</th>
-						<th>Recursos</th>
-						<th>Identificación</th>
-						<th>Nombres</th>
-						<th>Apellidos</th>
-						<th>Dirección</th>
-						<th>Correo</th>
-						<th>Celular</th>
-						<th>Enfoque</th>
-						<th>Esthato</th>
-						<th>Fecha de Nacimiento</th>
-						<th>Genero</th>
-						<th>Asistencia</th>
-					</tr>
-					</thead>
-					<tbody></tbody>
-				</table>
+				<form id="form-reporte-asistencias">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3 offset-md-3">
+								<select class="form-control selectpicker" title="Seleccione un año" id="mes-reporte-asistencias" required>
+									<option value="2020">2020</option>
+									<option value="2021">2021</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3 offset-md-3">
+								<button class="btn btn-block btn-primary" type="submit">Consultar</button>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="form-group" id="div-tabla-reporte-asistencias" style="display: none;">
+					<div class="row">
+						<div class="col-lg-12">
+							<table class="table table-striped table-bordered display" id="tabla-reporte-asistencias" style="width: 100%;">
+								<thead>
+									<tr>
+										<th>Localidad</th>
+										<th>Tipo Institución</th>
+										<th>Nombre Institución</th>
+										<th>DANE</th>
+										<th>Nombre Grupo</th>
+										<th>Mediador</th>
+										<th>Fecha Atención</th>
+										<th>Horario</th>
+										<th>Modalidad</th>
+										<th>Tipo actividad</th>
+										<th>Recursos</th>
+										<th>Identificación</th>
+										<th>Nombres</th>
+										<th>Apellidos</th>
+										<th>Dirección</th>
+										<th>Correo</th>
+										<th>Celular</th>
+										<th>Enfoque</th>
+										<th>Estrato</th>
+										<th>Fecha de Nacimiento</th>
+										<th>Género</th>
+										<th>Asistencia</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>	
+						</div>
+					</div>
+				</div>
 			</div>
-
 		</div>
 	</div>
 </div>
