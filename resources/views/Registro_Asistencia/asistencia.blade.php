@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Registro_Asistencia/asistencia.js?V=2021.01.3.2') }}" defer></script>
+<script src="{{ asset('js/Registro_Asistencia/asistencia.js?V=2021.01.11.14') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -14,6 +14,7 @@
 	<div class="panel-body">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#registro_asistencia">Registro de asistencia</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consolidado_mensual_asistencias">Consolidado mensual asistencias</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consulta_asistencias">Consultar asistencias registradas</a></li>
 		</ul>
 		<div class="tab-content">
@@ -40,7 +41,7 @@
 						<tr>
 							<td><select class="form-control selectpicker" id="modalidad-actividad" title="Seleccione una opción" required></td>
 							<td><select class="form-control selectpicker" id="tipo-actividad" title="Seleccione una opción" required></td>
-							<td colspan="2"><select class="form-control selectpicker"  multiple data-actions-box="true" id="recursos-materiales" title="Seleccion multiple" required></td>
+							<td colspan="2"><select class="form-control selectpicker" multiple data-actions-box="true" id="recursos-materiales" title="Seleccion multiple" required></td>
 
 						</tr>
 						<tr style="text-align: center;">
@@ -79,23 +80,16 @@
 			<div class="tab-pane" id="consulta_asistencias" role="tabpanel"><br>
 				<div class="form-group">
 					<div class="row mb-3">
-						<div class="col-xs-6 col-md-2 col-lg-2">
+						<div class="col-xs-6 col-md-4 col-lg-4 offset-md-2 offset-lg-2">
 							<span><strong>Seleccionar Grupo</strong></span>
-						</div>
-						<div class="col-xs-6 col-md-4 col-lg-4">
 							<select class="form-control selectpicker" id="consultar-grupo" title="Seleccione una opción" required></select>
 						</div>
-						<div class="col-xs-6 col-md-2 col-lg-2">
-							<span><strong>Seleccionar actividad</strong></span>
-						</div>
 						<div class="col-xs-6 col-md-4 col-lg-4">
-							<select class="form-control selectpicker" id="consultar-actividad" title="Seleccione una opción" required>
-							</select>
+							<span><strong>Seleccionar actividad</strong></span>
+							<select class="form-control selectpicker" id="consultar-actividad" title="Seleccione una opción" required></select>
 						</div>
-
 					</div>
 				</div>
-
 				<div id="div_consulta_atencion" style="display: none;">
 					<table id="informacion-atencion" style="width: 100%; border-color: #663399;" border="2">
 						<tr style="text-align: center; background: #EBEDEF">
@@ -117,7 +111,6 @@
 							<td><label id="lb-modalidad"></label></td>
 							<td><label id="lb-actividad"></label></td>
 							<td><label id="lb-recursos"></label></td>
-
 						</tr>
 						<tr style="text-align: center;">
 							<td style="width: 25%; height: 30px"><strong>Tema desarrollado durante la actividad:</strong></td>
@@ -138,9 +131,42 @@
 						</thead>
 						<tbody></tbody>
 					</table>
-
 				</div>
-
+			</div>
+			<div class="tab-pane" id="consolidado_mensual_asistencias" role="tabpanel"><br>
+				<div class="form-group">
+					<div class="row mb-3">
+						<div class="col-xs-6 col-md-4 col-lg-4 offset-md-2 offset-lg-2">
+							<span><strong>Seleccionar Grupo</strong></span>
+							<select class="form-control selectpicker" id="consultar_grupo_mensual"></select>
+							<span class="help-block" id="error"></span>
+						</div>
+						<div class="col-xs-6 col-md-4 col-lg-4">
+							<span><strong>Seleccione Mes</strong></span>
+							<select class="form-control selectpicker" id="mes_reporte">
+								<option value="2021-01">Enero</option>
+								<option value="2021-02">Febrero</option>
+								<option value="2021-03">Marzo</option>
+								<option value="2021-04">Abril</option>
+								<option value="2021-05">Mayo</option>
+								<option value="2021-06">Junio</option>
+								<option value="2021-07">Julio</option>
+								<option value="2021-08">Agosto</option>
+								<option value="2021-09">Septiembre</option>
+								<option value="2021-10">Octubre</option>
+								<option value="2021-11">Noviembre</option>
+								<option value="2021-12">Diciembre</option>
+							</select>
+							<span class="help-block" id="error"></span>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-xs-6 col-md-4 col-lg-4 offset-md-4 offset-lg-4">
+							<button class="btn btn-block btn-success" id="btn-consultar-asistencias">Consultar asistencias</button>
+						</div>
+					</div>
+				</div>
+				<div id="div_table_asistencia"></div>
 			</div>
 		</div>
 	</div>

@@ -18,9 +18,9 @@ class ColegiosController extends Controller
 
 	protected $colegiosRepository;
 
-	public function __construct(ColegiosRepository $colegiosRepository){
+/*	public function __construct(ColegiosRepository $colegiosRepository){
 		$this->middleware('auth');
-	}
+	}*/
 	public function index(){
 		return view('Gestion_Colegios/colegios');
 	}

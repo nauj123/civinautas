@@ -106,6 +106,7 @@ Route::post('/Registro_Asistencia/guardarActividadAsistencia', 'Registro_Asisten
 Route::post('/Registro_Asistencia/getListadoActividadesGrupo', 'Registro_Asistencia\AsistenciaController@getListadoActividadesGrupo');
 Route::post('/Registro_Asistencia/getEncabezadoAtencion', 'Registro_Asistencia\AsistenciaController@getEncabezadoAtencion');
 Route::post('/Registro_Asistencia/getAsistenciaAtencion', 'Registro_Asistencia\AsistenciaController@getAsistenciaAtencion');
+Route::post('/Registro_Asistencia/consultarAsistenciasMensual', 'Registro_Asistencia\AsistenciaController@consultarAsistenciasMensual');
 
 /**
  * Rutas reportes

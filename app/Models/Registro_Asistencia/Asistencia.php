@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models\Registro_Asistencia;
 
@@ -33,4 +33,16 @@ class Asistencia extends Model
         $informacion = DB::select($sql);
         return $informacion;
     }
+
+    public function consultarAsistenciaEstudianteAtencion($id_estudiante,$id_sesion_clase) {
+        $estado_asistencia = Asistencia::select(Asistencia::raw("IN_Asistencia"))
+        ->where([
+          ['Fk_Id_Estudiante', $id_estudiante],
+          ['Fk_Id_Atencion', $id_sesion_clase]
+        ])
+        ->get();
+        return $estado_asistencia;
+    } 
+
+
 }

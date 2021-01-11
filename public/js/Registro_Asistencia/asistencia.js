@@ -19,6 +19,8 @@ $(document).ready(function(){
 		$("#consultar-actividad").html(getListadoActividadesGrupo($("#consultar-grupo").val())).selectpicker("refresh");
 	}).selectpicker("refresh");
 
+	$("#consultar_grupo_mensual").html(options_grupos).selectpicker("refresh");
+
 
 	function getOptionsGruposMediador() {
 		$.ajax({
@@ -340,6 +342,61 @@ $(document).ready(function(){
 			},
 			async: false
 		});
+	}
+
+
+	$("#btn-consultar-asistencias").click(consultarAsistenciasMensual);
+
+	/*function cargarConsolidadoMensual() {
+		consultarAsistenciasMensual();
+	}*/ 
+
+	function consultarAsistenciasMensual(){
+		$.ajax({
+			url: "consultarAsistenciasMensual",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_grupo: $("#consultar_grupo_mensual").val(),
+				id_mes: $("#mes_reporte").val()
+			},
+			success: function(data){			
+				$("#div_table_asistencia").html(data);
+				
+				$("#table_asistencia").DataTable({ 
+					pageLength: 50,
+					lengthChange: false,
+					responsive: true,
+					dom: 'Bfrtip',
+					buttons: [{
+						extend: 'excel',
+						text: 'Descargar datos',
+						filename: 'Datos'
+					}],
+					"language": {
+						"lengthMenu": "Ver _MENU_ registros por página",
+						"zeroRecords": "No hay información, lo sentimos.",
+						"info": "Mostrando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de un total de _MAX_ registros)",
+						"search": "Filtrar",
+						"paginate": {
+							"first": "Primera",
+							"last": "Última",
+							"next": "Siguiente",
+							"previous": "Anterior"
+						},
+					},					
+				}).draw();				
+			},
+			error: function(data){
+				swal("Error", "No se encontro información con los datos seleccionados por favor verifique la información, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+
 	}
 
 });

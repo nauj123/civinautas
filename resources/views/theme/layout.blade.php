@@ -189,6 +189,7 @@
 <script src="{{ asset ('assets/js/es5/sidebar.large.script.min.js') }}"></script>
 <script src="{{ asset ('assets/js/vendor/sweetalert2.min.js') }}"></script>
 <script src="{{ asset ('assets/js/sweetalert.script.js') }}"></script>
+<script src="{{ asset ('assets/js/jquery.validate.min.js') }}"></script>
 <script src="https://cdn.amcharts.com/lib/3/amcharts.js"></script>
 <script src="https://cdn.amcharts.com/lib/3/ammap.js"></script>
 

@@ -54,4 +54,18 @@ class Atencion extends Model
         $informacion = DB::select($sql);
         return $informacion;
     } 
+
+    public function getEncabezadoConsultaMensual($id_grupo,$id_mes) {
+        $informacion = Atencion::select(Atencion::raw("Pk_Id_Atencion, DT_Fecha_Atencion"))
+        ->where([
+          ['Fk_Id_Grupo', $id_grupo],
+          ['DT_Fecha_Atencion','like','%'.$id_mes.'%']
+        ])
+        ->get();
+        return $informacion;
+    } 
+
+
+
+    
 }

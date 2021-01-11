@@ -60,5 +60,24 @@ class EstudianteGrupo extends Model
         return $informacion;
     } 
 
+    public function getEncabezadoConsultaMensual() {
+        $informacion = EstudianteGrupo::select(EstudianteGrupo::raw("Pk_Id_Atencion, DT_Fecha_Atencion"))
+        ->where([
+          ['Fk_Id_Grupo', 7]
+        ])
+        ->get();
+        return $informacion;
+    } 
+
+    public function getEstudaintesGrupoConsulta($id_grupo){
+		$informacion = EstudianteGrupo::select("Pk_Id_Beneficiario", "IN_Identificacion", "VC_Primer_Nombre", "VC_Segundo_Nombre", "VC_Primer_Apellido", "VC_Segundo_Apellido", "IN_Estado")
+		->join("tb_estudiantes as es", "es.Pk_Id_Beneficiario", "=", "Fk_Id_Estudiante")
+		->where([
+			["Fk_Id_Grupo", $id_grupo]
+    ])
+    ->orderBy('VC_Primer_Nombre','desc')
+		->get();
+		return $informacion;
+	}
 
 }
