@@ -172,23 +172,26 @@ class Reportes extends Model
         return $informacion;
     }
     public function getInfoColegiosEstudiantes($id_localidad){
-        $informacion = Asistencia::select("Pk_Id_Institucion AS id_colegio", "VC_Nombre_Institucion AS Colegio")
+        $informacion = Asistencia::select("Pk_Id_Institucion AS id_colegio", "VC_Nombre_Institucion AS Colegio", "descripcion AS Tipo_Institucion", "VC_Nombre_Upz AS Upz")
         ->selectRaw("COUNT(IN_Asistencia) AS 'Atendidos'")
         ->join("tb_atenciones", "Pk_Id_Atencion", "=", "Fk_Id_Atencion")
         ->join("tb_grupos", "Pk_Id_Grupo", "=", "Fk_Id_Grupo")
-        ->join("tb_instituciones_educativas", "Pk_Id_Institucion", "=", "Fk_Id_Institucion")
+        ->join("tb_instituciones_educativas AS IE", "Pk_Id_Institucion", "=", "Fk_Id_Institucion")
+        ->join("parametro_detalle", "id_parametro_detalle", "=", "Fk_Tipo_Institucion")
+        ->leftjoin("tb_upz", "Pk_Id_Upz", "=", "Fk_Id_Upz")
         ->where("IN_Asistencia", 1)
-        ->where("Fk_Id_Localidad", $id_localidad)
-        ->groupBy("Pk_Id_Institucion")
+        ->where("IE.Fk_Id_Localidad", $id_localidad)
+        ->groupBy("IE.Pk_Id_Institucion")
         ->get();
 
         return $informacion;
     }
     public function getInfoGruposEstudiantes($id_colegio){
-        $informacion = Asistencia::select("Pk_Id_Grupo AS id_grupo", "VC_Nombre_Grupo AS Grupo")
+        $informacion = Asistencia::select("Pk_Id_Grupo AS id_grupo", "VC_Nombre_Grupo AS Grupo", "primer_nombre AS P_Nombre", "segundo_nombre AS S_Nombre", "primer_apellido AS P_Apellido", "VC_Docente AS Docente")
         ->selectRaw("COUNT(IN_Asistencia) AS 'Atendidos'")
         ->join("tb_atenciones", "Pk_Id_Atencion", "=", "Fk_Id_Atencion")
         ->join("tb_grupos", "Pk_Id_Grupo", "=", "Fk_Id_Grupo")
+        ->join("users AS US", "id", "=", "Fk_Id_Mediador")
         ->where("IN_Asistencia", 1)
         ->where("Fk_Id_Institucion", $id_colegio)
         ->groupBy("Pk_Id_Grupo")
@@ -197,8 +200,9 @@ class Reportes extends Model
         return $informacion;
     }
     public function getInfoEstudiantes($id_grupo){
-        $informacion = Asistencia::select("Pk_Id_Beneficiario AS id_estudiante")
+        $informacion = Asistencia::select("Pk_Id_Beneficiario AS id_estudiante","IN_Identificacion AS Identificacion")
         ->selectRaw("CONCAT_ws(' ', VC_Primer_Nombre,VC_Segundo_Nombre,VC_Primer_Apellido,VC_Primer_Apellido)  AS 'Estudiante'")
+        ->selectRaw("(CASE WHEN IN_Genero = '1' THEN 'MASCULINO' WHEN IN_Genero = '2' THEN 'FEMENINO' END) AS 'GENERO'")
         ->join("tb_atenciones", "Pk_Id_Atencion", "=", "Fk_Id_Atencion")
         ->join("tb_grupos", "Pk_Id_Grupo", "=", "Fk_Id_Grupo")
         ->join("tb_estudiantes", "Pk_Id_Beneficiario", "=", "Fk_Id_Estudiante")

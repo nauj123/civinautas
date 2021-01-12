@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/caracterizacion/caracterizacion.js') }}" defer></script>
+<script src="{{ asset('js/caracterizacion/caracterizacion.js?v=2021.01.11.06') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -13,7 +13,7 @@
 <div class="container-fluid">
 	<div class="panel-body">
 		<ul class="nav nav-tabs" role="tablist">
-			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#creacion_usuario">Información beneficiarios</a></li>
+			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#creacion_usuario">Georeferenciación</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active col-lg-10 offset-lg-1" id="creacion_usuario"><br>
@@ -48,8 +48,10 @@
 			<div class="modal-body">
 				<table id="tabla-colegios-estudiantes" class="table table-hover table-striped table-bordered display" style="width: 100%;">
 					<thead>
-						<tr>
-							<th>Colegio</th>
+						<tr style="text-align: center;">
+							<th>Nombre de la Institución</th>
+							<th>Tipo de Institución</th>
+							<th>Upz</th>
 							<th>Estudiantes atendidos</th>
 						</tr>
 					</thead>
@@ -74,8 +76,10 @@
 			<div class="modal-body">
 				<table id="tabla-grupos-estudiantes" class="table table-hover table-striped table-bordered display" style="width: 100%;">
 					<thead>
-						<tr>
-							<th>Grupo</th>
+						<tr style="text-align: center;">
+							<th>Nombre del Grupo</th>
+							<th>Nombre del Mediador</th>
+							<th>Docente</th>
 							<th>Estudiantes atendidos</th>
 						</tr>
 					</thead>
@@ -101,7 +105,9 @@
 				<table id="tabla-estudiantes" class="table table-hover table-striped table-bordered display" style="width: 100%;">
 					<thead>
 						<tr>
-							<th>Estudiante</th>
+							<th>Identificación</th>
+							<th>Nombre del Estudiante</th>
+							<th>Genero</th>
 						</tr>
 					</thead>
 					<tbody></tbody>

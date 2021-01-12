@@ -201,7 +201,7 @@ map.addListener("clickMapObject", function(event){
     id_localidad = event.mapObject.linkToObject["id_localidad"];
 
     $("#modal-colegios-estudiantes").modal("show");
-    $("#title-colegios-estudiantes").html("").html(titulo_modal);
+    $("#title-colegios-estudiantes").html("").html("<strong>INSTITUCIONES EDUCATIVAS LOCALIDAD DE "+titulo_modal+"</strong>");
 
     $.ajax({
         url: "getInfoColegiosEstudiantes",
@@ -217,11 +217,14 @@ map.addListener("clickMapObject", function(event){
             data.forEach((value, index) => {
                 rowNode = tabla_colegios_estudiantes.row.add([
                     "<a href='#' class='colegio' data-id-colegio='"+data[index]["id_colegio"]+"'>"+data[index]["Colegio"]+"</a>",
-                    data[index]["Atendidos"],
+                    data[index]["Tipo_Institucion"],
+                    data[index]["Upz"],
+                    "<strong><center>"+data[index]["Atendidos"]+"</center></strong>",
                     ]).draw().node();
             });
         },
         error: function(data){
+
             swal("Error", "No se pudo obtener la información, por favor inténtelo nuevamente", "error");
         },
         async: false
@@ -242,13 +245,15 @@ $("#modal-colegios-estudiantes").on("click", ".colegio", function(){
         },
         success: function(data) {
             $("#modal-colegios-estudiantes").modal("hide");
-            $("#title-grupos-estudiantes").html("").html(nombre_colegio);
+            $("#title-grupos-estudiantes").html("").html("<strong>GRUPOS DE LA INSTITUCION "+nombre_colegio+"</strong>");
             $("#modal-grupos-estudiantes").modal("show");
             tabla_grupos_estudiantes.clear().draw();
             data.forEach((value, index) => {
                 rowNode = tabla_grupos_estudiantes.row.add([
-                    data[index]["Grupo"],
-                    "<a href='#' class='estudiantes' data-id-grupo='"+data[index]["id_grupo"]+"' data-nombre-grupo='"+data[index]["Grupo"]+"'>"+data[index]["Atendidos"]+"</a>",
+                    "<a href='#' class='estudiantes' data-id-grupo='"+data[index]["id_grupo"]+"' data-nombre-grupo='"+data[index]["Grupo"]+"'>"+data[index]["Grupo"]+"</a>",
+                    data[index]["P_Nombre"]+" "+data[index]["S_Nombre"]+" "+data[index]["P_Apellido"],
+                    data[index]["Docente"],
+                    "<center>"+data[index]["Atendidos"]+"</center>"
                     ]).draw().node();
             });
         },
@@ -278,7 +283,9 @@ $("#modal-grupos-estudiantes").on("click", ".estudiantes", function(){
             tabla_estudiantes.clear().draw();
             data.forEach((value, index) => {
                 rowNode = tabla_estudiantes.row.add([
+                    data[index]["Identificacion"],
                     "<a href='#' class='estudiante' data-id-estudiante='"+data[index]["id_estudiante"]+"'>"+data[index]["Estudiante"]+"</a>",
+                    data[index]["GENERO"]
                     ]).draw().node();
             });
         },
