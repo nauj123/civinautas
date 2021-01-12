@@ -135,6 +135,7 @@ Route::post('/Diplomados/getOptionsDiplomadosMediador', 'Diplomados\DiplomadosCo
 Route::post('/Diplomados/guardarParticipantesDiplomado', 'Diplomados\DiplomadosController@guardarParticipantesDiplomado');
 Route::post('/Diplomados/getInfoParticipantesDiplomado', 'Diplomados\DiplomadosController@getInfoParticipantesDiplomado');
 Route::post('/Diplomados/guardarAsistenciaDiplomado', 'Diplomados\DiplomadosController@guardarAsistenciaDiplomado');
+Route::post('/Diplomados/consultarAsistenciaDiplomado', 'Diplomados\DiplomadosController@consultarAsistenciaDiplomado');
 
 /**
  * Rutas caracterización 

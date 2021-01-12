@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Diplomados/diplomados.js?v=2020.12.29.03') }}" defer></script>
+<script src="{{ asset('js/Diplomados/diplomados.js?v=2021.01.12.03') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -13,11 +13,12 @@
 	@auth
 	<div class="panel-body">
 		<ul class="nav nav-tabs" role="tablist">
-			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#grupos_mediador">Crear diplomado</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#agregar_estudiantes">Registrar asistencia diplomado</a></li>
+			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#crear_diplomado">Crear diplomado</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#registrar_asistencia">Registrar asistencia</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consultar_asistencia">Consultar asistencia</a></li>
 		</ul>
 		<div class="tab-content">
-			<div class="tab-pane active col-lg-12" id="grupos_mediador"><br>
+			<div class="tab-pane active col-lg-12" id="crear_diplomado"><br>
 				<div class="row">
 					<div class="col-xs-6 col-md-6 col-lg-6">
 					</div>
@@ -39,7 +40,7 @@
 					<tbody></tbody>
 				</table>
 			</div>
-			<div class="tab-pane" id="agregar_estudiantes" role="tabpanel"><br>
+			<div class="tab-pane" id="registrar_asistencia" role="tabpanel"><br>
 				<form id="form-asistencia-diplomado">
 					<div class="form-group">
 						<div class="row">
@@ -84,6 +85,19 @@
 					</div>
 				</form>
 			</div>
+
+			<div class="tab-pane" id="consultar_asistencia" role="tabpanel"><br>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-lg-4 offset-lg-4">
+							<span>Seleccionar Diplomado:</span>
+							<select class="form-control selectpicker" id="diplomado-consulta" title="Seleccione una opción" required></select>
+						</div>
+					</div>
+				</div>
+				<div id="div_table_asistencia"></div>				
+			</div>
+
 		</div>
 	</div>
 	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-crear-diplomado">

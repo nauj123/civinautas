@@ -151,11 +151,11 @@
 								<option value="2021-05">Mayo</option>
 								<option value="2021-06">Junio</option>
 								<option value="2021-07">Julio</option>
-								<option value="2021-08">Agosto</option>
-								<option value="2021-09">Septiembre</option>
-								<option value="2021-10">Octubre</option>
-								<option value="2021-11">Noviembre</option>
-								<option value="2021-12">Diciembre</option>
+								<option value="2020-08">Agosto</option>
+								<option value="2020-09">Septiembre</option>
+								<option value="2020-10">Octubre</option>
+								<option value="2020-11">Noviembre</option>
+								<option value="2020-12">Diciembre</option>
 							</select>
 							<span class="help-block" id="error"></span>
 						</div>

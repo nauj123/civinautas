@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/caracterizacion/caracterizacion.js?v=2021.01.11.06') }}" defer></script>
+<script src="{{ asset('js/Caracterizacion/caracterizacion.js?v=2021.01.11.06') }}" defer></script>
 @endsection
 @section('principal')
 @endsection

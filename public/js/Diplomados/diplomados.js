@@ -62,9 +62,14 @@ $(document).ready(function(){
 	$("#localidad").html(options_localidades).selectpicker("refresh");
 	$("#etnia").html(options_enfoque).selectpicker("refresh");
 
-	$('a[href="#agregar_estudiantes"]').on('shown.bs.tab', function(e){ 
+	$('a[href="#registrar_asistencia"]').on('shown.bs.tab', function(e){ 
 		getOptionsDiplomadosMediador();
 		$("#diplomado-asistencia").html(options_diplomados).selectpicker("refresh");		
+	});
+
+	$('a[href="#consultar_asistencia"]').on('shown.bs.tab', function(e){
+		getOptionsDiplomadosMediador();
+		$("#diplomado-consulta").html(options_diplomados).selectpicker("refresh");		
 	});
 
 	function getLocalidades() {
@@ -273,7 +278,7 @@ $(document).ready(function(){
 		$('.asistencia_diplomado').each(function() {
 			var check;
 			check = $(this).is(":checked") ? 1 : 0;
-			array_datos_asistencia.push(new Array($("#diplomado-asistencia").val(), $("#fecha-asistencia").val(), $(this).attr("data-id-participante"), check));
+			array_datos_asistencia.push(new Array($(this).attr("data-id-participante"), check));
 		});
 
 		$.ajax({
@@ -283,6 +288,8 @@ $(document).ready(function(){
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
 			data:{
+				diplomado: $("#diplomado-asistencia").val(),
+				fecha: $("#fecha-asistencia").val(),
 				array_datos_asistencia: array_datos_asistencia
 			},
 			success: function(data) {
@@ -334,6 +341,59 @@ $(document).ready(function(){
 			async: false
 		});
 	});
+
+	$("#diplomado-consulta").change(consultarAsistenciasMensual);
+
+	/*function cargarConsolidadoMensual() {
+		consultarAsistenciasMensual();
+	}*/ 
+
+	function consultarAsistenciasMensual(){
+		$.ajax({
+			url: "consultarAsistenciaDiplomado",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_diplomado: $("#diplomado-consulta").val()
+			},
+			success: function(data){			
+				$("#div_table_asistencia").html(data);
+				
+				$("#table_asistencia").DataTable({ 
+					pageLength: 50,
+					lengthChange: false,
+					responsive: true,
+					dom: 'Bfrtip',
+					buttons: [{
+						extend: 'excel',
+						text: 'Descargar datos',
+						filename: 'Datos'
+					}],
+					"language": {
+						"lengthMenu": "Ver _MENU_ registros por página",
+						"zeroRecords": "No hay información, lo sentimos.",
+						"info": "Mostrando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de un total de _MAX_ registros)",
+						"search": "Filtrar",
+						"paginate": {
+							"first": "Primera",
+							"last": "Última",
+							"next": "Siguiente",
+							"previous": "Anterior"
+						},
+					},					
+				}).draw();				
+			},
+			error: function(data){
+				swal("Error", "No se encontro información con los datos seleccionados por favor verifique la información, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+
+	}
 
 
 });

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Diplomados\Diplomados;
 use App\Models\Diplomados\ParticipantesDiplomado;
+use App\Models\Diplomados\SesionDiplomado;
 use App\Models\Diplomados\AsistenciaDiplomado;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,15 +79,75 @@ class DiplomadosController extends Controller
 		return $informacion;
 	}
 	public function guardarAsistenciaDiplomado(Request $request){
+		$sesion = new SesionDiplomado;
+		$sesion->Fk_Id_Diplomado = $request->diplomado;
+		$sesion->DT_Fecha_Sesion = $request->fecha;
+		if ($sesion->save())
+		$idSesionDiploma = $sesion->id;		
 		$datos = $request->array_datos_asistencia;
 		foreach ($datos as $dato) {
 			$asistencia = new AsistenciaDiplomado;
-			$asistencia->Fk_Id_Diplomado = $dato[0];
-			$asistencia->VC_Fecha_Asistencia = $dato[1];
-			$asistencia->Fk_Id_Participante = $dato[2];
-			$asistencia->IN_Asistencia = $dato[3];
+			$asistencia->Fk_Id_Sesion_Diplomado = $idSesionDiploma;
+			$asistencia->Fk_Id_Participante = $dato[0];
+			$asistencia->IN_Asistencia = $dato[1];
 			$asistencia->save();
 		}
-		return $asistencia;
+		return 200;
+	}
+
+	function consultarAsistenciaDiplomado(Request $request)
+	{
+		$id_diplomado = intval($request->id_diplomado);
+		$sesion = new SesionDiplomado;
+		$mostrar = "";
+		$diplomado = $sesion->getEncabezadoConsultaDiplomado($id_diplomado);
+		$mostrar = "<table class='display table table-striped table-bordered' id='table_asistencia' style='width: 100%;'>";
+		$mostrar .= "<thead>";
+		$mostrar .= "<th style='text-align: center;'> Identificación</th>";
+		$mostrar .= "<th style='text-align: center;'> Nombre del Estudiante</th>";
+		$mostrar .= "<th style='text-align: center;'> Correo Electrónico</th>";
+		foreach ($diplomado as $sc) {
+			$mostrar .= "<th style='text-align: center;'>" . explode("-", $sc['DT_Fecha_Sesion'])[2] . '/' . explode("-", $sc['DT_Fecha_Sesion'])[1] . '/' . explode("-", $sc['DT_Fecha_Sesion'])[0] . "</th>";
+		}
+		$mostrar .= "</thead>";
+		$mostrar .= "<colgroup><col style='width: 10%; border:1px solid black;'>";
+		$mostrar .= "<col style='width: 30%; border:1px solid black;'>";
+		$ancho_columna_asistencia = 60 / sizeof($diplomado);
+		foreach ($diplomado as $sc) {
+			$mostrar .= "<col style='width: " . $ancho_columna_asistencia . "%; border:1px solid black;'>";
+		}
+		$mostrar .= "</colgroup>";
+		$mostrar .= " <tbody>";
+
+		$estudiantegrupo = new ParticipantesDiplomado;
+		$estudiante = $estudiantegrupo->getParticipantesDiplomado($id_diplomado);
+
+		foreach ($estudiante as $e) {
+			$mostrar .= "<tr>";
+			$mostrar .= "<td>" . $e['VC_Identificacion'] . "</td>";
+			$mostrar .= "<td>" . $e['VC_Nombres'] . " " . $e['VC_Apellidos'] . "</td>";
+			$mostrar .= "<td>" . $e['VC_Correo'] . "</td>";
+			foreach ($diplomado as $sc) {
+				$asistencia = new AsistenciaDiplomado;
+				$estado_asistencia = $asistencia->consultarAsistenciaDiplomado($e['Pk_Id_Participante'], $sc['Pk_Id_Sesion_Diplomado']);
+				if (empty($estado_asistencia["IN_Asistencia"])) {
+					$estado_asistencia = $estado_asistencia[0];
+					if ($estado_asistencia["IN_Asistencia"] == 1) {
+						$mostrar .= "<td class='text-center' style='background-color: #A9DFBF'>";
+						$mostrar .= '<strong><span>Asistió</span></strong>';
+						"</td>";
+					} else if ($estado_asistencia["IN_Asistencia"] == 0) {
+						$mostrar .= "<td class='text-center' style='background-color: #F5B7B1'>";
+						$mostrar .= '<strong><span>No Asistió</span></strong>';
+						"</td>";
+					}
+				} else {
+					$mostrar .= "<td class='text-center'><span>No registra</span></td>";
+				}
+			}
+			$mostrar .= "</tr>";
+		}
+		$mostrar .= "</tbody></table>";
+		return $mostrar;
 	}
 }
