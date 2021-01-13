@@ -1,7 +1,7 @@
 @extends("theme.layout")
 @section('js-import')
 <script src="../../node_modules/xlsx/dist/xlsx.full.min.js"></script>
-<script src="{{ asset('js/Gestion_Simat/simat.js') }}" defer></script>
+<script src="{{ asset('js/Gestion_Simat/simat.js?v=2021.01.13.1') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -81,9 +81,10 @@
 					</div>
 				</form>
 				<div id="div-consulta-archivos-simat" style="display: none;">
-					<table class="table display" id="tabla-consulta-archivos-simat" style="width: 100%;">
+					<table class="display table table-striped table-bordered" id="tabla-consulta-archivos-simat" style="width: 100%;">
 						<thead>
 							<tr>
+								<th>Mes de la información</th>
 								<th>Fecha de subida</th>
 								<th>Colegio</th>
 								<th>Total de estudiantes</th>

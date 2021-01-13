@@ -190,11 +190,12 @@ class SimatController extends Controller
 	}
 	public function getInfoArchivosSubidos(Request $request){
 		$informacion = EstudianteSimat::select(EstudianteSimat::raw("
+		(CASE WHEN MES_INF = '1' THEN 'Enero' WHEN MES_INF = '2' THEN 'Febrero' WHEN MES_INF = '3' THEN 'Marzo' WHEN MES_INF = '4' THEN 'Abril' WHEN MES_INF = '5' THEN 'Mayo' WHEN MES_INF = '6' THEN 'Junio' WHEN MES_INF = '7' THEN 'Julio' WHEN MES_INF = '8' THEN 'Agosto' WHEN MES_INF = '9' THEN 'Septiembre' WHEN MES_INF = '10' THEN 'Octubre' WHEN MES_INF = '11' THEN 'Noviembre' WHEN MES_INF = '12' THEN 'Diciembre' END) AS 'Mes',
 			date_format(FECHA_SUBIDA, '%d/%m/%Y %h:%i') AS 'Fecha_cargue',
 			NOMBRE_ESTABLECIMIENTO_EDUCATIVO AS 'Colegio',
 			count(Pk_Id_Estudiante_Simat) AS 'Total_estudiantes'
 			"))
-		->whereMonth("FECHA_SUBIDA", $request->mes)
+		->where("MES_INF", $request->mes)
 		->groupBy("CODIGO_ESTABLECIMIENTO_EDUCATIVO")
 		->get();
 		return $informacion;

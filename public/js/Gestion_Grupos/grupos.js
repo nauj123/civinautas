@@ -755,9 +755,9 @@ $(document).ready(function(){
 						"<center>"+info_consultar_grupos[index]["DOCENTE"]+"</center>",
 						"<center>"+info_consultar_grupos[index]["JORNADA"]+"</center>",
 						"<center>"+info_consultar_grupos[index]["FCREACION"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["ESTADO"]+"</center>"
-						]).draw().node();				
-
+						"<center>"+info_consultar_grupos[index]["ESTADO"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["OBSERVACIONES"]+"</center>"
+						]).draw().node();
 				});
 			},
 			error: function(data){

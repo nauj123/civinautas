@@ -162,7 +162,7 @@ $(document).ready(function(){
 		tabla_consulta_archivos_simat.clear().draw();
 
 		$.ajax({
-			url: "getInfoArchivosSubidos",
+			url: "getInfoArchivosSubidos", 
 			type: 'POST',
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -173,10 +173,11 @@ $(document).ready(function(){
 			success: function(data) {
 				$("#div-consulta-archivos-simat").show();
 				data.forEach((value, index) => {
-					rowNode = tabla_consulta_archivos_simat.row.add([
+					rowNode = tabla_consulta_archivos_simat.row.add([						
+						data[index]["Mes"],
 						data[index]["Fecha_cargue"],
 						data[index]["Colegio"],
-						data[index]["Total_estudiantes"]
+						"<strong><center>"+data[index]["Total_estudiantes"]+"</center></strong>"
 						]).draw().node();
 				});
 			},

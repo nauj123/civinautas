@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2021.01.4.1') }}" defer></script>
+<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2021.01.4.2') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -137,6 +137,7 @@
 							<th>Jornada</th>
 							<th>Fecha de creación</th>
 							<th>Estado</th>
+							<th>Observación</th>
 						</tr>
 					</thead>
 					<tbody></tbody>

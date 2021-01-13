@@ -88,7 +88,8 @@ class Grupos extends Model
      GR.VC_Docente AS 'DOCENTE',
      PDJ.descripcion AS 'JORNADA',
      GR.DT_Created_at AS 'FCREACION',
-     (CASE WHEN GR.IN_Estado = '0' THEN 'INACTIVO' WHEN GR.IN_Estado = '1' THEN 'ACTIVO' END) AS 'ESTADO'
+     (CASE WHEN GR.IN_Estado = '0' THEN 'INACTIVO' WHEN GR.IN_Estado = '1' THEN 'ACTIVO' END) AS 'ESTADO',
+     GR.VC_Observaciones AS 'OBSERVACIONES'
      FROM tb_grupos AS GR
      JOIN tb_instituciones_educativas AS IE ON GR.Fk_Id_Institucion = IE.Pk_Id_Institucion
      JOIN tb_localidades AS LO ON IE.Fk_Id_Localidad  = LO.Pk_Id_Localidad
