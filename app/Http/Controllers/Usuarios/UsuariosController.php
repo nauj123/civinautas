@@ -83,4 +83,32 @@ class UsuariosController extends Controller
 		$resultado = $usuario->getListadoUsuarios();
 		return response()->json($resultado[0]);
 	}
+	public function InactivarUsuario(Request $request){
+		$usuario = new Users;
+		$usuario_id =  $request->id_usuario;
+		$array_update = [];
+		$array_update["IN_Estado"] = 0;
+		$user_id = auth()->user()->id;
+		$Observaciones = 'Usuario: '.$user_id.'; Motivo Inactivación: '.$request->observacion.'; Fecha Inactivación: '.date("Y-m-d H:i:s");
+		$array_update["VC_Observaciones"] = $Observaciones;
+		$usuario->where('id', $usuario_id)
+		->update($array_update);
+		if($usuario){
+			return 200;
+		}
+	}
+	public function ActivarUsuario(Request $request){
+		$estudiantegrupo = new Users;
+		$usuario_id =  $request->id_usuario;
+		$array_update = [];
+		$array_update["IN_Estado"] = 1;
+		$estudiantegrupo->where('id', $usuario_id)
+		->update($array_update);
+		if($estudiantegrupo){
+			return 200;
+		}
+	}
+
+	
+	
 }

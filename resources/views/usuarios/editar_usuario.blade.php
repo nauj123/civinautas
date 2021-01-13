@@ -70,4 +70,13 @@
 		</div>
 	</div>
 </div>
+<div class="form-group">
+	<div class="row">
+		<div class="col-xs-6 col-md-6 col-lg-6 offset-lg-3">
+			<span>Tipo de usuario</span>
+			<select class="form-control selectpicker" id="rol-m" required>				
+			</select>
+		</div>		
+	</div>
+</div>
 

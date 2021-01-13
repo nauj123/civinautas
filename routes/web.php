@@ -59,6 +59,9 @@ Route::get('/usuarios/perfil-usuario', 'Usuarios\UsuariosController@perfilUsuari
 Route::post('/usuarios/getInfoUsuario', 'Usuarios\UsuariosController@getInfoUsuario');
 Route::post('/usuarios/actualizarInfoUsuario', 'Usuarios\UsuariosController@actualizarInfoUsuario');
 Route::post('/usuarios/getListadoUsuarios', 'Usuarios\UsuariosController@getListadoUsuarios');
+Route::post('/usuarios/InactivarUsuario', 'Usuarios\UsuariosController@InactivarUsuario');
+Route::post('/usuarios/ActivarUsuario', 'Usuarios\UsuariosController@ActivarUsuario');
+
 
 /**
  * Rutas instituciones educativas

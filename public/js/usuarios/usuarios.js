@@ -72,7 +72,7 @@ $(document).ready(function(){
 	$("#tipo_documento").html(options_tipodocumento).selectpicker("refresh");
 	$("#rol-usuario").html(options_roles).selectpicker("refresh");	
 	$("#tipo-documento-m").html(options_tipodocumento).selectpicker("refresh");
-	$("#rol-usuario-m").html(options_roles).selectpicker("refresh");
+	$("#rol-m").html(options_roles).selectpicker("refresh");
 
 	function getTiposDocumento(id_parametro) {
 		$.ajax({
@@ -167,14 +167,27 @@ $(document).ready(function(){
 				tabla_info_usuarios.clear().draw();
 				info_tabla_info_usuarios.forEach((value, index) => {
 
-					rowNode = tabla_info_usuarios.row.add([
+					if (info_tabla_info_usuarios[index]["estado"] == 1) {
+						rowNode = tabla_info_usuarios.row.add([
 						"<center>"+info_tabla_info_usuarios[index]["identificacion"]+"</center>",
 						"<center>"+info_tabla_info_usuarios[index]["nombre"]+"</center>",
 						"<center>"+info_tabla_info_usuarios[index]["email"]+"</center>",
 						"<center>"+info_tabla_info_usuarios[index]["celular"]+"</center>",
 						"<center>"+info_tabla_info_usuarios[index]["rol"]+"</center>",
-						"<center><buton type='button' class='btn btn-warning editar' data-id-usuario='"+info_tabla_info_usuarios[index]["id"]+"' data-toggle='modal' data-target='#modal-editar-usuario'>Editar</buton></center>"
+						"<center><buton type='button' class='btn btn-warning editar' data-id-usuario='"+info_tabla_info_usuarios[index]["id"]+"' data-toggle='modal' data-target='#modal-editar-usuario'>Editar</buton></center>",
+						"<center><buton type='button' class='btn btn-danger inactivarusuario' data-id-usuario='"+info_tabla_info_usuarios[index]["id"]+"' data-nombre-usuario='"+info_tabla_info_usuarios[index]["nombre"]+"' data-toggle='modal' data-target='#modal-inactivar-usuario'>Inactivar</buton></center>"
 						]).draw().node();
+					} else {
+						rowNode = tabla_info_usuarios.row.add([
+							"<center>"+info_tabla_info_usuarios[index]["identificacion"]+"</center>",
+							"<center>"+info_tabla_info_usuarios[index]["nombre"]+"</center>",
+							"<center>"+info_tabla_info_usuarios[index]["email"]+"</center>",
+							"<center>"+info_tabla_info_usuarios[index]["celular"]+"</center>",
+							"<center>"+info_tabla_info_usuarios[index]["rol"]+"</center>",
+							"Usuario Inactivo",
+							"<center><buton type='button' class='btn btn-success activarusuario' data-id-usuario='"+info_tabla_info_usuarios[index]["id"]+"' data-nombre-usuario='"+info_tabla_info_usuarios[index]["nombre"]+"' data-toggle='modal' data-target='#modal-activar-usuario'>Activar</buton></center>"
+							]).draw().node();
+					}		
 				});
 			},
 			error: function(data){
@@ -184,6 +197,71 @@ $(document).ready(function(){
 		});
 		return options_tipodocumento;
 	}
+
+	$("#tabla-info-usuarios").on("click", ".inactivarusuario",  function(){
+		$("#id-usuario").val($(this).attr("data-id-usuario"));
+		$("#lb-usuario-inactivar").html("").html($(this).attr("data-nombre-usuario"));
+	}); 
+
+	$("#form-inactivar-usuario").submit(function (e) {
+		e.preventDefault();
+		$.ajax({
+			url: "InactivarUsuario",
+			type: 'POST',
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_usuario: $("#id-usuario").val(),
+				observacion: $("#observacion-usuario").val()
+			},
+			success: function (data) {
+				if (data == 200) {
+					swal("Éxito", "Se inactivo correctamente el usuario, desde este momento no tendrá acceso a la plataforma", "success");
+					$("#modal-inactivar-usuario").modal('hide');
+					getUsuarios();
+					
+				}
+			},
+			error: function (data) {
+				swal("Error", "No fue posible inactivar el usuario, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	});
+
+	$("#tabla-info-usuarios").on("click", ".activarusuario",  function(){
+		$("#id-usuario-activar").val($(this).attr("data-id-usuario"));
+		$("#lb-usuario-activar").html("").html($(this).attr("data-nombre-usuario"));
+	});
+
+	$("#form-activar-usuario").submit(function (e) {
+		e.preventDefault();
+		$.ajax({
+			url: "ActivarUsuario",
+			type: 'POST',
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_usuario: $("#id-usuario-activar").val()
+			},
+			success: function (data) {
+				if (data == 200) {
+					swal("Éxito", "Se activo correctamente el usuario, desde este momento ya tendrá acceso a la plataforma", "success");
+					$("#modal-activar-usuario").modal('hide');
+					getUsuarios();
+					
+				}
+			},
+			error: function (data) {
+				swal("Error", "No fue posible activar el usuario, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	});
 
 	function getParametros() {
 		$.ajax({
@@ -340,7 +418,7 @@ $(document).ready(function(){
 				$("#genero-m").val(data["genero"]);
 				$("#email-m").val(data["email"]);
 				$("#celular-m").val(data["celular"]);
-				$("#rol-m").val(data["rol_m"]).selectpicker("refresh").trigger("change");
+				$("#rol-m").val(data["fk_rol"]).selectpicker("refresh").trigger("change");
 			},
 			error: function(data){
 				swal("Error", "No se pudo obtener el listado Tipo de documento, por favor inténtelo nuevamente", "error");

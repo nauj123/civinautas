@@ -25,10 +25,12 @@ class Users extends Model
         u.genero AS 'genero', 
         u.email AS 'email',
         u.celular AS 'celular', 
-        r.descripcion AS 'rol' 
+        r.descripcion AS 'rol',
+        u.IN_Estado AS 'estado' 
         FROM users u
         JOIN parametro_detalle i ON i.id_parametro_detalle = u.fk_tipo_documento AND i.fk_parametro = 1
-        LEFT JOIN parametro_detalle r ON r.id_parametro_detalle = u.fk_rol AND r.fk_parametro = 5";
+        LEFT JOIN parametro_detalle r ON r.id_parametro_detalle = u.fk_rol AND r.fk_parametro = 5
+        ORDER BY nombre";
         $informacion = DB::select($sql);
         return $informacion;
     }
@@ -45,7 +47,7 @@ class Users extends Model
             "genero",
             "email",
             "celular",
-            "fk_rol as rol"
+            "fk_rol"
         )
         ->where("id", $user_id)
         ->get();
