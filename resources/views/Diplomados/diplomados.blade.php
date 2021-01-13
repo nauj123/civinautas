@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Diplomados/diplomados.js?v=2021.01.12.03') }}" defer></script>
+<script src="{{ asset('js/Diplomados/diplomados.js?v=2021.01.12.09') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -26,9 +26,9 @@
 						<button class="btn btn-block btn-success" id="btn-crear-grupo" data-toggle='modal' data-target='#modal-crear-diplomado'>Crear diplomado</button>
 					</div>
 				</div>
-				<table class="table display" id="tabla-info-diplomados" style="width: 100%;">
+				<table class="display table table-striped table-bordered" id="tabla-info-diplomados" style="width: 100%;">
 					<thead>
-						<tr>
+						<tr style="text-align: center;">
 							<th>No.</th>
 							<th>Nombre diplomado</th>
 							<th>Duración </th>
@@ -62,9 +62,9 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-lg-12">
-									<table class="table display" style="width: 100%;" id="tabla-participantes-asistencia-diplomado">
+									<table class="display table table-striped table-bordered" style="width: 100%;" id="tabla-participantes-asistencia-diplomado">
 										<thead>
-											<tr>
+											<tr style="text-align: center;">
 												<th>Identificación</th>
 												<th>Nombres</th>
 												<th>Asitencia</th>
@@ -144,18 +144,13 @@
 					<h3 class="modal-title"><strong>Participantes registrados</strong></h3>
 				</div>
 				<div class="modal-body">
-					<table class="table display" style="width: 100%;" id="tabla-participantes-diplomado">
+					<table class="display table table-striped table-bordered" style="width: 100%;" id="tabla-participantes-diplomado">
 						<thead>
-							<tr>
+							<tr style="text-align: center;">
 								<th>Identificación</th>
 								<th>Nombre</th>
 								<th>Correo</th>
 								<th>Teléfono</th>
-								<!-- <th>Localidad en la que habita</th>
-								<th>Entidad a la que pertenece</th>
-								<th>Rol</th>
-								<th>Pertenencia étnica</th>
-								<th>Sectores sociales</th> -->
 							</tr>
 						</thead>
 					</table>

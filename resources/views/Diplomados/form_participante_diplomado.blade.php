@@ -1,3 +1,4 @@
+<input class="form-control" type="hidden" id="id_diplomado">
 <div class="form-group"> 
 	<div class="row">
 		<div class="col-xs-12 col-md-6 col-lg-6">
@@ -70,4 +71,4 @@
 			</select>
 		</div>
 	</div>
-</div>
+</div> 

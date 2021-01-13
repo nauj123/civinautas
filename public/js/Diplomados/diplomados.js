@@ -3,6 +3,7 @@ var options_localidades;
 var options_instituciones;
 var options_enfoque;
 var id_diplomado;
+var id_diplomado_registro;
 $(document).ready(function(){
 
 	tabla_config = {
@@ -173,11 +174,11 @@ $(document).ready(function(){
 				informacion_diplomados.forEach((value, index) => {
 
 					rowNode = tabla_info_diplomados.row.add([
-						informacion_diplomados[index]["IDDIPLOMADO"],
+						"<center>"+informacion_diplomados[index]["IDDIPLOMADO"]+"</center>",
 						informacion_diplomados[index]["NOMBRE"],
 						informacion_diplomados[index]["DURACION"],
 						informacion_diplomados[index]["TEMATICA"],
-						"<a href='#' class='btn btn-secondary participantes' data-id-diplomado='"+informacion_diplomados[index]["IDDIPLOMADO"]+"' data-toggle='modal' data-target='#modal-participantes-diplomado'>"+informacion_diplomados[index]["PARTICIPANTES"]+"</a>",
+						"<center><a href='#' class='btn btn-secondary participantes' data-id-diplomado='"+informacion_diplomados[index]["IDDIPLOMADO"]+"' data-toggle='modal' data-target='#modal-participantes-diplomado'>"+informacion_diplomados[index]["PARTICIPANTES"]+"</a></center>",
 						"<buton type='button' class='btn btn-block btn-primary agregar' data-id-diplomado='"+informacion_diplomados[index]["IDDIPLOMADO"]+"' data-toggle='modal' data-target='#modal-registrar-participante'>Agregar participante</buton>"
 						]).draw().node();
 				});
@@ -190,6 +191,7 @@ $(document).ready(function(){
 	}
 
 	function getOptionsDiplomadosMediador() {
+		options_diplomados = "";
 		$.ajax({
 			url: "getOptionsDiplomadosMediador",
 			type: 'POST',
@@ -207,11 +209,13 @@ $(document).ready(function(){
 		return options_diplomados;
 	}
 
-	$(".agregar").on("click", function(){
-		id_diplomado = $(this).attr("data-id-diplomado");
-	});
+	$("#tabla-info-diplomados").on("click", ".agregar",  function(){
+		id_diplomado_registro = $(this).attr("data-id-diplomado");
+		console.log(id_diplomado_registro);
+		$("#id_diplomado").val(id_diplomado_registro);
+	}); 
 
-	$(".participantes").on("click", function(){
+	$("#tabla-info-diplomados").on("click", ".participantes",  function(){	
 		id_diplomado = $(this).attr("data-id-diplomado");
 		$.ajax({
 			url: "getInfoParticipantesDiplomado",
@@ -256,9 +260,9 @@ $(document).ready(function(){
 				tabla_participantes_asistencia_diplomado.clear().draw();
 				data.forEach((value, index) => {
 					rowNode = tabla_participantes_asistencia_diplomado.row.add([
-						data[index]["IDENTIFICACION"],
-						data[index]["NOMBRE"],
-						"<input data-toggle='toggle' data-onstyle='success' data-offstyle='danger' data-on='SI' data-off='NO' type='checkbox' data-id-participante='"+data[index]["IDPARTICIPANTE"]+"' class='asistencia_diplomado'>"
+						"<center>"+data[index]["IDENTIFICACION"]+"</center>",
+						"<center>"+data[index]["NOMBRE"]+"</center>",
+						"<center><input data-toggle='toggle' data-onstyle='success' data-offstyle='danger' data-on='SI' data-off='NO' type='checkbox' data-id-participante='"+data[index]["IDPARTICIPANTE"]+"' class='asistencia_diplomado'><center>"
 						]).draw().node();
 				});
 				$('input[type="checkbox"]').bootstrapToggle();
@@ -316,7 +320,7 @@ $(document).ready(function(){
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
 			data: {
-				id_diplomado: id_diplomado,
+				id_diplomado: id_diplomado_registro,
 				identificacion: $("#identificacion").val(),
 				correo: $("#correo").val(),
 				nombres: $("#nombres").val(),
@@ -330,8 +334,7 @@ $(document).ready(function(){
 			},
 			success: function (data) {
 				swal("Éxito", "Se agrego correctamente el participante al diplomado", "success");
-				$("#form-participantes :input").val("");
-				$("#form-participantes .selectpicker").selectpicker("val", "");
+				LimpiarFormulario();
 				$("#modal-registrar-participante").modal("hide");
 				getDiplomadosMediador(); 
 			},
@@ -341,6 +344,26 @@ $(document).ready(function(){
 			async: false
 		});
 	});
+
+	function LimpiarFormulario() {
+		$("#identificacion").val("");
+		$("#correo").val("");
+		$("#nombres").val("");
+		$("#apellidos").val("");
+		$("#entidad").val("");
+		$("#entidad").selectpicker("refresh");
+		$("#rol").val("");
+		$("#rol").selectpicker("refresh");
+		$("#localidad").val("");
+		$("#localidad").selectpicker("refresh");
+		$("#telefono").val("");
+		$("#etnia").val("");
+		$("#etnia").selectpicker("refresh");
+		$("#sector-social").val("");
+		$("#sector-social").selectpicker("refresh");
+
+
+	}
 
 	$("#diplomado-consulta").change(consultarAsistenciasMensual);
 
