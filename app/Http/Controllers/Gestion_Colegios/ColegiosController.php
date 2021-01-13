@@ -124,6 +124,21 @@ class ColegiosController extends Controller
 		return response()->json($resultado[0], 200);
 	}
 
+	public function InactivarInstitucion(Request $request){
+		$colegio = new Colegios;
+		$institucion_id =  $request->id_institucion;
+		$array_update = [];
+		$array_update["IN_Estado"] = 0;
+		$user_id = auth()->user()->id;
+		$Observaciones = 'Usuario: '.$user_id.'; Motivo Inactivación: '.$request->observacion.'; Fecha Inactivación: '.date("Y-m-d H:i:s");
+		$array_update["VC_Observaciones"] = $Observaciones;
+		$colegio->where('Pk_Id_Institucion', $institucion_id)
+		->update($array_update);
+		if($colegio){
+			return 200;
+		}
+	}
+
 	
 
 }

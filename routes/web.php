@@ -72,6 +72,7 @@ Route::post('/Gestion_Colegios/getOptionsInstituciones', 'Gestion_Colegios\Coleg
 Route::post('/Gestion_Colegios/getInicialesIdLocalidad', 'Gestion_Colegios\ColegiosController@getInicialesIdLocalidad');
 Route::post('/Gestion_Colegios/getInformacionInstitucion', 'Gestion_Colegios\ColegiosController@getInformacionInstitucion');
 Route::post('/Gestion_Colegios/actualizarInformacionInstitucion', 'Gestion_Colegios\ColegiosController@actualizarInformacionInstitucion');
+Route::post('/Gestion_Colegios/InactivarInstitucion', 'Gestion_Colegios\ColegiosController@InactivarInstitucion');
 
 /**
  * Rutas grupos

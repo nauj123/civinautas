@@ -211,15 +211,29 @@ $(document).ready(function () {
 				tabla_info_instituciones.clear().draw();
 				info_instituciones.forEach((value, index) => {
 
-					rowNode =tabla_info_instituciones.row.add([
+					if (info_instituciones[index]["ESTADO"] == 1) {
+						rowNode =tabla_info_instituciones.row.add([
 						"<center>"+info_instituciones[index]["LOCALIDAD"]+"</center>",
 						"<center>"+info_instituciones[index]["UPZ"]+"</center>",
 						"<center>"+info_instituciones[index]["TIPOINSTITUCION"]+"</center>",
 						"<center>"+info_instituciones[index]["NOMBRE"]+"</center>",
 						"<center>"+info_instituciones[index]["CODIGODANE"]+"</center>",
 						"<center>"+info_instituciones[index]["SEDES"]+"</center>",
-						"<center><buton type='button' class='btn btn-warning editar' data-id-institucion='"+info_instituciones[index]["IDINSTITUCIONAL"]+"' data-toggle='modal' data-target='#modal-actualizar-institucion'>Actualizar</buton></center>"
+						"<center><buton type='button' class='btn btn-warning editar' data-id-institucion='"+info_instituciones[index]["IDINSTITUCIONAL"]+"' data-toggle='modal' data-target='#modal-actualizar-institucion'>Actualizar</buton></center>",
+						"<center><buton type='button' class='btn btn-danger inactivarinstitucion' data-id-institucion='"+info_instituciones[index]["IDINSTITUCIONAL"]+"' data-nombre-institucion='"+info_instituciones[index]["NOMBRE"]+"' data-toggle='modal' data-target='#modal-inactivar-institucion'>Inactivar</buton></center>"
 						]).draw().node();
+					} else {
+						rowNode =tabla_info_instituciones.row.add([
+							"<center>"+info_instituciones[index]["LOCALIDAD"]+"</center>",
+							"<center>"+info_instituciones[index]["UPZ"]+"</center>",
+							"<center>"+info_instituciones[index]["TIPOINSTITUCION"]+"</center>",
+							"<center>"+info_instituciones[index]["NOMBRE"]+"</center>",
+							"<center>"+info_instituciones[index]["CODIGODANE"]+"</center>",
+							"<center>"+info_instituciones[index]["SEDES"]+"</center>",
+							"<center>---</center>",
+							"<center>INACTIVO</center>"
+							]).draw().node();
+					}		
 				});
 			},
 			error: function(data){
@@ -350,6 +364,39 @@ $(document).ready(function () {
 			},
 			error: function (data) {
 				swal("Error", "No fue posible guardar la información de la institución educativa, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	});
+
+	$("#tabla-info-instituciones").on("click", ".inactivarinstitucion",  function(){
+		$("#id-institucion").val($(this).attr("data-id-institucion"));
+		$("#lb-institucion-inactivar").html("").html($(this).attr("data-nombre-institucion"));
+	}); 
+
+	$("#form-inactivar-institucion").submit(function (e) {
+		e.preventDefault();
+		$.ajax({
+			url: "InactivarInstitucion",
+			type: 'POST',
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_institucion: $("#id-institucion").val(),
+				observacion: $("#observacion-institucion").val()
+			},
+			success: function (data) {
+				if (data == 200) {
+					swal("Éxito", "Se inactivo correctamente la institución educativa, desde este momento no se podrán crear grupos en esta institución", "success");
+					$("#modal-inactivar-institucion").modal('hide');
+					getInstitucionesEducativas();
+					
+				}
+			},
+			error: function (data) {
+				swal("Error", "No fue posible inactivar la institución educativa, por favor inténtelo nuevamente", "error");
 			},
 			async: false
 		});

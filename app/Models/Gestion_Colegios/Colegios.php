@@ -34,7 +34,8 @@ class Colegios extends Model
      IE.VC_Codigo_Dane AS 'CODIGODANE',
      LO.VC_Nom_Localidad AS 'LOCALIDAD',
      CONCAT(UP.IN_Codigo_Upz,' ',UP.VC_Nombre_Upz) AS 'UPZ',
-     IE.IN_Sedes AS 'SEDES'
+     IE.IN_Sedes AS 'SEDES',
+     IE.IN_Estado AS 'ESTADO'
      FROM tb_instituciones_educativas AS IE
      JOIN parametro_detalle AS PDT ON IE.Fk_Tipo_Institucion = PDT.id_parametro_detalle AND PDT.fk_parametro = 6
      JOIN tb_localidades AS LO ON IE.Fk_Id_Localidad = LO.Pk_Id_Localidad 
