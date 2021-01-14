@@ -18094,8 +18094,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * Copyright © 2016 Eli Grey - http://eligrey.com
  */
 
-(function( factory ){
-	if ( true ) {
+ (function( factory ){
+     if ( true ) {
 		// AMD
 		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"), __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js"), __webpack_require__(/*! datatables.net-buttons */ "./node_modules/datatables.net-buttons/js/dataTables.buttons.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function ( $ ) {
 			return factory( $, window, document );
@@ -18104,8 +18104,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	}
 	else {}
 }(function( $, window, document, jszip, pdfmake, undefined ) {
-'use strict';
-var DataTable = $.fn.dataTable;
+    'use strict';
+    var DataTable = $.fn.dataTable;
 
 // Allow the constructor to pass in JSZip and PDFMake from external requires.
 // Otherwise, use globally defined variables, if they are available.
@@ -18135,34 +18135,34 @@ DataTable.Buttons.jszip = function (_) {
  * FileSaver.js dependency
  */
 
-/*jslint bitwise: true, indent: 4, laxbreak: true, laxcomma: true, smarttabs: true, plusplus: true */
+ /*jslint bitwise: true, indent: 4, laxbreak: true, laxcomma: true, smarttabs: true, plusplus: true */
 
-var _saveAs = (function(view) {
-	"use strict";
+ var _saveAs = (function(view) {
+     "use strict";
 	// IE <10 is explicitly unsupported
 	if (typeof view === "undefined" || typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
 		return;
 	}
 	var
-		  doc = view.document
+    doc = view.document
 		  // only get URL when necessary in case Blob.js hasn't overridden it yet
-		, get_URL = function() {
-			return view.URL || view.webkitURL || view;
-		}
-		, save_link = doc.createElementNS("http://www.w3.org/1999/xhtml", "a")
-		, can_use_save_link = "download" in save_link
-		, click = function(node) {
-			var event = new MouseEvent("click");
-			node.dispatchEvent(event);
-		}
-		, is_safari = /constructor/i.test(view.HTMLElement) || view.safari
-		, is_chrome_ios =/CriOS\/[\d]+/.test(navigator.userAgent)
-		, throw_outside = function(ex) {
-			(view.setImmediate || view.setTimeout)(function() {
-				throw ex;
-			}, 0);
-		}
-		, force_saveable_type = "application/octet-stream"
+          , get_URL = function() {
+           return view.URL || view.webkitURL || view;
+       }
+       , save_link = doc.createElementNS("http://www.w3.org/1999/xhtml", "a")
+       , can_use_save_link = "download" in save_link
+       , click = function(node) {
+           var event = new MouseEvent("click");
+           node.dispatchEvent(event);
+       }
+       , is_safari = /constructor/i.test(view.HTMLElement) || view.safari
+       , is_chrome_ios =/CriOS\/[\d]+/.test(navigator.userAgent)
+       , throw_outside = function(ex) {
+           (view.setImmediate || view.setTimeout)(function() {
+            throw ex;
+        }, 0);
+       }
+       , force_saveable_type = "application/octet-stream"
 		// the Blob API is fundamentally broken as there is no "downloadfinished" event to subscribe to
 		, arbitrary_revoke_timeout = 1000 * 40 // in ms
 		, revoke = function(file) {
@@ -18203,13 +18203,13 @@ var _saveAs = (function(view) {
 			}
 			// First try a.download, then web filesystem, then object URLs
 			var
-				  filesaver = this
-				, type = blob.type
-				, force = type === force_saveable_type
-				, object_url
-				, dispatch_all = function() {
-					dispatch(filesaver, "writestart progress write writeend".split(" "));
-				}
+          filesaver = this
+          , type = blob.type
+          , force = type === force_saveable_type
+          , object_url
+          , dispatch_all = function() {
+             dispatch(filesaver, "writestart progress write writeend".split(" "));
+         }
 				// on any filesys errors revert to saving with object URLs
 				, fs_error = function() {
 					if ((is_chrome_ios || (force && is_safari)) && view.FileReader) {
@@ -18244,29 +18244,29 @@ var _saveAs = (function(view) {
 					dispatch_all();
 					revoke(object_url);
 				}
-			;
-			filesaver.readyState = filesaver.INIT;
+               ;
+               filesaver.readyState = filesaver.INIT;
 
-			if (can_use_save_link) {
-				object_url = get_URL().createObjectURL(blob);
-				setTimeout(function() {
-					save_link.href = object_url;
-					save_link.download = name;
-					click(save_link);
-					dispatch_all();
-					revoke(object_url);
-					filesaver.readyState = filesaver.DONE;
-				});
-				return;
-			}
+               if (can_use_save_link) {
+                object_url = get_URL().createObjectURL(blob);
+                setTimeout(function() {
+                 save_link.href = object_url;
+                 save_link.download = name;
+                 click(save_link);
+                 dispatch_all();
+                 revoke(object_url);
+                 filesaver.readyState = filesaver.DONE;
+             });
+                return;
+            }
 
-			fs_error();
-		}
-		, FS_proto = FileSaver.prototype
-		, saveAs = function(blob, name, no_auto_bom) {
-			return new FileSaver(blob, name || blob.name || "download", no_auto_bom);
-		}
-	;
+            fs_error();
+        }
+        , FS_proto = FileSaver.prototype
+        , saveAs = function(blob, name, no_auto_bom) {
+           return new FileSaver(blob, name || blob.name || "download", no_auto_bom);
+       }
+       ;
 	// IE 10+ (native saveAs)
 	if (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob) {
 		return function(blob, name, no_auto_bom) {
@@ -18291,14 +18291,14 @@ var _saveAs = (function(view) {
 	FS_proto.onabort =
 	FS_proto.onerror =
 	FS_proto.onwriteend =
-		null;
+  null;
 
-	return saveAs;
+  return saveAs;
 }(
-	   typeof self !== "undefined" && self
-	|| typeof window !== "undefined" && window
-	|| this.content
-));
+    typeof self !== "undefined" && self
+    || typeof window !== "undefined" && window
+    || this.content
+    ));
 
 
 // Expose file saver on the DataTables API. Can't attach to `DataTables.Buttons`
@@ -18315,15 +18315,15 @@ DataTable.fileSave = _saveAs;
  *
  * @param {object}	config Button configuration
  */
-var _sheetname = function ( config )
-{
-	var sheetName = 'Sheet1';
+ var _sheetname = function ( config )
+ {
+     var sheetName = 'Sheet1';
 
-	if ( config.sheetName ) {
-		sheetName = config.sheetName.replace(/[\[\]\*\/\\\?\:]/g, '');
-	}
+     if ( config.sheetName ) {
+      sheetName = config.sheetName.replace(/[\[\]\*\/\\\?\:]/g, '');
+  }
 
-	return sheetName;
+  return sheetName;
 };
 
 /**
@@ -18332,14 +18332,14 @@ var _sheetname = function ( config )
  * @param {object}	config Button configuration
  * @return {string}				Newline character
  */
-var _newLine = function ( config )
-{
-	return config.newline ?
-		config.newline :
-		navigator.userAgent.match(/Windows/) ?
-			'\r\n' :
-			'\n';
-};
+ var _newLine = function ( config )
+ {
+     return config.newline ?
+     config.newline :
+     navigator.userAgent.match(/Windows/) ?
+     '\r\n' :
+     '\n';
+ };
 
 /**
  * Combine the data from the `buttons.exportData` method into a string that
@@ -18349,18 +18349,18 @@ var _newLine = function ( config )
  * @param	{object}				config Button configuration
  * @return {object}							 The data to export
  */
-var _exportData = function ( dt, config )
-{
-	var newLine = _newLine( config );
-	var data = dt.buttons.exportData( config.exportOptions );
-	var boundary = config.fieldBoundary;
-	var separator = config.fieldSeparator;
-	var reBoundary = new RegExp( boundary, 'g' );
-	var escapeChar = config.escapeChar !== undefined ?
-		config.escapeChar :
-		'\\';
-	var join = function ( a ) {
-		var s = '';
+ var _exportData = function ( dt, config )
+ {
+     var newLine = _newLine( config );
+     var data = dt.buttons.exportData( config.exportOptions );
+     var boundary = config.fieldBoundary;
+     var separator = config.fieldSeparator;
+     var reBoundary = new RegExp( boundary, 'g' );
+     var escapeChar = config.escapeChar !== undefined ?
+     config.escapeChar :
+     '\\';
+     var join = function ( a ) {
+      var s = '';
 
 		// If there is a field boundary, then we might need to escape it in
 		// the source data
@@ -18370,25 +18370,25 @@ var _exportData = function ( dt, config )
 			}
 
 			s += boundary ?
-				boundary + ('' + a[i]).replace( reBoundary, escapeChar+boundary ) + boundary :
-				a[i];
-		}
+            boundary + ('' + a[i]).replace( reBoundary, escapeChar+boundary ) + boundary :
+            a[i];
+        }
 
-		return s;
-	};
+        return s;
+    };
 
-	var header = config.header ? join( data.header )+newLine : '';
-	var footer = config.footer && data.footer ? newLine+join( data.footer ) : '';
-	var body = [];
+    var header = config.header ? join( data.header )+newLine : '';
+    var footer = config.footer && data.footer ? newLine+join( data.footer ) : '';
+    var body = [];
 
-	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
-		body.push( join( data.body[i] ) );
-	}
+    for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
+      body.push( join( data.body[i] ) );
+  }
 
-	return {
-		str: header + body.join( newLine ) + footer,
-		rows: body.length
-	};
+  return {
+      str: header + body.join( newLine ) + footer,
+      rows: body.length
+  };
 };
 
 /**
@@ -18397,22 +18397,22 @@ var _exportData = function ( dt, config )
  *
  * @return {Boolean} `true` if old Safari
  */
-var _isDuffSafari = function ()
-{
-	var safari = navigator.userAgent.indexOf('Safari') !== -1 &&
-		navigator.userAgent.indexOf('Chrome') === -1 &&
-		navigator.userAgent.indexOf('Opera') === -1;
+ var _isDuffSafari = function ()
+ {
+     var safari = navigator.userAgent.indexOf('Safari') !== -1 &&
+     navigator.userAgent.indexOf('Chrome') === -1 &&
+     navigator.userAgent.indexOf('Opera') === -1;
 
-	if ( ! safari ) {
-		return false;
-	}
+     if ( ! safari ) {
+      return false;
+  }
 
-	var version = navigator.userAgent.match( /AppleWebKit\/(\d+\.\d+)/ );
-	if ( version && version.length > 1 && version[1]*1 < 603.1 ) {
-		return true;
-	}
+  var version = navigator.userAgent.match( /AppleWebKit\/(\d+\.\d+)/ );
+  if ( version && version.length > 1 && version[1]*1 < 603.1 ) {
+      return true;
+  }
 
-	return false;
+  return false;
 };
 
 /**
@@ -18420,18 +18420,18 @@ var _isDuffSafari = function ()
  * @param  {int} n Column number
  * @return {string} Column letter(s) name
  */
-function createCellPos( n ){
-	var ordA = 'A'.charCodeAt(0);
-	var ordZ = 'Z'.charCodeAt(0);
-	var len = ordZ - ordA + 1;
-	var s = "";
+ function createCellPos( n ){
+     var ordA = 'A'.charCodeAt(0);
+     var ordZ = 'Z'.charCodeAt(0);
+     var len = ordZ - ordA + 1;
+     var s = "";
 
-	while( n >= 0 ) {
-		s = String.fromCharCode(n % len + ordA) + s;
-		n = Math.floor(n / len) - 1;
-	}
+     while( n >= 0 ) {
+      s = String.fromCharCode(n % len + ordA) + s;
+      n = Math.floor(n / len) - 1;
+  }
 
-	return s;
+  return s;
 }
 
 try {
@@ -18448,24 +18448,24 @@ catch (t) {}
  * @param {JSZip} zip ZIP package
  * @param {object} obj Object to add (recursive)
  */
-function _addToZip( zip, obj ) {
-	if ( _ieExcel === undefined ) {
+ function _addToZip( zip, obj ) {
+     if ( _ieExcel === undefined ) {
 		// Detect if we are dealing with IE's _awful_ serialiser by seeing if it
 		// drop attributes
 		_ieExcel = _serialiser
-			.serializeToString(
-				( new window.DOMParser() ).parseFromString( excelStrings['xl/worksheets/sheet1.xml'], 'text/xml' )
-			)
-			.indexOf( 'xmlns:r' ) === -1;
-	}
+       .serializeToString(
+        ( new window.DOMParser() ).parseFromString( excelStrings['xl/worksheets/sheet1.xml'], 'text/xml' )
+        )
+       .indexOf( 'xmlns:r' ) === -1;
+   }
 
-	$.each( obj, function ( name, val ) {
-		if ( $.isPlainObject( val ) ) {
-			var newDir = zip.folder( name );
-			_addToZip( newDir, val );
-		}
-		else {
-			if ( _ieExcel ) {
+   $.each( obj, function ( name, val ) {
+      if ( $.isPlainObject( val ) ) {
+       var newDir = zip.folder( name );
+       _addToZip( newDir, val );
+   }
+   else {
+       if ( _ieExcel ) {
 				// IE's XML serialiser will drop some name space attributes from
 				// from the root node, so we need to save them. Do this by
 				// replacing the namespace nodes with a regular attribute that
@@ -18528,26 +18528,26 @@ function _addToZip( zip, obj ) {
  *   (child nodes) and `text` (text content)
  * @return {node}            Created node
  */
-function _createNode( doc, nodeName, opts ) {
-	var tempNode = doc.createElement( nodeName );
+ function _createNode( doc, nodeName, opts ) {
+     var tempNode = doc.createElement( nodeName );
 
-	if ( opts ) {
-		if ( opts.attr ) {
-			$(tempNode).attr( opts.attr );
-		}
+     if ( opts ) {
+      if ( opts.attr ) {
+       $(tempNode).attr( opts.attr );
+   }
 
-		if ( opts.children ) {
-			$.each( opts.children, function ( key, value ) {
-				tempNode.appendChild( value );
-			} );
-		}
+   if ( opts.children ) {
+       $.each( opts.children, function ( key, value ) {
+        tempNode.appendChild( value );
+    } );
+   }
 
-		if ( opts.text !== null && opts.text !== undefined ) {
-			tempNode.appendChild( doc.createTextNode( opts.text ) );
-		}
-	}
+   if ( opts.text !== null && opts.text !== undefined ) {
+       tempNode.appendChild( doc.createTextNode( opts.text ) );
+   }
+}
 
-	return tempNode;
+return tempNode;
 }
 
 /**
@@ -18556,19 +18556,19 @@ function _createNode( doc, nodeName, opts ) {
  * @param  {int}    col  Column index
  * @return {int}         Column width
  */
-function _excelColWidth( data, col ) {
-	var max = data.header[col].length;
-	var len, lineSplit, str;
+ function _excelColWidth( data, col ) {
+     var max = data.header[col].length;
+     var len, lineSplit, str;
 
-	if ( data.footer && data.footer[col].length > max ) {
-		max = data.footer[col].length;
-	}
+     if ( data.footer && data.footer[col].length > max ) {
+      max = data.footer[col].length;
+  }
 
-	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
-		var point = data.body[i][col];
-		str = point !== null && point !== undefined ?
-			point.toString() :
-			'';
+  for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
+      var point = data.body[i][col];
+      str = point !== null && point !== undefined ?
+      point.toString() :
+      '';
 
 		// If there is a newline character, workout the width of the column
 		// based on the longest line in the string
@@ -18603,235 +18603,235 @@ function _excelColWidth( data, col ) {
 // Excel - Pre-defined strings to build a basic XLSX file
 var excelStrings = {
 	"_rels/.rels":
-		'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
-		'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+
-			'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>'+
-		'</Relationships>',
+  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
+  '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+
+  '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>'+
+  '</Relationships>',
 
-	"xl/_rels/workbook.xml.rels":
-		'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
-		'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+
-			'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>'+
-			'<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>'+
-		'</Relationships>',
+  "xl/_rels/workbook.xml.rels":
+  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
+  '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+
+  '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>'+
+  '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>'+
+  '</Relationships>',
 
-	"[Content_Types].xml":
-		'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
-		'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'+
-			'<Default Extension="xml" ContentType="application/xml" />'+
-			'<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml" />'+
-			'<Default Extension="jpeg" ContentType="image/jpeg" />'+
-			'<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml" />'+
-			'<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml" />'+
-			'<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml" />'+
-		'</Types>',
+  "[Content_Types].xml":
+  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
+  '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'+
+  '<Default Extension="xml" ContentType="application/xml" />'+
+  '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml" />'+
+  '<Default Extension="jpeg" ContentType="image/jpeg" />'+
+  '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml" />'+
+  '<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml" />'+
+  '<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml" />'+
+  '</Types>',
 
-	"xl/workbook.xml":
-		'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
-		'<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">'+
-			'<fileVersion appName="xl" lastEdited="5" lowestEdited="5" rupBuild="24816"/>'+
-			'<workbookPr showInkAnnotation="0" autoCompressPictures="0"/>'+
-			'<bookViews>'+
-				'<workbookView xWindow="0" yWindow="0" windowWidth="25600" windowHeight="19020" tabRatio="500"/>'+
-			'</bookViews>'+
-			'<sheets>'+
-				'<sheet name="Sheet1" sheetId="1" r:id="rId1"/>'+
-			'</sheets>'+
-			'<definedNames/>'+
-		'</workbook>',
+  "xl/workbook.xml":
+  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
+  '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">'+
+  '<fileVersion appName="xl" lastEdited="5" lowestEdited="5" rupBuild="24816"/>'+
+  '<workbookPr showInkAnnotation="0" autoCompressPictures="0"/>'+
+  '<bookViews>'+
+  '<workbookView xWindow="0" yWindow="0" windowWidth="25600" windowHeight="19020" tabRatio="500"/>'+
+  '</bookViews>'+
+  '<sheets>'+
+  '<sheet name="Sheet1" sheetId="1" r:id="rId1"/>'+
+  '</sheets>'+
+  '<definedNames/>'+
+  '</workbook>',
 
-	"xl/worksheets/sheet1.xml":
-		'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
-		'<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">'+
-			'<sheetData/>'+
-			'<mergeCells count="0"/>'+
-		'</worksheet>',
+  "xl/worksheets/sheet1.xml":
+  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
+  '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">'+
+  '<sheetData/>'+
+  '<mergeCells count="0"/>'+
+  '</worksheet>',
 
-	"xl/styles.xml":
-		'<?xml version="1.0" encoding="UTF-8"?>'+
-		'<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">'+
-			'<numFmts count="6">'+
-				'<numFmt numFmtId="164" formatCode="#,##0.00_-\ [$$-45C]"/>'+
-				'<numFmt numFmtId="165" formatCode="&quot;£&quot;#,##0.00"/>'+
-				'<numFmt numFmtId="166" formatCode="[$€-2]\ #,##0.00"/>'+
-				'<numFmt numFmtId="167" formatCode="0.0%"/>'+
-				'<numFmt numFmtId="168" formatCode="#,##0;(#,##0)"/>'+
-				'<numFmt numFmtId="169" formatCode="#,##0.00;(#,##0.00)"/>'+
-			'</numFmts>'+
-			'<fonts count="5" x14ac:knownFonts="1">'+
-				'<font>'+
-					'<sz val="11" />'+
-					'<name val="Calibri" />'+
-				'</font>'+
-				'<font>'+
-					'<sz val="11" />'+
-					'<name val="Calibri" />'+
-					'<color rgb="FFFFFFFF" />'+
-				'</font>'+
-				'<font>'+
-					'<sz val="11" />'+
-					'<name val="Calibri" />'+
-					'<b />'+
-				'</font>'+
-				'<font>'+
-					'<sz val="11" />'+
-					'<name val="Calibri" />'+
-					'<i />'+
-				'</font>'+
-				'<font>'+
-					'<sz val="11" />'+
-					'<name val="Calibri" />'+
-					'<u />'+
-				'</font>'+
-			'</fonts>'+
-			'<fills count="6">'+
-				'<fill>'+
-					'<patternFill patternType="none" />'+
-				'</fill>'+
+  "xl/styles.xml":
+  '<?xml version="1.0" encoding="UTF-8"?>'+
+  '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">'+
+  '<numFmts count="6">'+
+  '<numFmt numFmtId="164" formatCode="#,##0.00_-\ [$$-45C]"/>'+
+  '<numFmt numFmtId="165" formatCode="&quot;£&quot;#,##0.00"/>'+
+  '<numFmt numFmtId="166" formatCode="[$€-2]\ #,##0.00"/>'+
+  '<numFmt numFmtId="167" formatCode="0.0%"/>'+
+  '<numFmt numFmtId="168" formatCode="#,##0;(#,##0)"/>'+
+  '<numFmt numFmtId="169" formatCode="#,##0.00;(#,##0.00)"/>'+
+  '</numFmts>'+
+  '<fonts count="5" x14ac:knownFonts="1">'+
+  '<font>'+
+  '<sz val="11" />'+
+  '<name val="Calibri" />'+
+  '</font>'+
+  '<font>'+
+  '<sz val="11" />'+
+  '<name val="Calibri" />'+
+  '<color rgb="FFFFFFFF" />'+
+  '</font>'+
+  '<font>'+
+  '<sz val="11" />'+
+  '<name val="Calibri" />'+
+  '<b />'+
+  '</font>'+
+  '<font>'+
+  '<sz val="11" />'+
+  '<name val="Calibri" />'+
+  '<i />'+
+  '</font>'+
+  '<font>'+
+  '<sz val="11" />'+
+  '<name val="Calibri" />'+
+  '<u />'+
+  '</font>'+
+  '</fonts>'+
+  '<fills count="6">'+
+  '<fill>'+
+  '<patternFill patternType="none" />'+
+  '</fill>'+
 				'<fill>'+ // Excel appears to use this as a dotted background regardless of values but
 					'<patternFill patternType="none" />'+ // to be valid to the schema, use a patternFill
-				'</fill>'+
-				'<fill>'+
-					'<patternFill patternType="solid">'+
-						'<fgColor rgb="FFD9D9D9" />'+
-						'<bgColor indexed="64" />'+
-					'</patternFill>'+
-				'</fill>'+
-				'<fill>'+
-					'<patternFill patternType="solid">'+
-						'<fgColor rgb="FFD99795" />'+
-						'<bgColor indexed="64" />'+
-					'</patternFill>'+
-				'</fill>'+
-				'<fill>'+
-					'<patternFill patternType="solid">'+
-						'<fgColor rgb="ffc6efce" />'+
-						'<bgColor indexed="64" />'+
-					'</patternFill>'+
-				'</fill>'+
-				'<fill>'+
-					'<patternFill patternType="solid">'+
-						'<fgColor rgb="ffc6cfef" />'+
-						'<bgColor indexed="64" />'+
-					'</patternFill>'+
-				'</fill>'+
-			'</fills>'+
-			'<borders count="2">'+
-				'<border>'+
-					'<left />'+
-					'<right />'+
-					'<top />'+
-					'<bottom />'+
-					'<diagonal />'+
-				'</border>'+
-				'<border diagonalUp="false" diagonalDown="false">'+
-					'<left style="thin">'+
-						'<color auto="1" />'+
-					'</left>'+
-					'<right style="thin">'+
-						'<color auto="1" />'+
-					'</right>'+
-					'<top style="thin">'+
-						'<color auto="1" />'+
-					'</top>'+
-					'<bottom style="thin">'+
-						'<color auto="1" />'+
-					'</bottom>'+
-					'<diagonal />'+
-				'</border>'+
-			'</borders>'+
-			'<cellStyleXfs count="1">'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" />'+
-			'</cellStyleXfs>'+
-			'<cellXfs count="68">'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="1" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="2" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="3" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="4" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-					'<alignment horizontal="left"/>'+
-				'</xf>'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-					'<alignment horizontal="center"/>'+
-				'</xf>'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-					'<alignment horizontal="right"/>'+
-				'</xf>'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-					'<alignment horizontal="fill"/>'+
-				'</xf>'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-					'<alignment textRotation="90"/>'+
-				'</xf>'+
-				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-					'<alignment wrapText="1"/>'+
-				'</xf>'+
-				'<xf numFmtId="9"   fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="164" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="165" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="166" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="167" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="168" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="169" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="3" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="4" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="1" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="2" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="14" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-			'</cellXfs>'+
-			'<cellStyles count="1">'+
-				'<cellStyle name="Normal" xfId="0" builtinId="0" />'+
-			'</cellStyles>'+
-			'<dxfs count="0" />'+
-			'<tableStyles count="0" defaultTableStyle="TableStyleMedium9" defaultPivotStyle="PivotStyleMedium4" />'+
-		'</styleSheet>'
-};
+                    '</fill>'+
+                    '<fill>'+
+                    '<patternFill patternType="solid">'+
+                    '<fgColor rgb="FFD9D9D9" />'+
+                    '<bgColor indexed="64" />'+
+                    '</patternFill>'+
+                    '</fill>'+
+                    '<fill>'+
+                    '<patternFill patternType="solid">'+
+                    '<fgColor rgb="FFD99795" />'+
+                    '<bgColor indexed="64" />'+
+                    '</patternFill>'+
+                    '</fill>'+
+                    '<fill>'+
+                    '<patternFill patternType="solid">'+
+                    '<fgColor rgb="ffc6efce" />'+
+                    '<bgColor indexed="64" />'+
+                    '</patternFill>'+
+                    '</fill>'+
+                    '<fill>'+
+                    '<patternFill patternType="solid">'+
+                    '<fgColor rgb="ffc6cfef" />'+
+                    '<bgColor indexed="64" />'+
+                    '</patternFill>'+
+                    '</fill>'+
+                    '</fills>'+
+                    '<borders count="2">'+
+                    '<border>'+
+                    '<left />'+
+                    '<right />'+
+                    '<top />'+
+                    '<bottom />'+
+                    '<diagonal />'+
+                    '</border>'+
+                    '<border diagonalUp="false" diagonalDown="false">'+
+                    '<left style="thin">'+
+                    '<color auto="1" />'+
+                    '</left>'+
+                    '<right style="thin">'+
+                    '<color auto="1" />'+
+                    '</right>'+
+                    '<top style="thin">'+
+                    '<color auto="1" />'+
+                    '</top>'+
+                    '<bottom style="thin">'+
+                    '<color auto="1" />'+
+                    '</bottom>'+
+                    '<diagonal />'+
+                    '</border>'+
+                    '</borders>'+
+                    '<cellStyleXfs count="1">'+
+                    '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" />'+
+                    '</cellStyleXfs>'+
+                    '<cellXfs count="68">'+
+                    '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="1" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="3" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="4" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="0" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="1" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="3" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="4" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="0" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="1" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="2" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="3" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="4" fillId="3" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="0" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="1" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="2" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="3" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="4" fillId="4" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="0" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="1" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="2" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="3" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="4" fillId="5" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="0" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="1" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="2" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="3" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="4" fillId="0" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="0" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="1" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="2" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="3" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="4" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="0" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="1" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="2" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="3" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="4" fillId="3" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="0" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="1" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="2" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="3" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="4" fillId="4" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="0" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="1" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="2" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="3" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="4" fillId="5" borderId="1" applyFont="1" applyFill="1" applyBorder="1"/>'+
+                    '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                    '<alignment horizontal="left"/>'+
+                    '</xf>'+
+                    '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                    '<alignment horizontal="center"/>'+
+                    '</xf>'+
+                    '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                    '<alignment horizontal="right"/>'+
+                    '</xf>'+
+                    '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                    '<alignment horizontal="fill"/>'+
+                    '</xf>'+
+                    '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                    '<alignment textRotation="90"/>'+
+                    '</xf>'+
+                    '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                    '<alignment wrapText="1"/>'+
+                    '</xf>'+
+                    '<xf numFmtId="9"   fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+                    '<xf numFmtId="164" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+                    '<xf numFmtId="165" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+                    '<xf numFmtId="166" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+                    '<xf numFmtId="167" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+                    '<xf numFmtId="168" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+                    '<xf numFmtId="169" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+                    '<xf numFmtId="3" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+                    '<xf numFmtId="4" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+                    '<xf numFmtId="1" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+                    '<xf numFmtId="2" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+                    '<xf numFmtId="14" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+                    '</cellXfs>'+
+                    '<cellStyles count="1">'+
+                    '<cellStyle name="Normal" xfId="0" builtinId="0" />'+
+                    '</cellStyles>'+
+                    '<dxfs count="0" />'+
+                    '<tableStyles count="0" defaultTableStyle="TableStyleMedium9" defaultPivotStyle="PivotStyleMedium4" />'+
+                    '</styleSheet>'
+                };
 // Note we could use 3 `for` loops for the styles, but when gzipped there is
 // virtually no difference in size, since the above can be easily compressed
 
@@ -18852,7 +18852,7 @@ var _excelSpecials = [
 	{ match: /^\-?[\d,]+$/,                 style: 63 }, // Numbers with thousand separators
 	{ match: /^\-?[\d,]+\.\d{2}$/,          style: 64 },
 	{ match: /^[\d]{4}\-[\d]{2}\-[\d]{2}$/, style: 67, fmt: function (d) {return Math.round(25569 + (Date.parse(d) / (86400 * 1000)));}} //Date yyyy-mm-dd
-];
+    ];
 
 
 
@@ -18879,34 +18879,34 @@ DataTable.ext.buttons.copyHtml5 = {
 		var newline = _newLine(config);
 		var output = exportData.str;
 		var hiddenDiv = $('<div/>')
-			.css( {
-				height: 1,
-				width: 1,
-				overflow: 'hidden',
-				position: 'fixed',
-				top: 0,
-				left: 0
-			} );
+       .css( {
+        height: 1,
+        width: 1,
+        overflow: 'hidden',
+        position: 'fixed',
+        top: 0,
+        left: 0
+    } );
 
-		if ( info.title ) {
-			output = info.title + newline + newline + output;
-		}
+       if ( info.title ) {
+           output = info.title + newline + newline + output;
+       }
 
-		if ( info.messageTop ) {
-			output = info.messageTop + newline + newline + output;
-		}
+       if ( info.messageTop ) {
+           output = info.messageTop + newline + newline + output;
+       }
 
-		if ( info.messageBottom ) {
-			output = output + newline + newline + info.messageBottom;
-		}
+       if ( info.messageBottom ) {
+           output = output + newline + newline + info.messageBottom;
+       }
 
-		if ( config.customize ) {
-			output = config.customize( output, config, dt );
-		}
+       if ( config.customize ) {
+           output = config.customize( output, config, dt );
+       }
 
-		var textarea = $('<textarea readonly/>')
-			.val( output )
-			.appendTo( hiddenDiv );
+       var textarea = $('<textarea readonly/>')
+       .val( output )
+       .appendTo( hiddenDiv );
 
 		// For browsers that support the copy execCommand, try to use it
 		if ( document.queryCommandSupported('copy') ) {
@@ -18926,7 +18926,7 @@ DataTable.ext.buttons.copyHtml5 = {
 							_: 'Copied %d rows to clipboard'
 						}, exportData.rows ),
 						2000
-					);
+                     );
 
 					this.processing( false );
 					return;
@@ -18937,12 +18937,12 @@ DataTable.ext.buttons.copyHtml5 = {
 
 		// Otherwise we show the text box and instruct the user to use it
 		var message = $('<span>'+dt.i18n( 'buttons.copyKeys',
-				'Press <i>ctrl</i> or <i>\u2318</i> + <i>C</i> to copy the table data<br>to your system clipboard.<br><br>'+
-				'To cancel, click this message or press escape.' )+'</span>'
-			)
-			.append( hiddenDiv );
+            'Press <i>ctrl</i> or <i>\u2318</i> + <i>C</i> to copy the table data<br>to your system clipboard.<br><br>'+
+            'To cancel, click this message or press escape.' )+'</span>'
+       )
+       .append( hiddenDiv );
 
-		dt.buttons.info( dt.i18n( 'buttons.copyTitle', 'Copy to clipboard' ), message, 0 );
+       dt.buttons.info( dt.i18n( 'buttons.copyTitle', 'Copy to clipboard' ), message, 0 );
 
 		// Select the text so when the user activates their system clipboard
 		// it will copy that text
@@ -18959,33 +18959,33 @@ DataTable.ext.buttons.copyHtml5 = {
 
 		container.on( 'click.buttons-copy', close );
 		$(document)
-			.on( 'keydown.buttons-copy', function (e) {
+       .on( 'keydown.buttons-copy', function (e) {
 				if ( e.keyCode === 27 ) { // esc
 					close();
 					that.processing( false );
 				}
 			} )
-			.on( 'copy.buttons-copy cut.buttons-copy', function () {
-				close();
-				that.processing( false );
-			} );
-	},
+       .on( 'copy.buttons-copy cut.buttons-copy', function () {
+        close();
+        that.processing( false );
+    } );
+   },
 
-	exportOptions: {},
+   exportOptions: {},
 
-	fieldSeparator: '\t',
+   fieldSeparator: '\t',
 
-	fieldBoundary: '',
+   fieldBoundary: '',
 
-	header: true,
+   header: true,
 
-	footer: false,
+   footer: false,
 
-	title: '*',
+   title: '*',
 
-	messageTop: '*',
+   messageTop: '*',
 
-	messageBottom: '*'
+   messageBottom: '*'
 };
 
 //
@@ -19037,7 +19037,7 @@ DataTable.ext.buttons.csvHtml5 = {
 			new Blob( [output], {type: 'text/csv'+charset} ),
 			info.filename,
 			true
-		);
+          );
 
 		this.processing( false );
 	},
@@ -19153,9 +19153,9 @@ DataTable.ext.buttons.excelHtml5 = {
 								s: special.style
 							},
 							children: [
-								_createNode( rels, 'v', { text: val } )
-							]
-						} );
+                            _createNode( rels, 'v', { text: val } )
+                            ]
+                        } );
 
 						break;
 					}
@@ -19166,7 +19166,7 @@ DataTable.ext.buttons.excelHtml5 = {
 						row[i].match &&
 						row[i].match(/^-?\d+(\.\d+)?$/) &&
 						! row[i].match(/^0\d+/) )
-					) {
+                     ) {
 						// Detect numbers - don't match numbers with leading zeros
 						// or a negative anywhere but the start
 						cell = _createNode( rels, 'c', {
@@ -19175,57 +19175,57 @@ DataTable.ext.buttons.excelHtml5 = {
 								r: cellId
 							},
 							children: [
-								_createNode( rels, 'v', { text: row[i] } )
-							]
-						} );
+                            _createNode( rels, 'v', { text: row[i] } )
+                            ]
+                        } );
 					}
 					else {
 						// String output - replace non standard characters for text output
 						var text = ! originalContent.replace ?
-							originalContent :
-							originalContent.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '');
+                       originalContent :
+                       originalContent.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '');
 
-						cell = _createNode( rels, 'c', {
-							attr: {
-								t: 'inlineStr',
-								r: cellId
-							},
-							children:{
-								row: _createNode( rels, 'is', {
-									children: {
-										row: _createNode( rels, 't', {
-											text: text,
-											attr: {
-												'xml:space': 'preserve'
-											}
-										} )
-									}
-								} )
-							}
-						} );
-					}
-				}
+                       cell = _createNode( rels, 'c', {
+                           attr: {
+                            t: 'inlineStr',
+                            r: cellId
+                        },
+                        children:{
+                            row: _createNode( rels, 'is', {
+                             children: {
+                              row: _createNode( rels, 't', {
+                               text: text,
+                               attr: {
+                                'xml:space': 'preserve'
+                            }
+                        } )
+                          }
+                      } )
+                        }
+                    } );
+                   }
+               }
 
-				rowNode.appendChild( cell );
-			}
+               rowNode.appendChild( cell );
+           }
 
-			relsGet.appendChild(rowNode);
-			rowPos++;
-		};
+           relsGet.appendChild(rowNode);
+           rowPos++;
+       };
 
-		if ( config.customizeData ) {
-			config.customizeData( data );
-		}
+       if ( config.customizeData ) {
+           config.customizeData( data );
+       }
 
-		var mergeCells = function ( row, colspan ) {
-			var mergeCells = $('mergeCells', rels);
+       var mergeCells = function ( row, colspan ) {
+           var mergeCells = $('mergeCells', rels);
 
-			mergeCells[0].appendChild( _createNode( rels, 'mergeCell', {
-				attr: {
-					ref: 'A'+row+':'+createCellPos(colspan)+row
-				}
-			} ) );
-			mergeCells.attr( 'count', parseFloat(mergeCells.attr( 'count' ))+1 );
+           mergeCells[0].appendChild( _createNode( rels, 'mergeCell', {
+            attr: {
+             ref: 'A'+row+':'+createCellPos(colspan)+row
+         }
+     } ) );
+           mergeCells.attr( 'count', parseFloat(mergeCells.attr( 'count' ))+1 );
 			$('row:eq('+(row-1)+') c', rels).attr( 's', '51' ); // centre
 		};
 
@@ -19244,16 +19244,26 @@ DataTable.ext.buttons.excelHtml5 = {
 
 		// Table itself
 		if ( config.header ) {
-			addRow( data.header, rowPos );
-			$('row:last c', rels).attr( 's', '2' ); // bold
+            /* ----- BEGIN changed Code ----- */
+            var headerMatrix = _fnGetHeaders(dt);
+            for (var rowIdx = 0; rowIdx < headerMatrix.length; rowIdx++) {
+                addRow(headerMatrix[rowIdx], rowPos);
+            }
+            /* ----- OLD Code that is replaced: ----- */
+            //addRow( data.header, rowPos );
+            /* ----- END changed Code ----- */
+            $('row c', rels).attr('s', '2'); // bold
+
+			//addRow( data.header, rowPos );
+			//$('row:last c', rels).attr( 's', '2' ); // bold
 		}
-	
+
 		dataStartRow = rowPos;
 
 		for ( var n=0, ie=data.body.length ; n<ie ; n++ ) {
 			addRow( data.body[n], rowPos );
 		}
-	
+
 		dataEndRow = rowPos;
 
 		if ( config.footer && data.footer ) {
@@ -19327,18 +19337,18 @@ DataTable.ext.buttons.excelHtml5 = {
 		if ( zip.generateAsync ) {
 			// JSZip 3+
 			zip
-				.generateAsync( zipConfig )
-				.then( function ( blob ) {
-					_saveAs( blob, exportInfo.filename );
-					that.processing( false );
-				} );
-		}
-		else {
+            .generateAsync( zipConfig )
+            .then( function ( blob ) {
+             _saveAs( blob, exportInfo.filename );
+             that.processing( false );
+         } );
+        }
+        else {
 			// JSZip 2.5
 			_saveAs(
 				zip.generate( zipConfig ),
 				exportInfo.filename
-			);
+               );
 			this.processing( false );
 		}
 	},
@@ -19422,106 +19432,162 @@ DataTable.ext.buttons.pdfHtml5 = {
 			pageSize: config.pageSize,
 			pageOrientation: config.orientation,
 			content: [
-				{
-					table: {
-						headerRows: 1,
-						body: rows
-					},
-					layout: 'noBorders'
-				}
-			],
-			styles: {
-				tableHeader: {
-					bold: true,
-					fontSize: 11,
-					color: 'white',
-					fillColor: '#2d4154',
-					alignment: 'center'
-				},
-				tableBodyEven: {},
-				tableBodyOdd: {
-					fillColor: '#f3f3f3'
-				},
-				tableFooter: {
-					bold: true,
-					fontSize: 11,
-					color: 'white',
-					fillColor: '#2d4154'
-				},
-				title: {
-					alignment: 'center',
-					fontSize: 15
-				},
-				message: {}
-			},
-			defaultStyle: {
-				fontSize: 10
-			}
-		};
+            {
+             table: {
+              headerRows: 1,
+              body: rows
+          },
+          layout: 'noBorders'
+      }
+      ],
+      styles: {
+        tableHeader: {
+         bold: true,
+         fontSize: 11,
+         color: 'white',
+         fillColor: '#2d4154',
+         alignment: 'center'
+     },
+     tableBodyEven: {},
+     tableBodyOdd: {
+         fillColor: '#f3f3f3'
+     },
+     tableFooter: {
+         bold: true,
+         fontSize: 11,
+         color: 'white',
+         fillColor: '#2d4154'
+     },
+     title: {
+         alignment: 'center',
+         fontSize: 15
+     },
+     message: {}
+ },
+ defaultStyle: {
+    fontSize: 10
+}
+};
 
-		if ( info.messageTop ) {
-			doc.content.unshift( {
-				text: info.messageTop,
-				style: 'message',
-				margin: [ 0, 0, 0, 12 ]
-			} );
-		}
+if ( info.messageTop ) {
+   doc.content.unshift( {
+    text: info.messageTop,
+    style: 'message',
+    margin: [ 0, 0, 0, 12 ]
+} );
+}
 
-		if ( info.messageBottom ) {
-			doc.content.push( {
-				text: info.messageBottom,
-				style: 'message',
-				margin: [ 0, 0, 0, 12 ]
-			} );
-		}
+if ( info.messageBottom ) {
+   doc.content.push( {
+    text: info.messageBottom,
+    style: 'message',
+    margin: [ 0, 0, 0, 12 ]
+} );
+}
 
-		if ( info.title ) {
-			doc.content.unshift( {
-				text: info.title,
-				style: 'title',
-				margin: [ 0, 0, 0, 12 ]
-			} );
-		}
+if ( info.title ) {
+   doc.content.unshift( {
+    text: info.title,
+    style: 'title',
+    margin: [ 0, 0, 0, 12 ]
+} );
+}
 
-		if ( config.customize ) {
-			config.customize( doc, config, dt );
-		}
+if ( config.customize ) {
+   config.customize( doc, config, dt );
+}
 
-		var pdf = _pdfMake().createPdf( doc );
+var pdf = _pdfMake().createPdf( doc );
 
-		if ( config.download === 'open' && ! _isDuffSafari() ) {
-			pdf.open();
-		}
-		else {
-			pdf.download( info.filename );
-		}
+if ( config.download === 'open' && ! _isDuffSafari() ) {
+   pdf.open();
+}
+else {
+   pdf.download( info.filename );
+}
 
-		this.processing( false );
-	},
+this.processing( false );
+},
 
-	title: '*',
+title: '*',
 
-	filename: '*',
+filename: '*',
 
-	extension: '.pdf',
+extension: '.pdf',
 
-	exportOptions: {},
+exportOptions: {},
 
-	orientation: 'portrait',
+orientation: 'portrait',
 
-	pageSize: 'A4',
+pageSize: 'A4',
 
-	header: true,
+header: true,
 
-	footer: false,
+footer: false,
 
-	messageTop: '*',
+messageTop: '*',
 
-	messageBottom: '*',
+messageBottom: '*',
 
-	customize: null,
+customize: null,
 
-	download: 'download'
+download: 'download'
+};
+
+var _fnGetHeaders = function(dt) {
+    var thRows = $(dt.header()[0]).children();
+    var numRows = thRows.length;
+    var matrix = [];
+
+// Iterate over each row of the header and add information to matrix.
+for ( var rowIdx = 0;  rowIdx < numRows;  rowIdx++ ) {
+    var $row = $(thRows[rowIdx]);
+
+    // Iterate over actual columns specified in this row.
+    var $ths = $row.children("th");
+    for ( var colIdx = 0;  colIdx < $ths.length;  colIdx++ )
+    {
+        var $th = $($ths.get(colIdx));
+        var colspan = $th.attr("colspan") || 1;
+        var rowspan = $th.attr("rowspan") || 1;
+        var colCount = 0;
+
+        // ----- add this cell's title to the matrix
+        if (matrix[rowIdx] === undefined) {
+            matrix[rowIdx] = [];  // create array for this row
+        }
+        // find 1st empty cell
+        for ( var j = 0;  j < (matrix[rowIdx]).length;  j++, colCount++ ) {
+            if ( matrix[rowIdx][j] === "PLACEHOLDER" ) {
+                break;
+            }
+        }
+        var myColCount = colCount;
+        matrix[rowIdx][colCount++] = $th.text();
+
+        // ----- If title cell has colspan, add empty titles for extra cell width.
+        for ( var j = 1;  j < colspan;  j++ ) {
+            matrix[rowIdx][colCount++] = "";
+        }
+
+        // ----- If title cell has rowspan, add empty titles for extra cell height.
+        for ( var i = 1;  i < rowspan;  i++ ) {
+            var thisRow = rowIdx+i;
+            if ( matrix[thisRow] === undefined ) {
+                matrix[thisRow] = [];
+            }
+            // First add placeholder text for any previous columns.                 
+            for ( var j = (matrix[thisRow]).length;  j < myColCount;  j++ ) {
+                matrix[thisRow][j] = "PLACEHOLDER";
+            }
+            for ( var j = 0;  j < colspan;  j++ ) {  // and empty for my columns
+                matrix[thisRow][myColCount+j] = "";
+            }
+        }
+    }
+}
+
+return matrix;
 };
 
 

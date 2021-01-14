@@ -101,7 +101,7 @@
 						</div>
 					</div>
 				</form>
-				<div class="form-group" id="div-tabla-reporte-consolidado-mensual-ciclo-vital" style="display: none;">
+				<div class="form-group" id="div-tabla-reporte-consolidado-mensual-ciclo-vital" style="display: none;">  
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="table-responsive">

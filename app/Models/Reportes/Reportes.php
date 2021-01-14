@@ -23,8 +23,8 @@ class Reportes extends Model
         ie.Fk_Id_Localidad AS 'NUMERO LOCALIDAD',
         l.VC_Nom_Localidad AS 'NOMBRE LOCALIDAD',
         ie.VC_Nombre_Institucion AS 'INSTITUCION EDUCATIVA',
-        'SEDE' AS 'SEDE',
-        pd.descripcion AS 'JORNADA',
+        es.CONS_SEDE AS 'SEDE',
+        es.TIPO_JORNADA AS 'JORNADA',
         es.GRADO AS 'GRADO',
         es.APELLIDO1 AS 'PRIMER_APELLIDO',
         es.APELLIDO2 AS 'SEGUNDO_APELLIDO',
@@ -55,7 +55,7 @@ class Reportes extends Model
         '' AS 'DETALLE ESCENARIO',
         'IDPC' AS 'ENTIDAD_ARCHIVO',
         '' AS 'CONVENIO',
-        pdm.descripcion AS 'TIPO_DOCUMENTO_FORMADOR',
+        UPPER(pdm.descripcion) AS 'TIPO_DOCUMENTO_FORMADOR',
         u.identificacion AS 'NO_ DOCUMENTO_FORMADOR',
         g.VC_Nombre_Grupo AS 'GRUPO',
         '' AS 'NOVEDAD DE REPORTE'
@@ -65,7 +65,6 @@ class Reportes extends Model
         JOIN tb_grupos g ON g.Pk_Id_Grupo=ate.Fk_Id_Grupo
         JOIN tb_instituciones_educativas ie ON  ie.Pk_Id_Institucion=g.Fk_Id_Institucion
         JOIN tb_localidades l ON l.Pk_Id_Localidad=ie.Fk_Id_Localidad
-        JOIN parametro_detalle pd ON pd.id_parametro_detalle=g.Fk_Id_Jornada AND pd.fk_parametro=9
         JOIN users u ON u.id=g.Fk_Id_Medidador
         JOIN parametro_detalle pdm ON pdm.id_parametro_detalle=u.fk_tipo_documento AND pdm.fk_parametro=1
         WHERE ate.DT_Fecha_Atencion BETWEEN '2020-$mes-01' AND '2020-$mes-31'";

@@ -112,7 +112,6 @@ $(document).ready(function(){
 			},
 			error: function(data){
 				swal("Error", "No se pudo obtener la información, por favor inténtelo nuevamente", "error");
-				
 			},
 			async: false
 		});
