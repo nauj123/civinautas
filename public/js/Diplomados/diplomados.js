@@ -418,5 +418,67 @@ $(document).ready(function(){
 
 	}
 
+	var tabla_consultar_grupos = $("#tabla-consultar-diplomados").DataTable({
+		autoWidth: false,
+		paging: false,
+		aaSorting: [],
+		pageLength: 50,
+		lengthChange: false,
+		responsive: true,
+		dom: 'Bfrtip',
+		buttons: [{
+			extend: 'excel',
+			text: 'Descargar datos',
+			filename: 'Datos'
+		}],
+		"language": {
+			"lengthMenu": "Ver _MENU_ registros por página",
+			"zeroRecords": "No hay información, lo sentimos.",
+			"info": "Mostrando página _PAGE_ de _PAGES_",
+			"infoEmpty": "No hay registros disponibles",
+			"infoFiltered": "(filtrado de un total de _MAX_ registros)",
+			"search": "Filtrar",
+			"paginate": {
+				"first": "Primera",
+				"last": "Última",
+				"next": "Siguiente",
+				"previous": "Anterior"
+			},
+		}
+	});
+
+	$('a[href="#total_diplomados"]').on('shown.bs.tab', function(e){
+		getTotalDiplomados();
+	});
+
+
+	function getTotalDiplomados() {
+		$.ajax({
+			url: "getTotalDiplomados",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			success: function(data) {
+				info_consultar_grupos = data;
+				tabla_consultar_grupos.clear().draw();
+				info_consultar_grupos.forEach((value, index) => {				
+					rowNode = tabla_consultar_grupos.row.add([		
+						
+						"<center>"+info_consultar_grupos[index]["IDDIPLOMADO"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["NOMBRE"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["MEDIADOR"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["DURACION"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["TEMATICA"]+"</center>",						
+						"<center>"+info_consultar_grupos[index]["PARTICIPANTES"]+"</center>"
+						]).draw().node();
+				});
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener el listado de los estudiantes del grupo, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	}
 
 });

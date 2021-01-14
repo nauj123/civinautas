@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Diplomados/diplomados.js?v=2021.01.12.09') }}" defer></script>
+<script src="{{ asset('js/Diplomados/diplomados.js?v=2021.01.14.04') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -16,6 +16,7 @@
 			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#crear_diplomado">Crear diplomado</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#registrar_asistencia">Registrar asistencia</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consultar_asistencia">Consultar asistencia</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#total_diplomados">Historico de diplomados</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active col-lg-12" id="crear_diplomado"><br>
@@ -96,6 +97,25 @@
 					</div>
 				</div>
 				<div id="div_table_asistencia"></div>				
+			</div>
+
+			<div class="tab-pane" id="total_diplomados" role="tabpanel"><br>
+				<div class="p-2 rounded d-flex align-items-center bg-success text-white">
+					<h3 class="text-18 mb-1 text-white">Listado total de diplomados CIVINAUTAS</h3>
+				</div><br>
+				<table class="display table table-striped table-bordered" id="tabla-consultar-diplomados" style="width: 100%;">
+					<thead>
+						<tr style="text-align: center;">
+							<th>N°.</th>
+							<th>Nombre diplomado</th>
+							<th>Nombre Mediador</th>
+							<th>Duración</th>
+							<th>Tematica o descripción</th>
+							<th>Número de participantes</th>	
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>			
 			</div>
 
 		</div>

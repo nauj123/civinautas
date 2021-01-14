@@ -33,4 +33,16 @@ class Diplomados extends Model
     	->get();
     	return $diplomados;
     }
+
+    public function getTotalDiplomados(){
+        $informacion = Diplomados::select("Pk_Id_Diplomado AS IDDIPLOMADO",
+           "VC_Nombre_Diplomado AS NOMBRE", 
+            Diplomados::raw("(SELECT CONCAT_WS(' ', primer_nombre,segundo_nombre,primer_apellido) FROM users WHERE Fk_Mediador=id) AS MEDIADOR"),
+           "VC_Tematica AS TEMATICA",
+           Diplomados::raw("CONCAT(DT_Fecha_Inicio,' hasta ',DT_Fecha_fin) AS 'DURACION'"),
+           Diplomados::raw("(SELECT COUNT(Pk_Id_Participante) FROM tb_participantes_diplomado WHERE Fk_Id_Diplomado=Pk_Id_Diplomado) AS PARTICIPANTES"))
+           ->get();
+        return $informacion;
+    }
 }
+

@@ -150,4 +150,11 @@ class DiplomadosController extends Controller
 		$mostrar .= "</tbody></table>";
 		return $mostrar;
 	}
+
+	public function getTotalDiplomados(){
+		$grupos = new Diplomados;
+		$resultado = $grupos->getTotalDiplomados();
+		return response()->json($resultado, 200);
+	}
+
 }
