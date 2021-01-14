@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2021.01.4.2') }}" defer></script>
+<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2021.01.4.4') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -35,6 +35,7 @@
 					<thead>
 						<tr>
 							<th>Institución</th>
+							<th>Sede</th>
 							<th>Nombre grupo</th>
 							<th>Nombre docente</th>
 							<th>Jornada</th>

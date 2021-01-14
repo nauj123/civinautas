@@ -5,8 +5,18 @@
 			<select class="form-control selectpicker" title="Seleccione una opción" id="institucion" required></select>
 		</div>
 		<div class="col-xs-12 col-md-6 col-lg-6">
+			<span>Sede</span>
+			<select class="form-control selectpicker" title="---" id="sede-grupo"></select>
+		</div>
+	</div>
+	<div class="row">
+	<div class="col-xs-12 col-md-6 col-lg-6">
 			<span>Nombre del grupo</span>
 			<input type="text" class="form-control" id="nombre-grupo" readonly required>
+		</div>
+		<div class="col-xs-12 col-md-6 col-lg-6">
+			<span>Jornada</span>
+			<select class="form-control selectpicker" title="Seleccione una opción" id="jornada" required></select>
 		</div>
 	</div>
 	<div class="row">
@@ -17,12 +27,6 @@
 		<div class="col-xs-12 col-md-6 col-lg-6">
 			<span>Nombre docente</span>
 			<input class="form-control" type="text" id="docente" required>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12 col-md-6 col-lg-6">
-			<span>Jornada</span>
-			<select class="form-control selectpicker" title="Seleccione una opción" id="jornada" required></select>
 		</div>
 	</div>
 </div>

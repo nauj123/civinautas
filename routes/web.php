@@ -62,7 +62,6 @@ Route::post('/usuarios/getListadoUsuarios', 'Usuarios\UsuariosController@getList
 Route::post('/usuarios/InactivarUsuario', 'Usuarios\UsuariosController@InactivarUsuario');
 Route::post('/usuarios/ActivarUsuario', 'Usuarios\UsuariosController@ActivarUsuario');
 
-
 /**
  * Rutas instituciones educativas
  */
@@ -73,6 +72,7 @@ Route::post('/Gestion_Colegios/getInicialesIdLocalidad', 'Gestion_Colegios\Coleg
 Route::post('/Gestion_Colegios/getInformacionInstitucion', 'Gestion_Colegios\ColegiosController@getInformacionInstitucion');
 Route::post('/Gestion_Colegios/actualizarInformacionInstitucion', 'Gestion_Colegios\ColegiosController@actualizarInformacionInstitucion');
 Route::post('/Gestion_Colegios/InactivarInstitucion', 'Gestion_Colegios\ColegiosController@InactivarInstitucion');
+Route::post('/Gestion_Colegios/getOptionsSedes', 'Gestion_Colegios\ColegiosController@getOptionsSedes');
 
 /**
  * Rutas grupos

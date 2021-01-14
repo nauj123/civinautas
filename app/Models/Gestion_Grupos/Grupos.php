@@ -58,6 +58,7 @@ class Grupos extends Model
      $sql = "SELECT 
      GR.Pk_Id_Grupo AS 'IDGRUPO',
      IE.VC_Nombre_Institucion AS 'INSTITUCION',
+     SE.VC_Nombre_Sede AS 'SEDE',
      GR.VC_Nombre_Grupo AS 'NOMBREGRUPO',
      CONCAT(US.primer_nombre,' ',US.segundo_nombre,' ',US.primer_apellido) AS 'MEDIADOR',
      GR.VC_Docente AS 'DOCENTE',
@@ -67,6 +68,7 @@ class Grupos extends Model
      WHERE EG.Fk_Id_Grupo = GR.Pk_Id_Grupo) AS 'ESTUDIANTES'
      FROM tb_grupos AS GR
      JOIN tb_instituciones_educativas AS IE ON GR.Fk_Id_Institucion = IE.Pk_Id_Institucion
+     LEFT JOIN tb_sedes_instituciones AS SE ON GR.Fk_Id_Sede = SE.Pk_Id_Sede
      JOIN users AS US ON GR.Fk_Id_Medidador = US.id
      LEFT JOIN parametro_detalle AS PDJ ON GR.Fk_Id_Jornada = PDJ.id_parametro_detalle
      WHERE GR.Fk_Id_Medidador = $id_Mediador ORDER BY ESTADO DESC, INSTITUCION, NOMBREGRUPO";

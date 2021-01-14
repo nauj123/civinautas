@@ -69,8 +69,13 @@ $(document).ready(function(){
 	getOptionsInstituciones();	
 	getJornadas(9);
 
-	$("#institucion").html(options_instituciones).selectpicker("refresh");
+
+	$("#institucion").html(options_instituciones).change(function(){
+		$("#sede-grupo").html(getOptionsSedes($("#institucion").val())).selectpicker("refresh");
+	}).selectpicker("refresh");
+
 	$("#jornada").html(options_jornada).selectpicker("refresh");
+
 
 	$('a[href="#agregar_estudiantes"]').on('shown.bs.tab', function(e){ 
 		getOptionsGruposMediador();
@@ -105,6 +110,29 @@ $(document).ready(function(){
 			async: false
 		});
 		return options_instituciones;
+	}
+
+	function getOptionsSedes(id_institucion) {
+		console.log(id_institucion);
+		var options_upz = "";
+		$.ajax({
+			url: "../Gestion_Colegios/getOptionsSedes",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data:{
+				id_institucion: id_institucion
+			},
+			success: function(data) {
+				options_upz += data["option"];
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener las sedes de la institución, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+		return options_upz;
 	}
 
 	function getJornadas(id_parametro) {
@@ -166,6 +194,7 @@ $(document).ready(function(){
 					if (info_grupos[index]["ESTADO"] == 1) {
 						rowNode = tabla_info_grupos.row.add([
 							info_grupos[index]["INSTITUCION"],
+							info_grupos[index]["SEDE"],
 							info_grupos[index]["NOMBREGRUPO"],
 							info_grupos[index]["DOCENTE"],
 							info_grupos[index]["JORNADA"],
@@ -176,6 +205,7 @@ $(document).ready(function(){
 					} else {
 						rowNode = tabla_info_grupos.row.add([
 							info_grupos[index]["INSTITUCION"],
+							info_grupos[index]["SEDE"],
 							info_grupos[index]["NOMBREGRUPO"],
 							info_grupos[index]["DOCENTE"],
 							info_grupos[index]["JORNADA"],
@@ -203,6 +233,7 @@ $(document).ready(function(){
 			},
 			data: {
 				institucion: $("#institucion").val(),
+				sede: $("#sede-grupo").val(),
 				nombre_grupo: $("#nombre-grupo").val(),
 				docente: $("#docente").val(),
 				tipo_atencion: $("#tipo-atencion").val(),

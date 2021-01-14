@@ -17,7 +17,7 @@ class Sedes_Colegio extends Model
 
 
     public function getSedesInstitucion($id_institucion){
-        $liga = Sedes_Colegio::select(
+        $sede = Sedes_Colegio::select(
           "Fk_Id_Institucion",
           "Fk_Id_Localidad",
           "Fk_Id_Upz",
@@ -26,6 +26,15 @@ class Sedes_Colegio extends Model
         )        
         ->where("Fk_Id_Institucion", $id_institucion)
         ->get();
-        return $liga;
+        return $sede;
       } 
+
+      public function getOptionsSedes($id_institucion){
+        $parametro = Sedes_Colegio::select(Sedes_Colegio::raw("CONCAT(GROUP_CONCAT('<option value=\"', Pk_Id_Sede, '\">', VC_Nombre_Sede , '</option>' SEPARATOR '')) AS 'option'"))
+        ->where([
+          ['Fk_Id_Institucion', $id_institucion]
+        ])
+        ->get();
+        return $parametro;
+      }
 }

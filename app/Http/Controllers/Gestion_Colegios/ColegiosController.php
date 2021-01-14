@@ -139,6 +139,9 @@ class ColegiosController extends Controller
 		}
 	}
 
-	
-
+	public function getOptionsSedes(Request $request){
+		$sedes = new Sedes_Colegio;
+		$resultado = $sedes->getOptionsSedes($request->id_institucion);
+		return response()->json($resultado[0]);
+	}
 }

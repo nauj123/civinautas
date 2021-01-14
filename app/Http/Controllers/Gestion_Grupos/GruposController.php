@@ -32,6 +32,7 @@ class GruposController extends Controller
 	public function guardarNuevoGrupo(Request $request){
 		$grupos = new Grupos;
 		$grupos->Fk_Id_Institucion = $request->institucion;
+		$grupos->Fk_Id_Sede = $request->sede;
 		$grupos->VC_Nombre_Grupo = $request->nombre_grupo;
 		$user_id = auth()->user()->id;
 		$grupos->Fk_Id_Medidador = $user_id;
@@ -178,8 +179,4 @@ class GruposController extends Controller
 		$resultado = $grupos->getTotalGrupos($id_mediador);
 		return response()->json($resultado, 200);
 	}
-
-
-
-
 }
