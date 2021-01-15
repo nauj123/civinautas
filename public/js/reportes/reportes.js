@@ -5,6 +5,8 @@ $(document).ready(function(){
 
 	$("#mes-reporte-consolidado").html(options_meses).selectpicker("refresh");
 	$("#mes-reporte-consolidado-mensual-ciclo-vital").html(options_meses).selectpicker("refresh");
+	$("#mes-reporte-cualitativo").html(options_meses).selectpicker("refresh");
+	
 
 	var tabla_config = {
 		autoWidth: false,
@@ -32,6 +34,7 @@ $(document).ready(function(){
 	var tabla_reporte_consolidado_mensual_ciclo_vital = $("#tabla-reporte-consolidado-mensual-ciclo-vital").DataTable(tabla_config);
 	var tabla_reporte_consolidado_global_ciclo_vital = $("#tabla-reporte-consolidado-global-ciclo-vital").DataTable(tabla_config);
 	var tabla_reporte_asistencias = $("#tabla-reporte-asistencias").DataTable(tabla_config);
+	var tabla_reporte_cualitativo = $("#tabla-reporte-cualitativo").DataTable(tabla_config);	
 
 	function getMeses(){
 		options_meses = "";
@@ -254,4 +257,43 @@ $(document).ready(function(){
 			async: false
 		});
 	})
+
+	$('#form-reporte-cualitativo').on('submit', function (e) {
+		e.preventDefault();
+
+		tabla_reporte_cualitativo.clear().draw();
+
+		$.ajax({
+			url: "getReporteCualitativo",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				mes: $("#mes-reporte-cualitativo").val()
+			},
+			success: function(data) {
+				$("#div-tabla-reporte-cualitativo").show("");
+				data.forEach((value, index) => {				
+					rowNode = tabla_reporte_cualitativo.row.add([	
+						data[index]["FECHA"],
+						data[index]["ACTIVIDAD"],
+						data[index]["DETALLE"],
+						data[index]["INSTITUCION"],
+						data[index]["GRUPO"],
+						data[index]["MEDIADOR"],
+						"<center>"+data[index]["ESTUDIANTES"]+"</center>"
+						]).draw().node();				
+				});
+				$($.fn.dataTable.tables(true)).DataTable()
+				.columns.adjust()
+				.responsive.recalc();
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener la información, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	})
+
 });

@@ -36,4 +36,11 @@ class ReportesController extends Controller
 		$resultado = $grupos->getConsultaCompleta($request->anio);
 		return response()->json($resultado, 200);
 	}
+
+	public function getReporteCualitativo(Request $request){
+		$grupos = new Reportes;
+		$resultado = $grupos->getReporteCualitativo($request->mes);
+		return response()->json($resultado, 200);
+	}
+
 }

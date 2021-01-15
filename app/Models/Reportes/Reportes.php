@@ -220,4 +220,26 @@ class Reportes extends Model
         ->get();
         return $informacion;
     }
+
+    public function getReporteCualitativo($mes){
+    	$sql = "SELECT 
+        AC.Pk_Id_Atencion AS 'IDATENCION',
+        AC.DT_Fecha_Atencion AS 'FECHA',
+        PD.descripcion AS 'ACTIVIDAD',
+        AC.VC_Tematica AS 'DETALLE',
+        IE.VC_Nombre_Institucion AS 'INSTITUCION',
+        GR.VC_Nombre_Grupo AS 'GRUPO',
+        CONCAT_WS(' ', US.primer_nombre,US.segundo_nombre,US.primer_apellido) AS 'MEDIADOR',
+        (SELECT COUNT(NA.Fk_Id_Estudiante) FROM tb_asistencia AS NA
+        WHERE AC.Pk_Id_Atencion = NA.Fk_Id_Atencion AND NA.IN_Asistencia = 1) AS 'ESTUDIANTES'
+        FROM tb_atenciones AS AC
+        JOIN parametro_detalle AS PD ON AC.IN_Modalidad = PD.id_parametro_detalle
+        JOIN tb_grupos AS GR ON AC.Fk_Id_Grupo = GR.Pk_Id_Grupo
+        JOIN tb_instituciones_educativas AS IE ON GR.Fk_Id_Institucion =  IE.Pk_Id_Institucion
+        JOIN users AS US ON AC.Fk_Id_Mediador = US.id
+        WHERE AC.DT_Fecha_Atencion LIKE '%2021-$mes%'
+        ORDER BY INSTITUCION, FECHA";
+        $informacion = DB::select($sql);
+        return $informacion;
+    }
 }

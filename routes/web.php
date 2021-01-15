@@ -118,6 +118,7 @@ Route::post('/Registro_Asistencia/consultarAsistenciasMensual', 'Registro_Asiste
 Route::post('/Reportes/getReporteConsolidado', 'Reportes\ReportesController@getReporteConsolidado');
 Route::post('/Reportes/getConsolidadoCicloVital', 'Reportes\ReportesController@getConsolidadoCicloVital');
 Route::post('/Reportes/getConsultaCompleta', 'Reportes\ReportesController@getConsultaCompleta');
+Route::post('/Reportes/getReporteCualitativo', 'Reportes\ReportesController@getReporteCualitativo');
 
 /**
  * Rutas gráficas home

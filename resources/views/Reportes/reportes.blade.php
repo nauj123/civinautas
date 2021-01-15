@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/reportes/reportes.js?v=2021.01.4.2') }}" defer></script>
+<script src="{{ asset('js/reportes/reportes.js?v=2021.01.14.2') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -17,6 +17,7 @@
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consolidado-mensual-ciclo-vital">Consolidado mensual ciclo vital</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consolidado-global-ciclo-vital">Consolidado global ciclo vital</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consulta-completa-asistencias">Consulta completa asistencias</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#reporte-cualitativo">Reporte Cualitativo</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active" id="reporte_consolidado"><br>
@@ -242,6 +243,47 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="tab-pane" id="reporte-cualitativo" role="tabpanel"><br>
+				<form id="form-reporte-cualitativo">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3 offset-md-3">
+								<select class="form-control selectpicker" title="Seleccione un mes" id="mes-reporte-cualitativo" required></select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-xs-12 col-md-6 col-lg-6 offset-lg-3 offset-md-3">
+								<button class="btn btn-block btn-primary" type="submit">Consultar</button>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="form-group" id="div-tabla-reporte-cualitativo" style="display: none;">
+					<div class="row">
+						<div class="col-lg-12">
+							<table class="table table-striped table-bordered display" id="tabla-reporte-cualitativo" style="width: 100%;">
+								<thead>
+									<tr style="text-align: center;">
+										<th>FECHA</th>
+										<th>ACTIVIDAD</th>
+										<th>DETALLE</th>
+										<th>ENTIDAD</th>
+										<th>GRUPO</th>
+										<th>MEDIADOR</th>
+										<th>ASISTENTES</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>	
+						</div>
+					</div>
+				</div>
+			</div>
+
+
 		</div>
 	</div>
 </div>
