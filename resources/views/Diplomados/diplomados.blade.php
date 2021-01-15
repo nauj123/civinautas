@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Diplomados/diplomados.js?v=2021.01.14.04') }}" defer></script>
+<script src="{{ asset('js/Diplomados/diplomados.js?v=2021.01.15.7') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -36,6 +36,7 @@
 							<th>Tematica o descripción</th>
 							<th>No. de participantes</th>
 							<th>Agregar participantes</th>
+							<th>Editar</th>
 						</tr>
 					</thead>
 					<tbody></tbody>
@@ -68,7 +69,7 @@
 											<tr style="text-align: center;">
 												<th>Identificación</th>
 												<th>Nombres</th>
-												<th>Asitencia</th>
+												<th>Asistencia</th>
 											</tr>
 										</thead>
 										<tbody></tbody>
@@ -138,6 +139,25 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-editar-diplomado">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header" style="text-align: center;">
+					<h3 class="modal-title"><strong>EDITAR INFORMACIÓN DIPLOMADO</strong></h3>
+				</div>
+				<div class="modal-body">
+					<form id="form-editar-diplomado">
+						@include('Diplomados.edit_diplomado')
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar-modal-edit-diplomado">Cerrar</button>
+						<button type="submit" class="btn btn-primary">Editar Diplomado</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-registrar-participante">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">

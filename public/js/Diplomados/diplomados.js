@@ -179,7 +179,8 @@ $(document).ready(function(){
 						informacion_diplomados[index]["DURACION"],
 						informacion_diplomados[index]["TEMATICA"],
 						"<center><a href='#' class='btn btn-secondary participantes' data-id-diplomado='"+informacion_diplomados[index]["IDDIPLOMADO"]+"' data-toggle='modal' data-target='#modal-participantes-diplomado'>"+informacion_diplomados[index]["PARTICIPANTES"]+"</a></center>",
-						"<buton type='button' class='btn btn-block btn-primary agregar' data-id-diplomado='"+informacion_diplomados[index]["IDDIPLOMADO"]+"' data-toggle='modal' data-target='#modal-registrar-participante'>Agregar participante</buton>"
+						"<buton type='button' class='btn btn-block btn-primary agregar' data-id-diplomado='"+informacion_diplomados[index]["IDDIPLOMADO"]+"' data-toggle='modal' data-target='#modal-registrar-participante'>Agregar participante</buton>",
+						"<center><buton type='button' class='btn btn-warning editar' data-id-diplomado='"+informacion_diplomados[index]["IDDIPLOMADO"]+"' data-toggle='modal' data-target='#modal-editar-diplomado'>Editar</buton></center>"
 						]).draw().node();
 				});
 			},
@@ -273,6 +274,70 @@ $(document).ready(function(){
 			async: false
 		});
 	});
+
+	$("#tabla-info-diplomados").on("click", ".editar",  function(){
+		getInformacionDiplomado($(this).attr("data-id-diplomado"));
+	});
+
+	function getInformacionDiplomado(diplomado) {
+		$.ajax({
+			url: "getInformacionDiplomado",
+			type: 'POST',
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data:{
+				id_diplomado: diplomado
+			},
+			success: function(data) {
+				$("#id-diplomado-m").val(data["Pk_Id_Diplomado"]);
+				$("#nombre-diplomado-m").val(data["VC_Nombre_Diplomado"]);
+				$("#fecha-inicio-m").val(data["DT_Fecha_Inicio"]);
+				$("#fecha-fin-m").val(data["DT_Fecha_fin"]);
+				$("#tematica-m").val(data["VC_Tematica"]); 
+			},
+			error: function(data){
+				Swal.fire("Error", "No se pudo obtener la información del diplomado, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	}
+
+	$("#form-editar-diplomado").submit(function (e) {
+		e.preventDefault();
+		$.ajax({
+			url: "actualizarInformacionDiplomado",
+			type: 'POST',
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_diplomado_m: $("#id-diplomado-m").val(),
+				nombre_m: $("#nombre-diplomado-m").val(),
+				fecha_inicio_m: $("#fecha-inicio-m").val(),
+				fecha_fin_m: $("#fecha-fin-m").val(),
+				tematica_m: $("#tematica-m").val()
+			},
+			success: function (data) {
+				if (data == 200) {
+					swal("Éxito", "Diplomado actualizado correctamente, ya puede ser consultado en el listado", "success");
+					$(":input").val("");
+					$('.selectpicker').selectpicker('val', '');
+					$("#modal-editar-diplomado").modal('hide');
+					getDiplomadosMediador();
+				}
+			},
+			error: function (data) {
+				swal("Error", "No fue posible actualizar la información del diplomado, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	});
+
+
+
 
 	$("#form-asistencia-diplomado").submit(function (e){
 		e.preventDefault();

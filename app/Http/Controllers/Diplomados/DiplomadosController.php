@@ -152,9 +152,31 @@ class DiplomadosController extends Controller
 	}
 
 	public function getTotalDiplomados(){
-		$grupos = new Diplomados;
-		$resultado = $grupos->getTotalDiplomados();
+		$diplomado = new Diplomados;
+		$resultado = $diplomado->getTotalDiplomados();
 		return response()->json($resultado, 200);
+	}
+
+	public function getInformacionDiplomado(Request $request){
+		$diplomado = new Diplomados;
+		$id_diplomado =  $request->id_diplomado;
+		$resultado = $diplomado->getInformacionDiplomado($id_diplomado);
+		return response()->json($resultado[0], 200);
+	}
+
+	public function actualizarInformacionDiplomado(Request $request){
+		$diplomado = new Diplomados;
+		$diplomado_id =  $request->id_diplomado_m;
+		$array_update = [];
+		$array_update["VC_Nombre_Diplomado"] = $request->nombre_m;
+		$array_update["DT_Fecha_Inicio"] = $request->fecha_inicio_m;
+		$array_update["DT_Fecha_fin"] = $request->fecha_fin_m;
+		$array_update["VC_Tematica"] = $request->tematica_m;
+		$diplomado->where('Pk_Id_Diplomado', $diplomado_id)
+		->update($array_update);
+		if($diplomado){
+			return 200;
+		}
 	}
 
 }

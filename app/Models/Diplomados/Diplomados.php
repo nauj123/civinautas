@@ -44,5 +44,17 @@ class Diplomados extends Model
            ->get();
         return $informacion;
     }
-}
 
+    public function getInformacionDiplomado($id_diplomado){
+        $diplomado = Diplomados::select(
+          "Pk_Id_Diplomado",
+          "VC_Nombre_Diplomado",
+          "DT_Fecha_Inicio",
+          "DT_Fecha_fin",
+          "VC_Tematica"  
+        )        
+        ->where("Pk_Id_Diplomado", $id_diplomado)
+        ->get();
+        return $diplomado;
+      } 
+}

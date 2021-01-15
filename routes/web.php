@@ -142,6 +142,8 @@ Route::post('/Diplomados/getInfoParticipantesDiplomado', 'Diplomados\DiplomadosC
 Route::post('/Diplomados/guardarAsistenciaDiplomado', 'Diplomados\DiplomadosController@guardarAsistenciaDiplomado');
 Route::post('/Diplomados/consultarAsistenciaDiplomado', 'Diplomados\DiplomadosController@consultarAsistenciaDiplomado');
 Route::post('/Diplomados/getTotalDiplomados', 'Diplomados\DiplomadosController@getTotalDiplomados');
+Route::post('/Diplomados/getInformacionDiplomado', 'Diplomados\DiplomadosController@getInformacionDiplomado');
+Route::post('/Diplomados/actualizarInformacionDiplomado', 'Diplomados\DiplomadosController@actualizarInformacionDiplomado');
 
 /**
  * Rutas caracterización 
