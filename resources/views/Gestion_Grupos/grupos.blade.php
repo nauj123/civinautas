@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2021.01.4.4') }}" defer></script>
+<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2021.01.4.7') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -33,13 +33,14 @@
 				</div>
 				<table class="display table table-striped table-bordered" id="tabla-info-grupos" style="width: 100%;">
 					<thead>
-						<tr>
+						<tr style="text-align: center;">
 							<th>Institución</th>
 							<th>Sede</th>
 							<th>Nombre grupo</th>
 							<th>Nombre docente</th>
 							<th>Jornada</th>
 							<th>N° estudiantes</th>
+							<th>Observación</th>
 							<th>Inactivar grupo</th>
 						</tr>
 					</thead>

@@ -19,7 +19,7 @@ class EstudianteGrupo extends Model
     	$sql = "SELECT
         EG.Pk_Id_Estudiante_Grupo AS 'IDESTUDIANTE',
         ES.IN_Identificacion AS 'IDENTIFICACION',
-        CONCAT_WS(' ', ES.VC_Primer_Nombre,ES.VC_Segundo_Nombre, ES.VC_Primer_Apellido,ES.VC_Segundo_Apellido) AS 'ESTUDIANTE',
+        CONCAT_WS(' ', ES.VC_Primer_Apellido,ES.VC_Segundo_Apellido,ES.VC_Primer_Nombre,ES.VC_Segundo_Nombre) AS 'ESTUDIANTE',
         ES.DD_F_Nacimiento AS 'FECHA',
         (CASE WHEN ES.IN_Genero = '1' THEN 'MASCULINO' WHEN ES.IN_Genero = '2' THEN 'FEMENINO' END) AS 'GENERO',
         EG.DT_Fecha_Ingreso AS 'FECHAINGRESO',
@@ -36,7 +36,7 @@ class EstudianteGrupo extends Model
         $sql = "SELECT 
         EG.Pk_Id_Estudiante_Grupo AS 'IDESTUDIANTE',
         GR.VC_Nombre_Grupo AS 'GRUPO',
-        CONCAT_WS(' ', ES.VC_Primer_Nombre,ES.VC_Segundo_Nombre, ES.VC_Primer_Apellido,ES.VC_Segundo_Apellido) AS 'ESTUDIANTE'
+        CONCAT_WS(' ', ES.VC_Primer_Apellido,ES.VC_Segundo_Apellido,ES.VC_Primer_Nombre,ES.VC_Segundo_Nombre) AS 'ESTUDIANTE',
         FROM tb_estudiante_grupo AS EG
         JOIN tb_grupos AS GR ON EG.Fk_Id_Grupo = GR.Pk_Id_Grupo
         JOIN tb_estudiantes AS ES ON EG.Fk_Id_Estudiante = ES.Pk_Id_Beneficiario
@@ -49,8 +49,13 @@ class EstudianteGrupo extends Model
     	$sql = "SELECT
         EG.Fk_Id_Estudiante AS 'IDESTUDIANTE',
         ES.IN_Identificacion AS 'IDENTIFICACION',
-        CONCAT_WS(' ', ES.VC_Primer_Nombre,ES.VC_Segundo_Nombre, ES.VC_Primer_Apellido,ES.VC_Segundo_Apellido) AS 'ESTUDIANTE',
-        ES.DD_F_Nacimiento AS 'FECHA',
+        CONCAT_WS(' ', ES.VC_Primer_Apellido,ES.VC_Segundo_Apellido,ES.VC_Primer_Nombre,ES.VC_Segundo_Nombre) AS 'ESTUDIANTE',
+        (CASE WHEN TIMESTAMPDIFF(YEAR,ES.DD_F_Nacimiento,CURDATE()) >= 0 AND TIMESTAMPDIFF(YEAR,ES.DD_F_Nacimiento,CURDATE()) <= 6 THEN 'Primera Infancia'
+        WHEN TIMESTAMPDIFF(YEAR,ES.DD_F_Nacimiento,CURDATE()) >= 7 AND TIMESTAMPDIFF(YEAR,ES.DD_F_Nacimiento,CURDATE()) <= 13 THEN 'Infancia'
+        WHEN TIMESTAMPDIFF(YEAR,ES.DD_F_Nacimiento,CURDATE()) >= 14 AND TIMESTAMPDIFF(YEAR,ES.DD_F_Nacimiento,CURDATE()) <= 17 THEN 'Adolescencia'
+        WHEN TIMESTAMPDIFF(YEAR,ES.DD_F_Nacimiento,CURDATE()) >= 18 AND TIMESTAMPDIFF(YEAR,ES.DD_F_Nacimiento,CURDATE()) <= 26 THEN 'Juventud'
+        WHEN TIMESTAMPDIFF(YEAR,ES.DD_F_Nacimiento,CURDATE()) >= 27 AND TIMESTAMPDIFF(YEAR,ES.DD_F_Nacimiento,CURDATE()) <= 59 THEN 'Adultez'
+        WHEN TIMESTAMPDIFF(YEAR,ES.DD_F_Nacimiento,CURDATE()) >= 60 AND TIMESTAMPDIFF(YEAR,ES.DD_F_Nacimiento,CURDATE()) <= 100 THEN 'Adulto Mayor' END) AS 'FECHA',
         (CASE WHEN ES.IN_Genero = '1' THEN 'MASCULINO' WHEN ES.IN_Genero = '2' THEN 'FEMENINO' END) AS 'GENERO',
         EG.DT_Fecha_Ingreso AS 'FECHAINGRESO'
         FROM tb_estudiante_grupo AS EG
@@ -75,7 +80,7 @@ class EstudianteGrupo extends Model
 		->where([
 			["Fk_Id_Grupo", $id_grupo]
     ])
-    ->orderBy('VC_Primer_Nombre','desc')
+    ->orderBy('VC_Primer_Apellido','desc')
 		->get();
 		return $informacion;
 	}

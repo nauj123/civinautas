@@ -65,7 +65,8 @@ class Grupos extends Model
      PDJ.descripcion AS 'JORNADA',
      GR.IN_Estado AS 'ESTADO',
      (SELECT COUNT(EG.Fk_Id_Estudiante) FROM tb_estudiante_grupo AS EG
-     WHERE EG.Fk_Id_Grupo = GR.Pk_Id_Grupo) AS 'ESTUDIANTES'
+     WHERE EG.Fk_Id_Grupo = GR.Pk_Id_Grupo) AS 'ESTUDIANTES',
+     GR.VC_Observaciones AS 'OBSERVACION'
      FROM tb_grupos AS GR
      JOIN tb_instituciones_educativas AS IE ON GR.Fk_Id_Institucion = IE.Pk_Id_Institucion
      LEFT JOIN tb_sedes_instituciones AS SE ON GR.Fk_Id_Sede = SE.Pk_Id_Sede

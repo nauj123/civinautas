@@ -199,6 +199,7 @@ $(document).ready(function(){
 							info_grupos[index]["DOCENTE"],
 							info_grupos[index]["JORNADA"],
 							"<center>"+info_grupos[index]["ESTUDIANTES"]+"</center>",
+							info_grupos[index]["OBSERVACION"],
 							"<center><buton type='button' class='btn btn-danger inactivargrupo' data-id-grupo='"+info_grupos[index]["IDGRUPO"]+"' data-nombre-grupo='"+info_grupos[index]["NOMBREGRUPO"]+"' data-toggle='modal' data-target='#modal-inactivar-grupo'>Inactivar Grupo</buton></center>"
 							]).draw().node();
 				
@@ -210,6 +211,7 @@ $(document).ready(function(){
 							info_grupos[index]["DOCENTE"],
 							info_grupos[index]["JORNADA"],
 							"<center>"+info_grupos[index]["ESTUDIANTES"]+"</center>",
+							info_grupos[index]["OBSERVACION"],
 							"<center>GRUPO INACTIVO</center>"
 							]).draw().node();
 					}
@@ -330,7 +332,7 @@ $(document).ready(function(){
 						"<center>"+info_estudiantes_grupo[index]["GENERO"]+"</center>",
 						"<center>"+info_estudiantes_grupo[index]["FECHAINGRESO"]+"</center>",
 						"<center><strong>"+info_estudiantes_grupo[index]["ESTADO"]+"<strong></center>",
-						"<center><buton type='button' class='btn btn-danger estado' data-id-estudiante='"+info_estudiantes_grupo[index]["IDESTUDIANTE"]+"' data-toggle='modal' data-target='#modal-inactivar-estudiante'>Inactivar</buton></center>"
+						"<center><buton type='button' class='btn btn-danger estado' data-id-estudiante='"+info_estudiantes_grupo[index]["IDESTUDIANTE"]+"' data-toggle='modal' data-target='#modal-inactivar-estudiante'>Inactivar</buton></center>"						
 						]).draw().node();				
 				} else {
 					rowNode = tabla_estudiantes_grupo.row.add([
