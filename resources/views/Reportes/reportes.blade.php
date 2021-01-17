@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/reportes/reportes.js?v=2021.01.14.2') }}" defer></script>
+<script src="{{ asset('js/reportes/reportes.js?v=2021.01.17.3') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -18,6 +18,8 @@
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consolidado-global-ciclo-vital">Consolidado global ciclo vital</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consulta-completa-asistencias">Consulta completa asistencias</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#reporte-cualitativo">Reporte Cualitativo</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consultar_grupos">Consultar grupos</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#total_diplomados">Historico de diplomados</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active" id="reporte_consolidado"><br>
@@ -283,7 +285,50 @@
 				</div>
 			</div>
 
+			<div class="tab-pane" id="consultar_grupos" role="tabpanel"><br>	
+				<div class="p-2 rounded d-flex align-items-center bg-success text-white">
+					<h3 class="text-18 mb-1 text-white">Listado del total de grupos en el sistema CIVINAUTAS </h3>
+				</div><br>
+				<table class="display table table-striped table-bordered" id="tabla-consultar-grupos" style="width: 100%;">
+					<thead>
+						<tr>
+							<th>N°.</th>
+							<th>Localidad</th>
+							<th>Tipo de Institución</th>
+							<th>Nombre de la Institución</th>
+							<th>Nombre del grupo</th>
+							<th>Número de estudaintes</th>
+							<th>mediador</th>
+							<th>Docente</th>
+							<th>Jornada</th>
+							<th>Fecha de creación</th>
+							<th>Estado</th>
+							<th>Observación</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
 
+			<div class="tab-pane" id="total_diplomados" role="tabpanel"><br>
+				<div class="p-2 rounded d-flex align-items-center bg-success text-white">
+					<h3 class="text-18 mb-1 text-white">Listado total de diplomados CIVINAUTAS</h3>
+				</div><br>
+				<table class="display table table-striped table-bordered" id="tabla-consultar-diplomados" style="width: 100%;">
+					<thead>
+						<tr style="text-align: center;">
+							<th>N°.</th>
+							<th>Nombre diplomado</th>
+							<th>Nombre Mediador</th>
+							<th>Duración</th>
+							<th>Tematica o descripción</th>
+							<th>Número de participantes</th>	
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>			
+			</div>	
+					
 		</div>
 	</div>
 </div>

@@ -7,7 +7,6 @@ $(document).ready(function(){
 	$("#mes-reporte-consolidado-mensual-ciclo-vital").html(options_meses).selectpicker("refresh");
 	$("#mes-reporte-cualitativo").html(options_meses).selectpicker("refresh");
 	
-
 	var tabla_config = {
 		autoWidth: false,
 		responsive: true,
@@ -34,7 +33,9 @@ $(document).ready(function(){
 	var tabla_reporte_consolidado_mensual_ciclo_vital = $("#tabla-reporte-consolidado-mensual-ciclo-vital").DataTable(tabla_config);
 	var tabla_reporte_consolidado_global_ciclo_vital = $("#tabla-reporte-consolidado-global-ciclo-vital").DataTable(tabla_config);
 	var tabla_reporte_asistencias = $("#tabla-reporte-asistencias").DataTable(tabla_config);
-	var tabla_reporte_cualitativo = $("#tabla-reporte-cualitativo").DataTable(tabla_config);	
+	var tabla_reporte_cualitativo = $("#tabla-reporte-cualitativo").DataTable(tabla_config);
+	var tabla_consultar_grupos = $("#tabla-consultar-grupos").DataTable(tabla_config);
+	var tabla_consultar_diplomados = $("#tabla-consultar-diplomados").DataTable(tabla_config);
 
 	function getMeses(){
 		options_meses = "";
@@ -57,9 +58,7 @@ $(document).ready(function(){
 
 	$('#form-reporte-consolidado').on('submit', function (e) {
 		e.preventDefault();
-
 		tabla_reporte_consolidado.clear().draw();
-
 		$.ajax({
 			url: "getReporteConsolidado",
 			type: 'POST',
@@ -122,9 +121,7 @@ $(document).ready(function(){
 
 	$('#form-consolidado-mensual-ciclo-vital').on('submit', function (e) {
 		e.preventDefault();
-
 		tabla_reporte_consolidado_mensual_ciclo_vital.clear().draw();
-
 		$.ajax({
 			url: "getConsolidadoCicloVital",
 			type: 'POST',
@@ -206,9 +203,7 @@ $(document).ready(function(){
 
 	$('#form-reporte-asistencias').on('submit', function (e) {
 		e.preventDefault();
-
 		tabla_reporte_asistencias.clear().draw();
-
 		$.ajax({
 			url: "getConsultaCompleta",
 			type: 'POST',
@@ -260,9 +255,7 @@ $(document).ready(function(){
 
 	$('#form-reporte-cualitativo').on('submit', function (e) {
 		e.preventDefault();
-
 		tabla_reporte_cualitativo.clear().draw();
-
 		$.ajax({
 			url: "getReporteCualitativo",
 			type: 'POST',
@@ -296,4 +289,76 @@ $(document).ready(function(){
 		});
 	})
 
+	$('a[href="#consultar_grupos"]').on('shown.bs.tab', function(e){
+		getTotalGrupos();
+	});
+
+	function getTotalGrupos() {
+		$.ajax({
+			url: "../Gestion_Grupos/getTotalGrupos",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			data: {
+				id_Grupo: $("#grupo-mediador").val()
+			},
+			success: function(data) {
+				info_consultar_grupos = data;
+				tabla_consultar_grupos.clear().draw();
+				info_consultar_grupos.forEach((value, index) => {				
+					rowNode = tabla_consultar_grupos.row.add([							
+						"<center>"+info_consultar_grupos[index]["IDGRUPO"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["LOCALIDAD"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["TIPOINSTITUCION"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["INSTITUCION"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["NOMGRUPO"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["ESTUDIANTES"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["MEDIADOR"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["DOCENTE"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["JORNADA"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["FCREACION"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["ESTADO"]+"</center>",
+						"<center>"+info_consultar_grupos[index]["OBSERVACIONES"]+"</center>"
+						]).draw().node();
+				});
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener el listado de los estudiantes del grupo, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	}
+
+	$('a[href="#total_diplomados"]').on('shown.bs.tab', function(e){
+		getTotalDiplomados();
+	});
+
+	function getTotalDiplomados() {
+		$.ajax({
+			url: "../Diplomados/getTotalDiplomados",
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			success: function(data) {
+				info_consultar_diplomados = data;
+				tabla_consultar_diplomados.clear().draw();
+				info_consultar_diplomados.forEach((value, index) => {				
+					rowNode = tabla_consultar_diplomados.row.add([						
+						"<center>"+info_consultar_diplomados[index]["IDDIPLOMADO"]+"</center>",
+						"<center>"+info_consultar_diplomados[index]["NOMBRE"]+"</center>",
+						"<center>"+info_consultar_diplomados[index]["MEDIADOR"]+"</center>",
+						"<center>"+info_consultar_diplomados[index]["DURACION"]+"</center>",
+						"<center>"+info_consultar_diplomados[index]["TEMATICA"]+"</center>",						
+						"<center>"+info_consultar_diplomados[index]["PARTICIPANTES"]+"</center>"
+						]).draw().node();
+				});
+			},
+			error: function(data){
+				swal("Error", "No se pudo obtener el listado de los diplomados registrados en el sistema, por favor inténtelo nuevamente", "error");
+			},
+			async: false
+		});
+	}
 });

@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Registro_Asistencia/asistencia.js?V=2021.01.11.14') }}" defer></script>
+<script src="{{ asset('js/Registro_Asistencia/asistencia.js?V=2021.01.16.0') }}" defer></script>
 @endsection
 @section('principal')
 @endsection

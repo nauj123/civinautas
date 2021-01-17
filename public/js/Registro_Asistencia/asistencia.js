@@ -1,21 +1,21 @@
 var options_grupos;
 var options_modalidad_actividad;
 
-$(document).ready(function(){
+$(document).ready(function () {
 
 	getOptionsGruposMediador();
 	getModalidadActividad(8);
 
 	$("#grupo-mediador").html(options_grupos).selectpicker("refresh");
-	
-	$("#modalidad-actividad").html(options_modalidad_actividad).change(function(){
+
+	$("#modalidad-actividad").html(options_modalidad_actividad).change(function () {
 		$("#tipo-actividad").html(getTipoActividad($("#modalidad-actividad").val())).selectpicker("refresh");
 		$("#recursos-materiales").html(getRecursosMateriales($("#modalidad-actividad").val())).selectpicker("refresh");
 	}).selectpicker("refresh");
 
 	//$("#consultar-grupo").html().selectpicker("refresh");
 
-	$("#consultar-grupo").html(options_grupos).change(function(){
+	$("#consultar-grupo").html(options_grupos).change(function () {
 		$("#consultar-actividad").html(getListadoActividadesGrupo($("#consultar-grupo").val())).selectpicker("refresh");
 	}).selectpicker("refresh");
 
@@ -29,10 +29,10 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			success: function(data) {
+			success: function (data) {
 				options_grupos += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de grupos del mediador, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -47,13 +47,13 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data:{
+			data: {
 				id_parametro: id_parametro
 			},
-			success: function(data) {
+			success: function (data) {
 				options_modalidad_actividad += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de tipo de atenciones, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -69,13 +69,13 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data:{
+			data: {
 				id_parametro: id_parametro
 			},
-			success: function(data) {
+			success: function (data) {
 				options_tipo_actividad += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de tipo de atenciones, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -91,13 +91,13 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data:{
+			data: {
 				id_parametro: id_parametro
 			},
-			success: function(data) {
+			success: function (data) {
 				options_recursos_materiales += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de tipo de atenciones, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -113,13 +113,13 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data:{
+			data: {
 				id_grupo: id_grupo
 			},
-			success: function(data) {
+			success: function (data) {
 				options_actividad_grupo += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de activiades del grupo, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -153,10 +153,10 @@ $(document).ready(function(){
 		}
 	});
 
-	$(document).delegate('#grupo-mediador', 'change', function() {
+	$(document).delegate('#grupo-mediador', 'change', function () {
 		$("#div_estudiantes_grupo").show();
 		getEstudiantesGrupo();
-	});	
+	});
 
 	function getEstudiantesGrupo() {
 		$.ajax({
@@ -168,7 +168,7 @@ $(document).ready(function(){
 			data: {
 				id_Grupo: $("#grupo-mediador").val()
 			},
-			success: function(data) {
+			success: function (data) {
 				info_estudiantes_grupo = data;
 				tabla_estudiantes_grupo.clear().draw();
 				var i = 1;
@@ -177,16 +177,16 @@ $(document).ready(function(){
 					rowNode = tabla_estudiantes_grupo.row.add([
 						i,
 						info_estudiantes_grupo[index]["ESTUDIANTE"],
-						info_estudiantes_grupo[index]["IDENTIFICACION"],						
+						info_estudiantes_grupo[index]["IDENTIFICACION"],
 						info_estudiantes_grupo[index]["FECHA"],
 						info_estudiantes_grupo[index]["GENERO"],
-						"<input id='checkbox_' data-toggle='toggle' data-onstyle='success' name='CH_asistencia_beneficiario[]' data-offstyle='danger' data-on='SI' data-off='NO' type='checkbox' data-id-beneficiario='"+info_estudiantes_grupo[index]["IDESTUDIANTE"]+"' class='asistencia_actividad'>"
-						]).draw().node();
-						i++
-						$('input[type="checkbox"]').bootstrapToggle();
+						"<input id='checkbox_' data-toggle='toggle' data-onstyle='success' name='CH_asistencia_beneficiario[]' data-offstyle='danger' data-on='SI' data-off='NO' type='checkbox' data-id-beneficiario='" + info_estudiantes_grupo[index]["IDESTUDIANTE"] + "' class='asistencia_actividad'>"
+					]).draw().node();
+					i++
+					$('input[type="checkbox"]').bootstrapToggle();
 				});
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de estudiantes del grupo, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -196,22 +196,22 @@ $(document).ready(function(){
 	$("#form-guardar-actividad").submit(function (e) {
 		var checkbox_asistencia_estudiante = new Array();
 		var idsRecursos = "";
-		$('.asistencia_actividad').each(function() {
-		  var check;
-		  if($(this).is(":checked")){
-			check=1;
-		  }else{
-			check=0;
-		  }
-		  checkbox_asistencia_estudiante.push(new Array($(this).data('id-beneficiario'), check));
+		$('.asistencia_actividad').each(function () {
+			var check;
+			if ($(this).is(":checked")) {
+				check = 1;
+			} else {
+				check = 0;
+			}
+			checkbox_asistencia_estudiante.push(new Array($(this).data('id-beneficiario'), check));
 		});
-		$('#recursos-materiales :selected').each(function(i, selected) {
+		$('#recursos-materiales :selected').each(function (i, selected) {
 			if (idsRecursos == "") {
-			 idsRecursos = $(selected).val() + ",";
-		   }else{
-			 idsRecursos += $(selected).val() + "," ;
-		   }
-		 });
+				idsRecursos = $(selected).val() + ",";
+			} else {
+				idsRecursos += $(selected).val() + ",";
+			}
+		});
 		e.preventDefault();
 		$.ajax({
 			url: "guardarActividadAsistencia",
@@ -270,7 +270,7 @@ $(document).ready(function(){
 				"previous": "Anterior"
 			},
 		}
-	}); 
+	});
 
 	$("#consultar-actividad").change(cargarInformacionAtencion);
 
@@ -320,24 +320,24 @@ $(document).ready(function(){
 			data: {
 				id_atencion: $("#consultar-actividad").val()
 			},
-			success: function(data) {
+			success: function (data) {
 				info_asistencia_estudiante = data;
 				tabla_asistencia_estudiante.clear().draw();
 				var i = 1;
 				info_asistencia_estudiante.forEach((value, index) => {
 
 					rowNode = tabla_asistencia_estudiante.row.add([
-						"<center>"+i+"</center>",
-						"<center>"+info_asistencia_estudiante[index]["IDENTIFICACION"]+"</center>",
-						"<center>"+info_asistencia_estudiante[index]["ESTUDIANTE"]+"</center>",						
-						"<center>"+info_asistencia_estudiante[index]["GENERO"]+"</center>",
-						"<center>"+info_asistencia_estudiante[index]["FECHA"]+"</center>",
-						"<center><strong>"+info_asistencia_estudiante[index]["ASISTENCIA"]+"</strong></center>"
-						]).draw().node();
-						i++
+						"<center>" + i + "</center>",
+						"<center>" + info_asistencia_estudiante[index]["IDENTIFICACION"] + "</center>",
+						"<center>" + info_asistencia_estudiante[index]["ESTUDIANTE"] + "</center>",
+						"<center>" + info_asistencia_estudiante[index]["GENERO"] + "</center>",
+						"<center>" + info_asistencia_estudiante[index]["FECHA"] + "</center>",
+						"<center><strong>" + info_asistencia_estudiante[index]["ASISTENCIA"] + "</strong></center>"
+					]).draw().node();
+					i++
 				});
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de asistencia de estudiantes, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -349,9 +349,9 @@ $(document).ready(function(){
 
 	/*function cargarConsolidadoMensual() {
 		consultarAsistenciasMensual();
-	}*/ 
+	}*/
 
-	function consultarAsistenciasMensual(){
+	function consultarAsistenciasMensual() {
 		$.ajax({
 			url: "consultarAsistenciasMensual",
 			type: 'POST',
@@ -362,10 +362,10 @@ $(document).ready(function(){
 				id_grupo: $("#consultar_grupo_mensual").val(),
 				id_mes: $("#mes_reporte").val()
 			},
-			success: function(data){			
+			success: function (data) {
 				$("#div_table_asistencia").html(data);
-				
-				$("#table_asistencia").DataTable({ 
+
+				$("#table_asistencia").DataTable({
 					pageLength: 50,
 					lengthChange: false,
 					responsive: true,
@@ -388,15 +388,14 @@ $(document).ready(function(){
 							"next": "Siguiente",
 							"previous": "Anterior"
 						},
-					},					
-				}).draw();				
+					},
+				}).draw();
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se encontro información con los datos seleccionados por favor verifique la información, por favor inténtelo nuevamente", "error");
 			},
 			async: false
 		});
 
 	}
-
 });

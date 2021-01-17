@@ -4,7 +4,7 @@ var options_instituciones;
 var options_enfoque;
 var id_diplomado;
 var id_diplomado_registro;
-$(document).ready(function(){
+$(document).ready(function () {
 
 	tabla_config = {
 		pageLength: 50,
@@ -63,14 +63,14 @@ $(document).ready(function(){
 	$("#localidad").html(options_localidades).selectpicker("refresh");
 	$("#etnia").html(options_enfoque).selectpicker("refresh");
 
-	$('a[href="#registrar_asistencia"]').on('shown.bs.tab', function(e){ 
+	$('a[href="#registrar_asistencia"]').on('shown.bs.tab', function (e) {
 		getOptionsDiplomadosMediador();
-		$("#diplomado-asistencia").html(options_diplomados).selectpicker("refresh");		
+		$("#diplomado-asistencia").html(options_diplomados).selectpicker("refresh");
 	});
 
-	$('a[href="#consultar_asistencia"]').on('shown.bs.tab', function(e){
+	$('a[href="#consultar_asistencia"]').on('shown.bs.tab', function (e) {
 		getOptionsDiplomadosMediador();
-		$("#diplomado-consulta").html(options_diplomados).selectpicker("refresh");		
+		$("#diplomado-consulta").html(options_diplomados).selectpicker("refresh");
 	});
 
 	function getLocalidades() {
@@ -80,10 +80,10 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			success: function(data) {
+			success: function (data) {
 				options_localidades += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado Tipo de documento, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -98,10 +98,10 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			success: function(data) {
+			success: function (data) {
 				options_instituciones += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de instituciones, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -116,13 +116,13 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data:{
+			data: {
 				id_parametro: id_parametro
 			},
-			success: function(data) {
+			success: function (data) {
 				options_enfoque += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de tipo de atenciones, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -130,7 +130,7 @@ $(document).ready(function(){
 		return options_enfoque;
 	}
 
-	$("#form-nuevo-diplomado").submit(function (e){
+	$("#form-nuevo-diplomado").submit(function (e) {
 		e.preventDefault();
 		$.ajax({
 			url: "guardarNuevoDiplomado",
@@ -168,23 +168,23 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			success: function(data) {
+			success: function (data) {
 				informacion_diplomados = data;
 				tabla_info_diplomados.clear().draw();
 				informacion_diplomados.forEach((value, index) => {
 
 					rowNode = tabla_info_diplomados.row.add([
-						"<center>"+informacion_diplomados[index]["IDDIPLOMADO"]+"</center>",
+						"<center>" + informacion_diplomados[index]["IDDIPLOMADO"] + "</center>",
 						informacion_diplomados[index]["NOMBRE"],
 						informacion_diplomados[index]["DURACION"],
 						informacion_diplomados[index]["TEMATICA"],
-						"<center><a href='#' class='btn btn-secondary participantes' data-id-diplomado='"+informacion_diplomados[index]["IDDIPLOMADO"]+"' data-toggle='modal' data-target='#modal-participantes-diplomado'>"+informacion_diplomados[index]["PARTICIPANTES"]+"</a></center>",
-						"<buton type='button' class='btn btn-block btn-primary agregar' data-id-diplomado='"+informacion_diplomados[index]["IDDIPLOMADO"]+"' data-toggle='modal' data-target='#modal-registrar-participante'>Agregar participante</buton>",
-						"<center><buton type='button' class='btn btn-warning editar' data-id-diplomado='"+informacion_diplomados[index]["IDDIPLOMADO"]+"' data-toggle='modal' data-target='#modal-editar-diplomado'>Editar</buton></center>"
-						]).draw().node();
+						"<center><a href='#' class='btn btn-secondary participantes' data-id-diplomado='" + informacion_diplomados[index]["IDDIPLOMADO"] + "' data-toggle='modal' data-target='#modal-participantes-diplomado'>" + informacion_diplomados[index]["PARTICIPANTES"] + "</a></center>",
+						"<buton type='button' class='btn btn-block btn-primary agregar' data-id-diplomado='" + informacion_diplomados[index]["IDDIPLOMADO"] + "' data-toggle='modal' data-target='#modal-registrar-participante'>Agregar participante</buton>",
+						"<center><buton type='button' class='btn btn-warning editar' data-id-diplomado='" + informacion_diplomados[index]["IDDIPLOMADO"] + "' data-toggle='modal' data-target='#modal-editar-diplomado'>Editar</buton></center>"
+					]).draw().node();
 				});
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de diplomados creados, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -199,10 +199,10 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			success: function(data) {
+			success: function (data) {
 				options_diplomados += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de diplomados del mediador, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -210,13 +210,13 @@ $(document).ready(function(){
 		return options_diplomados;
 	}
 
-	$("#tabla-info-diplomados").on("click", ".agregar",  function(){
+	$("#tabla-info-diplomados").on("click", ".agregar", function () {
 		id_diplomado_registro = $(this).attr("data-id-diplomado");
 		console.log(id_diplomado_registro);
 		$("#id_diplomado").val(id_diplomado_registro);
-	}); 
+	});
 
-	$("#tabla-info-diplomados").on("click", ".participantes",  function(){	
+	$("#tabla-info-diplomados").on("click", ".participantes", function () {
 		id_diplomado = $(this).attr("data-id-diplomado");
 		$.ajax({
 			url: "getInfoParticipantesDiplomado",
@@ -224,10 +224,10 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data:{
+			data: {
 				id_diplomado: id_diplomado
 			},
-			success: function(data) {
+			success: function (data) {
 				tabla_participantes_diplomado.clear().draw();
 				data.forEach((value, index) => {
 					rowNode = tabla_participantes_diplomado.row.add([
@@ -235,17 +235,17 @@ $(document).ready(function(){
 						data[index]["NOMBRE"],
 						data[index]["CORREO"],
 						data[index]["TELEFONO"]
-						]).draw().node();
+					]).draw().node();
 				});
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener la información de los participantes del diplomado, por favor inténtelo nuevamente", "error");
 			},
 			async: false
 		});
 	});
 
-	$("#diplomado-asistencia").on("change", function(){
+	$("#diplomado-asistencia").on("change", function () {
 		$("#div-participantes-asistencia-diplomado").show();
 		id_diplomado = $(this).val();
 		$.ajax({
@@ -254,28 +254,28 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data:{
+			data: {
 				id_diplomado: id_diplomado
 			},
-			success: function(data) {
+			success: function (data) {
 				tabla_participantes_asistencia_diplomado.clear().draw();
 				data.forEach((value, index) => {
 					rowNode = tabla_participantes_asistencia_diplomado.row.add([
-						"<center>"+data[index]["IDENTIFICACION"]+"</center>",
-						"<center>"+data[index]["NOMBRE"]+"</center>",
-						"<center><input data-toggle='toggle' data-onstyle='success' data-offstyle='danger' data-on='SI' data-off='NO' type='checkbox' data-id-participante='"+data[index]["IDPARTICIPANTE"]+"' class='asistencia_diplomado'><center>"
-						]).draw().node();
+						"<center>" + data[index]["IDENTIFICACION"] + "</center>",
+						"<center>" + data[index]["NOMBRE"] + "</center>",
+						"<center><input data-toggle='toggle' data-onstyle='success' data-offstyle='danger' data-on='SI' data-off='NO' type='checkbox' data-id-participante='" + data[index]["IDPARTICIPANTE"] + "' class='asistencia_diplomado'><center>"
+					]).draw().node();
 				});
 				$('input[type="checkbox"]').bootstrapToggle();
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener la información de los participantes del diplomado, por favor inténtelo nuevamente", "error");
 			},
 			async: false
 		});
 	});
 
-	$("#tabla-info-diplomados").on("click", ".editar",  function(){
+	$("#tabla-info-diplomados").on("click", ".editar", function () {
 		getInformacionDiplomado($(this).attr("data-id-diplomado"));
 	});
 
@@ -287,17 +287,17 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data:{
+			data: {
 				id_diplomado: diplomado
 			},
-			success: function(data) {
+			success: function (data) {
 				$("#id-diplomado-m").val(data["Pk_Id_Diplomado"]);
 				$("#nombre-diplomado-m").val(data["VC_Nombre_Diplomado"]);
 				$("#fecha-inicio-m").val(data["DT_Fecha_Inicio"]);
 				$("#fecha-fin-m").val(data["DT_Fecha_fin"]);
-				$("#tematica-m").val(data["VC_Tematica"]); 
+				$("#tematica-m").val(data["VC_Tematica"]);
 			},
-			error: function(data){
+			error: function (data) {
 				Swal.fire("Error", "No se pudo obtener la información del diplomado, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -336,15 +336,12 @@ $(document).ready(function(){
 		});
 	});
 
-
-
-
-	$("#form-asistencia-diplomado").submit(function (e){
+	$("#form-asistencia-diplomado").submit(function (e) {
 		e.preventDefault();
 
 		var array_datos_asistencia = new Array();
 
-		$('.asistencia_diplomado').each(function() {
+		$('.asistencia_diplomado').each(function () {
 			var check;
 			check = $(this).is(":checked") ? 1 : 0;
 			array_datos_asistencia.push(new Array($(this).attr("data-id-participante"), check));
@@ -356,18 +353,18 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data:{
+			data: {
 				diplomado: $("#diplomado-asistencia").val(),
 				fecha: $("#fecha-asistencia").val(),
 				array_datos_asistencia: array_datos_asistencia
 			},
-			success: function(data) {
+			success: function (data) {
 				swal("Éxito", "Se ha guardado la asistencia correctamente", "success");
 				$("#div-participantes-asistencia-diplomado").hide();
 				$("#diplomado-asistencia").selectpicker("val", "");
 				$("#fecha-asistencia").val("")
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo guardar la asistencia, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -375,7 +372,7 @@ $(document).ready(function(){
 
 	});
 
-	$("#form-participantes").submit(function (e){
+	$("#form-participantes").submit(function (e) {
 		e.preventDefault();
 		$.ajax({
 			url: "guardarParticipantesDiplomado",
@@ -401,7 +398,7 @@ $(document).ready(function(){
 				swal("Éxito", "Se agrego correctamente el participante al diplomado", "success");
 				LimpiarFormulario();
 				$("#modal-registrar-participante").modal("hide");
-				getDiplomadosMediador(); 
+				getDiplomadosMediador();
 			},
 			error: function (data) {
 				swal("Error", "No se pudo agregar el participante al diplomado, por favor inténtelo nuevamente", "error");
@@ -426,17 +423,11 @@ $(document).ready(function(){
 		$("#etnia").selectpicker("refresh");
 		$("#sector-social").val("");
 		$("#sector-social").selectpicker("refresh");
-
-
 	}
 
 	$("#diplomado-consulta").change(consultarAsistenciasMensual);
 
-	/*function cargarConsolidadoMensual() {
-		consultarAsistenciasMensual();
-	}*/ 
-
-	function consultarAsistenciasMensual(){
+	function consultarAsistenciasMensual() {
 		$.ajax({
 			url: "consultarAsistenciaDiplomado",
 			type: 'POST',
@@ -446,10 +437,10 @@ $(document).ready(function(){
 			data: {
 				id_diplomado: $("#diplomado-consulta").val()
 			},
-			success: function(data){			
+			success: function (data) {
 				$("#div_table_asistencia").html(data);
-				
-				$("#table_asistencia").DataTable({ 
+
+				$("#table_asistencia").DataTable({
 					pageLength: 50,
 					lengthChange: false,
 					responsive: true,
@@ -472,78 +463,14 @@ $(document).ready(function(){
 							"next": "Siguiente",
 							"previous": "Anterior"
 						},
-					},					
-				}).draw();				
+					},
+				}).draw();
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se encontro información con los datos seleccionados por favor verifique la información, por favor inténtelo nuevamente", "error");
 			},
 			async: false
 		});
 
 	}
-
-	var tabla_consultar_grupos = $("#tabla-consultar-diplomados").DataTable({
-		autoWidth: false,
-		paging: false,
-		aaSorting: [],
-		pageLength: 50,
-		lengthChange: false,
-		responsive: true,
-		dom: 'Bfrtip',
-		buttons: [{
-			extend: 'excel',
-			text: 'Descargar datos',
-			filename: 'Datos'
-		}],
-		"language": {
-			"lengthMenu": "Ver _MENU_ registros por página",
-			"zeroRecords": "No hay información, lo sentimos.",
-			"info": "Mostrando página _PAGE_ de _PAGES_",
-			"infoEmpty": "No hay registros disponibles",
-			"infoFiltered": "(filtrado de un total de _MAX_ registros)",
-			"search": "Filtrar",
-			"paginate": {
-				"first": "Primera",
-				"last": "Última",
-				"next": "Siguiente",
-				"previous": "Anterior"
-			},
-		}
-	});
-
-	$('a[href="#total_diplomados"]').on('shown.bs.tab', function(e){
-		getTotalDiplomados();
-	});
-
-
-	function getTotalDiplomados() {
-		$.ajax({
-			url: "getTotalDiplomados",
-			type: 'POST',
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			},
-			success: function(data) {
-				info_consultar_grupos = data;
-				tabla_consultar_grupos.clear().draw();
-				info_consultar_grupos.forEach((value, index) => {				
-					rowNode = tabla_consultar_grupos.row.add([		
-						
-						"<center>"+info_consultar_grupos[index]["IDDIPLOMADO"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["NOMBRE"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["MEDIADOR"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["DURACION"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["TEMATICA"]+"</center>",						
-						"<center>"+info_consultar_grupos[index]["PARTICIPANTES"]+"</center>"
-						]).draw().node();
-				});
-			},
-			error: function(data){
-				swal("Error", "No se pudo obtener el listado de los estudiantes del grupo, por favor inténtelo nuevamente", "error");
-			},
-			async: false
-		});
-	}
-
 });

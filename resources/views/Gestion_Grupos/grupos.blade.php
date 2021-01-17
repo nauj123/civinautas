@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2021.01.4.7') }}" defer></script>
+<script src="{{ asset('js/Gestion_Grupos/grupos.js?v=2021.01.17.3') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -19,8 +19,7 @@
 	<div class="panel-body">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#grupos_mediador">Grupos mediador</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#agregar_estudiantes">Agregar estudiantes</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#consultar_grupos">Consultar grupos</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#agregar_estudiantes">Agregar estudiantes</a></li>			
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active col-lg-12" id="grupos_mediador"><br>
@@ -120,33 +119,6 @@
 					</table>
 				</div>
 			</div>
-
-			<div class="tab-pane" id="consultar_grupos" role="tabpanel"><br>	
-				<div class="p-2 rounded d-flex align-items-center bg-success text-white">
-					<h3 class="text-18 mb-1 text-white">Listado del total de grupos en el sistema CIVINAUTAS </h3>
-				</div><br>
-				<table class="display table table-striped table-bordered" id="tabla-consultar-grupos" style="width: 100%;">
-					<thead>
-						<tr>
-							<th>N°.</th>
-							<th>Localidad</th>
-							<th>Tipo de Institución</th>
-							<th>Nombre de la Institución</th>
-							<th>Nombre del grupo</th>
-							<th>Número de estudaintes</th>
-							<th>mediador</th>
-							<th>Docente</th>
-							<th>Jornada</th>
-							<th>Fecha de creación</th>
-							<th>Estado</th>
-							<th>Observación</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-				</table>
-
-			</div>
-
 		</div>
 	</div>
 	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-crear-grupo">

@@ -109,19 +109,21 @@ class AsistenciaController extends Controller
 			foreach ($sesion_clase as $sc) {
 				$asistencia = new Asistencia;
 				$estado_asistencia = $asistencia->consultarAsistenciaEstudianteAtencion($e['Pk_Id_Beneficiario'], $sc['Pk_Id_Atencion']);
-				if (empty($estado_asistencia["IN_Asistencia"])) {
+				if (empty($estado_asistencia)) {
+					$mostrar .= "<td class='text-center'>";
+					$mostrar .= '<strong><span>SIN REGISTRO</span></strong>';
+					"</td>";
+				} else {
 					$estado_asistencia = $estado_asistencia[0];
-					if ($estado_asistencia["IN_Asistencia"] == 1) {
+					if ($estado_asistencia->IN_Asistencia == 1) {
 						$mostrar .= "<td class='text-center' style='background-color: #A9DFBF'>";
 						$mostrar .= '<strong><span>Asistió</span></strong>';
 						"</td>";
-					} else if ($estado_asistencia["IN_Asistencia"] == 0) {
+					} else if ($estado_asistencia->IN_Asistencia == 0) {
 						$mostrar .= "<td class='text-center' style='background-color: #F5B7B1'>";
 						$mostrar .= '<strong><span>No Asistió</span></strong>';
 						"</td>";
 					}
-				} else {
-					$mostrar .= "<td class='text-center'><span>No registra</span></td>";
 				}
 			}
 			$mostrar .= "</tr>";

@@ -40,14 +40,10 @@ class Asistencia extends Model
     }
 
     public function consultarAsistenciaEstudianteAtencion($id_estudiante,$id_sesion_clase) {
-        $estado_asistencia = Asistencia::select(Asistencia::raw("IN_Asistencia"))
-        ->where([
-          ['Fk_Id_Estudiante', $id_estudiante],
-          ['Fk_Id_Atencion', $id_sesion_clase]
-        ])
-        ->get();
+        $sql = "SELECT IN_Asistencia
+        FROM tb_asistencia
+        WHERE Fk_Id_Estudiante = $id_estudiante AND Fk_Id_Atencion = $id_sesion_clase";
+        $estado_asistencia = DB::select($sql);
         return $estado_asistencia;
-    } 
-
-
+    }    
 }

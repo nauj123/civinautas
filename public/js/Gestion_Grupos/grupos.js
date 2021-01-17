@@ -11,16 +11,14 @@ var info_estudiante;
 var options_tipo_identificacion;
 var options_localidades;
 var options_enfoque;
-var tabla_consultar_grupos;
-var info_consultar_grupos;
 
-$(document).ready(function(){
+$(document).ready(function () {
 
-	$("body").on("keyup",".mayuscula", function(){
+	$("body").on("keyup", ".mayuscula", function () {
 		$(this).val($(this).val().toUpperCase());
-	  });
+	});
 
-	  function mostrarCargando(){
+	function mostrarCargando() {
 		swal({
 			title: "Cargando...",
 			text: "Espere un poco por favor.",
@@ -30,10 +28,10 @@ $(document).ready(function(){
 			showConfirmButton: false,
 			allowOutsideClick: false,
 			allowEscapeKey: false
-			});
+		});
 	}
 
-	function cerrarCargando(){
+	function cerrarCargando() {
 		swal.close();
 	}
 
@@ -66,18 +64,17 @@ $(document).ready(function(){
 		}
 	});
 	getGruposMediador();
-	getOptionsInstituciones();	
+	getOptionsInstituciones();
 	getJornadas(9);
 
 
-	$("#institucion").html(options_instituciones).change(function(){
+	$("#institucion").html(options_instituciones).change(function () {
 		$("#sede-grupo").html(getOptionsSedes($("#institucion").val())).selectpicker("refresh");
 	}).selectpicker("refresh");
 
 	$("#jornada").html(options_jornada).selectpicker("refresh");
 
-
-	$('a[href="#agregar_estudiantes"]').on('shown.bs.tab', function(e){ 
+	$('a[href="#agregar_estudiantes"]').on('shown.bs.tab', function (e) {
 		getOptionsGruposMediador();
 		getTipoIdentificacion(1);
 		getLocalidades();
@@ -86,13 +83,12 @@ $(document).ready(function(){
 		$("#grupo-mediador").html(options_grupos).selectpicker("refresh");
 		$("#tipo-identificacion").html(options_tipo_identificacion).selectpicker("refresh");
 		$("#localidad").html(options_localidades).selectpicker("refresh");
-		$("#enfoque").html(options_enfoque).selectpicker("refresh");		
+		$("#enfoque").html(options_enfoque).selectpicker("refresh");
 	});
 
-	$(document).delegate('#institucion', 'change', function() {
+	$(document).delegate('#institucion', 'change', function () {
 		getInicialesIdLocalidad();
-	});	 
-
+	});
 
 	function getOptionsInstituciones() {
 		$.ajax({
@@ -101,10 +97,10 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			success: function(data) {
+			success: function (data) {
 				options_instituciones += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de instituciones, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -121,13 +117,13 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data:{
+			data: {
 				id_institucion: id_institucion
 			},
-			success: function(data) {
+			success: function (data) {
 				options_upz += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener las sedes de la institución, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -142,20 +138,19 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data:{
+			data: {
 				id_parametro: id_parametro
 			},
-			success: function(data) {
+			success: function (data) {
 				options_jornada += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado jornadas, por favor inténtelo nuevamente", "error");
 			},
 			async: false
 		});
 		return options_jornada;
 	}
-
 
 	function getInicialesIdLocalidad() {
 		$.ajax({
@@ -186,7 +181,7 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			success: function(data) {
+			success: function (data) {
 				info_grupos = data;
 				tabla_info_grupos.clear().draw();
 				info_grupos.forEach((value, index) => {
@@ -198,11 +193,11 @@ $(document).ready(function(){
 							info_grupos[index]["NOMBREGRUPO"],
 							info_grupos[index]["DOCENTE"],
 							info_grupos[index]["JORNADA"],
-							"<center>"+info_grupos[index]["ESTUDIANTES"]+"</center>",
+							"<center>" + info_grupos[index]["ESTUDIANTES"] + "</center>",
 							info_grupos[index]["OBSERVACION"],
-							"<center><buton type='button' class='btn btn-danger inactivargrupo' data-id-grupo='"+info_grupos[index]["IDGRUPO"]+"' data-nombre-grupo='"+info_grupos[index]["NOMBREGRUPO"]+"' data-toggle='modal' data-target='#modal-inactivar-grupo'>Inactivar Grupo</buton></center>"
-							]).draw().node();
-				
+							"<center><buton type='button' class='btn btn-danger inactivargrupo' data-id-grupo='" + info_grupos[index]["IDGRUPO"] + "' data-nombre-grupo='" + info_grupos[index]["NOMBREGRUPO"] + "' data-toggle='modal' data-target='#modal-inactivar-grupo'>Inactivar Grupo</buton></center>"
+						]).draw().node();
+
 					} else {
 						rowNode = tabla_info_grupos.row.add([
 							info_grupos[index]["INSTITUCION"],
@@ -210,14 +205,14 @@ $(document).ready(function(){
 							info_grupos[index]["NOMBREGRUPO"],
 							info_grupos[index]["DOCENTE"],
 							info_grupos[index]["JORNADA"],
-							"<center>"+info_grupos[index]["ESTUDIANTES"]+"</center>",
+							"<center>" + info_grupos[index]["ESTUDIANTES"] + "</center>",
 							info_grupos[index]["OBSERVACION"],
 							"<center>GRUPO INACTIVO</center>"
-							]).draw().node();
+						]).draw().node();
 					}
 				});
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de grupos del mediador, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -264,10 +259,10 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			success: function(data) {
+			success: function (data) {
 				options_grupos += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de grupos del mediador, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -303,7 +298,7 @@ $(document).ready(function(){
 			},
 		}
 	});
-	$(document).delegate('#grupo-mediador', 'change', function() {
+	$(document).delegate('#grupo-mediador', 'change', function () {
 		$("#beneficiarios_grupo").show();
 		getEstudiantesGrupo();
 	});
@@ -318,36 +313,36 @@ $(document).ready(function(){
 			data: {
 				id_Grupo: $("#grupo-mediador").val()
 			},
-			success: function(data) {
+			success: function (data) {
 				info_estudiantes_grupo = data;
 				tabla_estudiantes_grupo.clear().draw();
 				info_estudiantes_grupo.forEach((value, index) => {
 
-				if (info_estudiantes_grupo[index]["IDESTADO"] == 1) {
-				
-					rowNode = tabla_estudiantes_grupo.row.add([						
-						"<center>"+info_estudiantes_grupo[index]["IDENTIFICACION"]+"</center>",
-						"<center>"+info_estudiantes_grupo[index]["ESTUDIANTE"]+"</center>",
-						"<center>"+info_estudiantes_grupo[index]["FECHA"]+"</center>",
-						"<center>"+info_estudiantes_grupo[index]["GENERO"]+"</center>",
-						"<center>"+info_estudiantes_grupo[index]["FECHAINGRESO"]+"</center>",
-						"<center><strong>"+info_estudiantes_grupo[index]["ESTADO"]+"<strong></center>",
-						"<center><buton type='button' class='btn btn-danger estado' data-id-estudiante='"+info_estudiantes_grupo[index]["IDESTUDIANTE"]+"' data-toggle='modal' data-target='#modal-inactivar-estudiante'>Inactivar</buton></center>"						
-						]).draw().node();				
-				} else {
-					rowNode = tabla_estudiantes_grupo.row.add([
-						"<center>"+info_estudiantes_grupo[index]["IDENTIFICACION"]+"</center>",
-						"<center>"+info_estudiantes_grupo[index]["ESTUDIANTE"]+"</center>",
-						"<center>"+info_estudiantes_grupo[index]["FECHA"]+"</center>",
-						"<center>"+info_estudiantes_grupo[index]["GENERO"]+"</center>",
-						"<center>"+info_estudiantes_grupo[index]["FECHAINGRESO"]+"</center>",
-						"<center><strong>"+info_estudiantes_grupo[index]["ESTADO"]+"</strong></center>",
-						"<center><buton type='button' class='btn btn-success estado' data-id-estudiante='"+info_estudiantes_grupo[index]["IDESTUDIANTE"]+"' data-toggle='modal' data-target='#modal-activar-estudiante'>Activar</buton></center>"
-						]).draw().node();					
-				}
+					if (info_estudiantes_grupo[index]["IDESTADO"] == 1) {
+
+						rowNode = tabla_estudiantes_grupo.row.add([
+							"<center>" + info_estudiantes_grupo[index]["IDENTIFICACION"] + "</center>",
+							"<center>" + info_estudiantes_grupo[index]["ESTUDIANTE"] + "</center>",
+							"<center>" + info_estudiantes_grupo[index]["FECHA"] + "</center>",
+							"<center>" + info_estudiantes_grupo[index]["GENERO"] + "</center>",
+							"<center>" + info_estudiantes_grupo[index]["FECHAINGRESO"] + "</center>",
+							"<center><strong>" + info_estudiantes_grupo[index]["ESTADO"] + "<strong></center>",
+							"<center><buton type='button' class='btn btn-danger estado' data-id-estudiante='" + info_estudiantes_grupo[index]["IDESTUDIANTE"] + "' data-toggle='modal' data-target='#modal-inactivar-estudiante'>Inactivar</buton></center>"
+						]).draw().node();
+					} else {
+						rowNode = tabla_estudiantes_grupo.row.add([
+							"<center>" + info_estudiantes_grupo[index]["IDENTIFICACION"] + "</center>",
+							"<center>" + info_estudiantes_grupo[index]["ESTUDIANTE"] + "</center>",
+							"<center>" + info_estudiantes_grupo[index]["FECHA"] + "</center>",
+							"<center>" + info_estudiantes_grupo[index]["GENERO"] + "</center>",
+							"<center>" + info_estudiantes_grupo[index]["FECHAINGRESO"] + "</center>",
+							"<center><strong>" + info_estudiantes_grupo[index]["ESTADO"] + "</strong></center>",
+							"<center><buton type='button' class='btn btn-success estado' data-id-estudiante='" + info_estudiantes_grupo[index]["IDESTUDIANTE"] + "' data-toggle='modal' data-target='#modal-activar-estudiante'>Activar</buton></center>"
+						]).draw().node();
+					}
 				});
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de los estudiantes del grupo, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -379,21 +374,20 @@ $(document).ready(function(){
 			},
 		}
 	});
-	$("#TB_buscar_usuario").keyup(function(e){
-	    if(e.keyCode == 13){
+	$("#TB_buscar_usuario").keyup(function (e) {
+		if (e.keyCode == 13) {
 			getBuscarEstudianteSimat();
 		}
 	});
 
-	$(document).delegate('#TB_buscar_usuario', 'change', function() {
+	$(document).delegate('#TB_buscar_usuario', 'change', function () {
 		$("#concidencias_simat").show();
-		
 		getBuscarEstudianteSimat();
-	});	
+	});
 
-	function getBuscarEstudianteSimat() {	
+	function getBuscarEstudianteSimat() {
 		mostrarCargando();
-		$.ajax({			
+		$.ajax({
 			url: "getBuscarEstudianteSimat",
 			type: 'POST',
 			headers: {
@@ -403,7 +397,7 @@ $(document).ready(function(){
 				buscar: $("#TB_buscar_usuario").val(),
 				id_Grupo: $("#grupo-mediador").val()
 			},
-			success: function(data) {
+			success: function (data) {
 				info_estudiante = data;
 				console.log(info_estudiante);
 				tabla_estudiantes_coincidencias.clear().draw();
@@ -414,19 +408,19 @@ $(document).ready(function(){
 						info_estudiante[index]["ESTUDIANTE"],
 						info_estudiante[index]["FECHA"],
 						info_estudiante[index]["GENERO"],
-						"<buton type='button' class='btn btn-success agregar' data-tipo-identificacion='"+info_estudiante[index]["TIPODOCUMENTO"]+"' data-identificacion='"+info_estudiante[index]["IDENTIFICACION"]+"' data-pnombre='"+info_estudiante[index]["PNOMBRE"]+"' data-snombre='"+info_estudiante[index]["SNOMBRE"]+"' data-papellido='"+info_estudiante[index]["PAPELLIDO"]+"' data-sapellido='"+info_estudiante[index]["SAPELLIDO"]+"' data-fecha='"+info_estudiante[index]["FECHA"]+"' data-genero='"+info_estudiante[index]["IDGENERO"]+"' data-direccion='"+info_estudiante[index]["DIRECCION"]+"' data-celular='"+info_estudiante[index]["CELULAR"]+"' data-estrato='"+info_estudiante[index]["ESTRATO"]+"' data-toggle='modal' data-target='#modal-editar-usuario'>Agregar</buton>"
-						]).draw().node();
+						"<buton type='button' class='btn btn-success agregar' data-tipo-identificacion='" + info_estudiante[index]["TIPODOCUMENTO"] + "' data-identificacion='" + info_estudiante[index]["IDENTIFICACION"] + "' data-pnombre='" + info_estudiante[index]["PNOMBRE"] + "' data-snombre='" + info_estudiante[index]["SNOMBRE"] + "' data-papellido='" + info_estudiante[index]["PAPELLIDO"] + "' data-sapellido='" + info_estudiante[index]["SAPELLIDO"] + "' data-fecha='" + info_estudiante[index]["FECHA"] + "' data-genero='" + info_estudiante[index]["IDGENERO"] + "' data-direccion='" + info_estudiante[index]["DIRECCION"] + "' data-celular='" + info_estudiante[index]["CELULAR"] + "' data-estrato='" + info_estudiante[index]["ESTRATO"] + "' data-toggle='modal' data-target='#modal-editar-usuario'>Agregar</buton>"
+					]).draw().node();
 				});
 				cerrarCargando();
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener las coincidencias de los datos ingresados en SIMAT, por favor inténtelo nuevamente", "error");
 			},
 			async: false
 		});
 	}
 
-	$("#tabla-estudiantes-coincidencias").on("click", ".agregar",  function(){
+	$("#tabla-estudiantes-coincidencias").on("click", ".agregar", function () {
 		agregarEstudianteGrupo(
 			$(this).attr("data-tipo-identificacion"),
 			$(this).attr("data-identificacion"),
@@ -465,8 +459,7 @@ $(document).ready(function(){
 				celular: celular,
 				enfoque: '',
 				estrato: estrato,
-				id_grupo_agregar: $("#grupo-mediador").val() 				
-
+				id_grupo_agregar: $("#grupo-mediador").val()
 			},
 			success: function (data) {
 				if (data == 200) {
@@ -474,7 +467,7 @@ $(document).ready(function(){
 					getEstudiantesGrupo();
 				}
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo registrar el estudiante en el grupo, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -488,13 +481,13 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data:{
+			data: {
 				id_parametro: id_parametro
 			},
-			success: function(data) {
+			success: function (data) {
 				options_tipo_identificacion += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de tipo de atenciones, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -509,10 +502,10 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			success: function(data) {
+			success: function (data) {
 				options_localidades += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado Tipo de documento, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -527,13 +520,13 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data:{
+			data: {
 				id_parametro: id_parametro
 			},
-			success: function(data) {
+			success: function (data) {
 				options_enfoque += data["option"];
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener el listado de tipo de atenciones, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -613,9 +606,9 @@ $(document).ready(function(){
 		$("#jornada").selectpicker("refresh");
 	}
 
-	$("#tabla-estudiantes-grupo").on("click", ".estado",  function(){
+	$("#tabla-estudiantes-grupo").on("click", ".estado", function () {
 		getEstadoEstudiante($(this).attr("data-id-estudiante"));
-	}); 
+	});
 
 	function getEstadoEstudiante(estudiante) {
 		$.ajax({
@@ -625,15 +618,15 @@ $(document).ready(function(){
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data:{
+			data: {
 				id_estudiante: estudiante
 			},
-			success: function(data) {
+			success: function (data) {
 				$("#id-estudiante").val(data[0]["IDESTUDIANTE"]);
 				$("#lb-grupo").html("").html(data[0]["GRUPO"]);
 				$("#lb-estudiante").html("").html(data[0]["ESTUDIANTE"]);
 			},
-			error: function(data){
+			error: function (data) {
 				swal("Error", "No se pudo obtener la información del estudainte que desea inactivar, por favor inténtelo nuevamente", "error");
 			},
 			async: false
@@ -658,7 +651,7 @@ $(document).ready(function(){
 					swal("Éxito", "Se inactivo correctamente el estudiante del grupo, ya no aparecerá en el listado de asistencia", "success");
 					$("#modal-inactivar-estudiante").modal('hide');
 					getEstudiantesGrupo();
-					
+
 				}
 			},
 			error: function (data) {
@@ -685,7 +678,7 @@ $(document).ready(function(){
 					swal("Éxito", "Se activo nuevamente el estudiante al grupo, desde este momento aparecerá en el listado de asistencia", "success");
 					$("#modal-activar-estudiante").modal('hide');
 					getEstudiantesGrupo();
-					
+
 				}
 			},
 			error: function (data) {
@@ -693,12 +686,12 @@ $(document).ready(function(){
 			},
 			async: false
 		});
-	});	
+	});
 
-	$("#tabla-info-grupos").on("click", ".inactivargrupo",  function(){
+	$("#tabla-info-grupos").on("click", ".inactivargrupo", function () {
 		$("#id-grupo").val($(this).attr("data-id-grupo"));
 		$("#lb-grupo-inactivar").html("").html($(this).attr("data-nombre-grupo"));
-	}); 
+	});
 
 	$("#form-inactivar-grupo").submit(function (e) {
 		e.preventDefault();
@@ -718,7 +711,7 @@ $(document).ready(function(){
 					swal("Éxito", "Se inactivo correctamente el grupo, ya no estará disponible para agregar estudiantes ni registrar asistencia", "success");
 					$("#modal-inactivar-grupo").modal('hide');
 					getGruposMediador();
-					
+
 				}
 			},
 			error: function (data) {
@@ -727,77 +720,4 @@ $(document).ready(function(){
 			async: false
 		});
 	});
-
-	tabla_consultar_grupos = $("#tabla-consultar-grupos").DataTable({
-		autoWidth: false,
-		paging: false,
-		aaSorting: [],
-		pageLength: 50,
-		lengthChange: false,
-		responsive: true,
-		dom: 'Bfrtip',
-		buttons: [{
-			extend: 'excel',
-			text: 'Descargar datos',
-			filename: 'Datos'
-		}],
-		"language": {
-			"lengthMenu": "Ver _MENU_ registros por página",
-			"zeroRecords": "No hay información, lo sentimos.",
-			"info": "Mostrando página _PAGE_ de _PAGES_",
-			"infoEmpty": "No hay registros disponibles",
-			"infoFiltered": "(filtrado de un total de _MAX_ registros)",
-			"search": "Filtrar",
-			"paginate": {
-				"first": "Primera",
-				"last": "Última",
-				"next": "Siguiente",
-				"previous": "Anterior"
-			},
-		}
-	});
-
-	$('a[href="#consultar_grupos"]').on('shown.bs.tab', function(e){
-		getTotalGrupos();
-	});
-
-
-	function getTotalGrupos() {
-		$.ajax({
-			url: "getTotalGrupos",
-			type: 'POST',
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			},
-			data: {
-				id_Grupo: $("#grupo-mediador").val()
-			},
-			success: function(data) {
-				info_consultar_grupos = data;
-				tabla_consultar_grupos.clear().draw();
-				info_consultar_grupos.forEach((value, index) => {				
-					rowNode = tabla_consultar_grupos.row.add([		
-						
-						"<center>"+info_consultar_grupos[index]["IDGRUPO"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["LOCALIDAD"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["TIPOINSTITUCION"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["INSTITUCION"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["NOMGRUPO"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["ESTUDIANTES"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["MEDIADOR"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["DOCENTE"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["JORNADA"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["FCREACION"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["ESTADO"]+"</center>",
-						"<center>"+info_consultar_grupos[index]["OBSERVACIONES"]+"</center>"
-						]).draw().node();
-				});
-			},
-			error: function(data){
-				swal("Error", "No se pudo obtener el listado de los estudiantes del grupo, por favor inténtelo nuevamente", "error");
-			},
-			async: false
-		});
-	}
-
 });
