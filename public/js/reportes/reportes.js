@@ -272,8 +272,10 @@ $(document).ready(function(){
 						data[index]["FECHA"],
 						data[index]["ACTIVIDAD"],
 						data[index]["DETALLE"],
+						data[index]["RECURSOS"],
 						data[index]["INSTITUCION"],
 						data[index]["GRUPO"],
+						data[index]["GRADO"],
 						data[index]["MEDIADOR"],
 						"<center>"+data[index]["ESTUDIANTES"]+"</center>"
 						]).draw().node();				

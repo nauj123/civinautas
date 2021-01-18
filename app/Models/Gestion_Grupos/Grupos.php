@@ -63,6 +63,7 @@ class Grupos extends Model
      CONCAT(US.primer_nombre,' ',US.segundo_nombre,' ',US.primer_apellido) AS 'MEDIADOR',
      GR.VC_Docente AS 'DOCENTE',
      PDJ.descripcion AS 'JORNADA',
+     GR.VC_Nivel_Escolaridad AS 'GRADO',
      GR.IN_Estado AS 'ESTADO',
      (SELECT COUNT(EG.Fk_Id_Estudiante) FROM tb_estudiante_grupo AS EG
      WHERE EG.Fk_Id_Grupo = GR.Pk_Id_Grupo) AS 'ESTUDIANTES',

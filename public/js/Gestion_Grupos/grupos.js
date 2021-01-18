@@ -193,6 +193,7 @@ $(document).ready(function () {
 							info_grupos[index]["NOMBREGRUPO"],
 							info_grupos[index]["DOCENTE"],
 							info_grupos[index]["JORNADA"],
+							info_grupos[index]["GRADO"],
 							"<center>" + info_grupos[index]["ESTUDIANTES"] + "</center>",
 							info_grupos[index]["OBSERVACION"],
 							"<center><buton type='button' class='btn btn-danger inactivargrupo' data-id-grupo='" + info_grupos[index]["IDGRUPO"] + "' data-nombre-grupo='" + info_grupos[index]["NOMBREGRUPO"] + "' data-toggle='modal' data-target='#modal-inactivar-grupo'>Inactivar Grupo</buton></center>"
@@ -205,6 +206,7 @@ $(document).ready(function () {
 							info_grupos[index]["NOMBREGRUPO"],
 							info_grupos[index]["DOCENTE"],
 							info_grupos[index]["JORNADA"],
+							info_grupos[index]["GRADO"],
 							"<center>" + info_grupos[index]["ESTUDIANTES"] + "</center>",
 							info_grupos[index]["OBSERVACION"],
 							"<center>GRUPO INACTIVO</center>"
@@ -234,7 +236,8 @@ $(document).ready(function () {
 				nombre_grupo: $("#nombre-grupo").val(),
 				docente: $("#docente").val(),
 				tipo_atencion: $("#tipo-atencion").val(),
-				jornada: $("#jornada").val()
+				jornada: $("#jornada").val(),
+				grado: $("#grado").val()
 			},
 			success: function (data) {
 				if (data == 200) {
@@ -678,7 +681,6 @@ $(document).ready(function () {
 					swal("Éxito", "Se activo nuevamente el estudiante al grupo, desde este momento aparecerá en el listado de asistencia", "success");
 					$("#modal-activar-estudiante").modal('hide');
 					getEstudiantesGrupo();
-
 				}
 			},
 			error: function (data) {
@@ -711,7 +713,6 @@ $(document).ready(function () {
 					swal("Éxito", "Se inactivo correctamente el grupo, ya no estará disponible para agregar estudiantes ni registrar asistencia", "success");
 					$("#modal-inactivar-grupo").modal('hide');
 					getGruposMediador();
-
 				}
 			},
 			error: function (data) {

@@ -38,6 +38,7 @@ class GruposController extends Controller
 		$grupos->Fk_Id_Medidador = $user_id;
 		$grupos->VC_Docente = $request->docente;
 		$grupos->Fk_Id_Jornada = $request->jornada;
+		$grupos->VC_Nivel_Escolaridad = $request->grado;
 		$grupos->FK_Usuario_Registro = $user_id;
 		$grupos->DT_Created_at = date("Y-m-d H:i:s");
 		$grupos->IN_Estado = '1';

@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/reportes/reportes.js?v=2021.01.17.3') }}" defer></script>
+<script src="{{ asset('js/reportes/reportes.js?v=2021.01.18.4') }}" defer></script>
 @endsection
 @section('principal')
 @endsection
@@ -272,8 +272,10 @@
 										<th>FECHA</th>
 										<th>ACTIVIDAD</th>
 										<th>DETALLE</th>
+										<th>RECURSOS</th>
 										<th>ENTIDAD</th>
 										<th>GRUPO</th>
+										<th>NIVEL DE ESCOLARIDAD</th>
 										<th>MEDIADOR</th>
 										<th>ASISTENTES</th>
 									</tr>

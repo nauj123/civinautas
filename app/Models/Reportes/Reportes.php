@@ -227,8 +227,12 @@ class Reportes extends Model
         AC.DT_Fecha_Atencion AS 'FECHA',
         PD.descripcion AS 'ACTIVIDAD',
         AC.VC_Tematica AS 'DETALLE',
+        (SELECT GROUP_CONCAT(CONCAT(' ',PDR.descripcion,' ') SEPARATOR ','  )
+        FROM parametro_detalle PDR
+        WHERE FIND_IN_SET(PDR.id_parametro_detalle, AC.IN_Recursos_Materiales) > 0)  AS 'RECURSOS',
         IE.VC_Nombre_Institucion AS 'INSTITUCION',
         GR.VC_Nombre_Grupo AS 'GRUPO',
+        GR.VC_Nivel_Escolaridad AS 'GRADO',
         CONCAT_WS(' ', US.primer_nombre,US.segundo_nombre,US.primer_apellido) AS 'MEDIADOR',
         (SELECT COUNT(NA.Fk_Id_Estudiante) FROM tb_asistencia AS NA
         WHERE AC.Pk_Id_Atencion = NA.Fk_Id_Atencion AND NA.IN_Asistencia = 1) AS 'ESTUDIANTES'
