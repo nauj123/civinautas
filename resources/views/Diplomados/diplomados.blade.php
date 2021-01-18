@@ -1,6 +1,6 @@
 @extends("theme.layout")
 @section('js-import')
-<script src="{{ asset('js/Diplomados/diplomados.js?v=2021.01.17.7') }}" defer></script>
+<script src="{{ asset('js/Diplomados/diplomados.js?v=2021.01.17.8') }}" defer></script>
 @endsection
 @section('principal')
 @endsection

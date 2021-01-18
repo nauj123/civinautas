@@ -103,9 +103,15 @@ class DiplomadosController extends Controller
 		$diplomado = $sesion->getEncabezadoConsultaDiplomado($id_diplomado);
 		$mostrar = "<table class='display table table-striped table-bordered' id='table_asistencia' style='width: 100%;'>";
 		$mostrar .= "<thead>";
-		$mostrar .= "<th style='text-align: center;'> Identificación</th>";
-		$mostrar .= "<th style='text-align: center;'> Nombre del Estudiante</th>";
 		$mostrar .= "<th style='text-align: center;'> Correo Electrónico</th>";
+		$mostrar .= "<th style='text-align: center;'> Identificación</th>";
+		$mostrar .= "<th style='text-align: center;'> Nombre participante</th>";
+		$mostrar .= "<th style='text-align: center;'> Entidad</th>";
+		$mostrar .= "<th style='text-align: center;'> Rol</th>";
+		$mostrar .= "<th style='text-align: center;'> Localidad que habita</th>";
+		$mostrar .= "<th style='text-align: center;'> Etnia</th>";
+		$mostrar .= "<th style='text-align: center;'> Sector Social</th>";
+		$mostrar .= "<th style='text-align: center;'> Teléfono</th>";
 		foreach ($diplomado as $sc) {
 			$mostrar .= "<th style='text-align: center;'>" . explode("-", $sc['DT_Fecha_Sesion'])[2] . '/' . explode("-", $sc['DT_Fecha_Sesion'])[1] . '/' . explode("-", $sc['DT_Fecha_Sesion'])[0] . "</th>";
 		}
@@ -124,29 +130,39 @@ class DiplomadosController extends Controller
 
 		foreach ($estudiante as $e) {
 			$mostrar .= "<tr>";
-			$mostrar .= "<td>" . $e['VC_Identificacion'] . "</td>";
-			$mostrar .= "<td>" . $e['VC_Nombres'] . " " . $e['VC_Apellidos'] . "</td>";
-			$mostrar .= "<td>" . $e['VC_Correo'] . "</td>";
+			$mostrar .= "<td>" . $e->CORREO . "</td>";
+			$mostrar .= "<td>" . $e->IDENTIFICACION . "</td>";
+			$mostrar .= "<td>" . $e->NOMBRES . " " . $e->APELLIDOS . "</td>";
+			$mostrar .= "<td>" . $e->ENTIDAD . "</td>";
+			$mostrar .= "<td>" . $e->ROL . "</td>";
+			$mostrar .= "<td>" . $e->LOCALIDAD . "</td>";
+			$mostrar .= "<td>" . $e->ETNIA . "</td>";
+			$mostrar .= "<td>" . $e->SOCIAL . "</td>";
+			$mostrar .= "<td>" . $e->TELEFONO . "</td>";
+			
 			foreach ($diplomado as $sc) {
 				$asistencia = new AsistenciaDiplomado;
-				$estado_asistencia = $asistencia->consultarAsistenciaDiplomado($e['Pk_Id_Participante'], $sc['Pk_Id_Sesion_Diplomado']);
-				if (empty($estado_asistencia["IN_Asistencia"])) {
+				$estado_asistencia = $asistencia->consultarAsistenciaDiplomado($e->IDPARTICIPANTE, $sc['Pk_Id_Sesion_Diplomado']);
+				
+				if (empty($estado_asistencia)) {
+					$mostrar .= "<td class='text-center'>";
+					$mostrar .= '<strong><span>SIN REGISTRO</span></strong>';
+					"</td>";
+				} else {
 					$estado_asistencia = $estado_asistencia[0];
-					if ($estado_asistencia["IN_Asistencia"] == 1) {
+					if ($estado_asistencia->IN_Asistencia == 1) {
 						$mostrar .= "<td class='text-center' style='background-color: #A9DFBF'>";
 						$mostrar .= '<strong><span>Asistió</span></strong>';
 						"</td>";
-					} else if ($estado_asistencia["IN_Asistencia"] == 0) {
+					} else if ($estado_asistencia->IN_Asistencia == 0) {
 						$mostrar .= "<td class='text-center' style='background-color: #F5B7B1'>";
 						$mostrar .= '<strong><span>No Asistió</span></strong>';
 						"</td>";
 					}
-				} else {
-					$mostrar .= "<td class='text-center'><span>No registra</span></td>";
-				}
+				} 
 			}
 			$mostrar .= "</tr>";
-		}
+		} 
 		$mostrar .= "</tbody></table>";
 		return $mostrar;
 	}
