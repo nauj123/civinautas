@@ -111,7 +111,7 @@ class AsistenciaController extends Controller
 					$estado_asistencia = $asistencia->consultarAsistenciaEstudianteAtencion($e['Pk_Id_Beneficiario'], $sc['Pk_Id_Atencion']);
 					$obj_asistencia = new stdClass;
 					$obj_asistencia->DT_Fecha_Atencion = $sc["DT_Fecha_Atencion"];
-					$obj_asistencia->IN_Asistencia = empty($estado_asistencia) ? "SIN REGISTRO" : $estado_asistencia[0]->IN_Asistencia;
+					$obj_asistencia->IN_Asistencia = empty($estado_asistencia) ? "SR" : $estado_asistencia[0]->IN_Asistencia;
 					$estado_asistencia = array();
 					array_push($estado_asistencia, $obj_asistencia);
 					array_push($info["datos_asistencia"][$clave][$sc["Pk_Id_Atencion"]], $estado_asistencia);
@@ -125,7 +125,14 @@ class AsistenciaController extends Controller
 			$mostrar .= "<th style='text-align: center;'> Identificación</th>";
 			$mostrar .= "<th style='text-align: center;'> Nombre del Estudiante</th>";
 			foreach ($sesion_clase as $sc) {
-				$mostrar .= "<th style='text-align: center;'>" . $sc['DT_Fecha_Atencion'] . "</th>";
+				$dia = explode("/", $sc['DT_Fecha_Atencion']);
+
+				// $pizza  = "porción1 porción2 porción3 porción4 porción5 porción6";
+				// $porciones = explode(" ", $pizza);
+
+
+				//$mostrar .= "<th style='text-align: center;'>" . $sc['DT_Fecha_Atencion'] . "</th>";
+				$mostrar .= "<th style='text-align: center;'>" . $dia[0] . "</th>";
 			}
 			$mostrar .= "</thead>";
 			$mostrar .= "<colgroup><col style='width: 10%; border:1px solid black;'>";
@@ -140,23 +147,23 @@ class AsistenciaController extends Controller
 			foreach ($estudiante as $e) {
 				$mostrar .= "<tr>";
 				$mostrar .= "<td>" . $e['IN_Identificacion'] . "</td>";
-				$mostrar .= "<td>" . $e['VC_Primer_Nombre'] . " " . $e['VC_Segundo_Nombre'] . " " . $e['VC_Primer_Apellido'] . " " . $e['VC_Segundo_Apellido'] . "</td>";
+				$mostrar .= "<td>" . $e['VC_Primer_Apellido'] . " " . $e['VC_Segundo_Apellido'] . " ". $e['VC_Primer_Nombre'] . " " . $e['VC_Segundo_Nombre'] . "</td>";
 				foreach ($sesion_clase as $sc) {
 					$asistencia = new Asistencia;
 					$estado_asistencia = $asistencia->consultarAsistenciaEstudianteAtencion($e['Pk_Id_Beneficiario'], $sc['Pk_Id_Atencion']);
 					if (empty($estado_asistencia)) {
 						$mostrar .= "<td class='text-center'>";
-						$mostrar .= '<strong><span>SIN REGISTRO</span></strong>';
+						$mostrar .= '<strong><span>SR</span></strong>';
 						"</td>";
 					} else {
 						$estado_asistencia = $estado_asistencia[0];
 						if ($estado_asistencia->IN_Asistencia == 1) {
 							$mostrar .= "<td class='text-center' style='background-color: #A9DFBF'>";
-							$mostrar .= '<strong><span>Asistió</span></strong>';
+							$mostrar .= '<strong><span>SI</span></strong>';
 							"</td>";
 						} else if ($estado_asistencia->IN_Asistencia == 0) {
 							$mostrar .= "<td class='text-center' style='background-color: #F5B7B1'>";
-							$mostrar .= '<strong><span>No Asistió</span></strong>';
+							$mostrar .= '<strong><span>NO</span></strong>';
 							"</td>";
 						}
 					}

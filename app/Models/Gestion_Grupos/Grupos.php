@@ -19,6 +19,10 @@ class Grupos extends Model
         return $this->belongsTo("App\Models\Gestion_Colegios\Colegios", "Fk_Id_Institucion", "Pk_Id_Institucion");
     }
 
+    public function mediador(){
+        return $this->belongsTo("App\Models\Usuarios\Users", "Fk_Id_Medidador", "id");
+    }
+
     public function getOptionsGruposMediador($id_mediador){
         $grupos = Grupos::select(Grupos::raw("CONCAT(GROUP_CONCAT('<option value=\"', Pk_Id_Grupo, '\">', VC_Nombre_Grupo , '</option>' SEPARATOR '')) AS 'option'"))
         ->where([
@@ -102,7 +106,8 @@ class Grupos extends Model
     }
     public function getInfoGrupo($id_grupo){
         $informacion = Grupos::with("institucionEducativa:Pk_Id_Institucion,VC_Nombre_Institucion")
-        ->select("VC_Nombre_Grupo", "VC_Docente", "Fk_Id_Institucion")
+        ->with("mediador:id,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido")
+        ->select("VC_Nombre_Grupo", "Fk_Id_Medidador", "Fk_Id_Institucion")
         ->where("Pk_Id_Grupo", $id_grupo)
         ->get();
         return $informacion;

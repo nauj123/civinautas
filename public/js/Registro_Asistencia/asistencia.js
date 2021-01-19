@@ -372,6 +372,7 @@ $(document).ready(function () {
 						pageLength: 50,
 						lengthChange: false,
 						responsive: true,
+						order: [[ 1, "asc" ]],
 						dom: 'Bfrtip',
 						buttons: [{
 							extend: 'excel',
@@ -416,9 +417,11 @@ $(document).ready(function () {
 		array_widths_info_estudiantes = [];
 		array_info_atenciones = [];
 
+		let nombre_mediador = datosPDF["grupo"][0]["mediador"]["primer_nombre"] + " " + datosPDF["grupo"][0]["mediador"]["segundo_nombre"] + " " + datosPDF["grupo"][0]["mediador"]["primer_apellido"] + " " + datosPDF["grupo"][0]["mediador"]["segundo_apellido"];
+
 		array_info_grupo.push(
 			[{text: "ENTIDAD", style: "titulo_tabla"},{text: datosPDF["grupo"][0]["institucion_educativa"]["VC_Nombre_Institucion"]},{text: "GRUPO", style: "titulo_tabla"},{text: datosPDF["grupo"][0]["VC_Nombre_Grupo"]}],
-			[{text: "RESPONSABLE", style: "titulo_tabla"},{text: datosPDF["grupo"][0]["VC_Docente"]},{text: "FECHA", style: "titulo_tabla"},{text: $("#mes_reporte").val()}]);
+			[{text: "RESPONSABLE", style: "titulo_tabla"},{text: nombre_mediador},{text: "FECHA", style: "titulo_tabla"},{text: $("#mes_reporte").val()}]);
 
 		array_widths_info_estudiantes.push("auto", "auto", "*", "auto");
 		array_info_estudiantes.push([
@@ -440,13 +443,13 @@ $(document).ready(function () {
 			array_widths_info_estudiantes.push("auto");
 
 			array_info_estudiantes[0].push(
-				{text: value["DT_Fecha_Atencion"], style: "titulo_tabla"}
+				{text: value["DT_Fecha_Atencion"].split("/")[0], style: "titulo_tabla"}
 				);
 
 			array_info_atenciones.push([
 				{text: key+1, fillColor: '#cccccc', style: "texto_tabla"},
 				{text: value["DT_Fecha_Atencion"], style: "texto_tabla"},
-				{text: value["IN_Tipo_Actividad"], style: "texto_tabla"},
+				{text: value["descripcion"], style: "texto_tabla"},
 				{text: value["VC_Tematica"], style: "texto_tabla"}
 				]);
 		});
@@ -461,7 +464,7 @@ $(document).ready(function () {
 						{text: value["genero"], style: "texto_tabla"}
 						]);
 				}else{
-					asistencia = value[0][0]["IN_Asistencia"] != "SIN REGISTRO" ? value[0][0]["IN_Asistencia"] == 1 ? "SI" : "NO" : value[0][0]["IN_Asistencia"];
+					asistencia = value[0][0]["IN_Asistencia"] != "SR" ? value[0][0]["IN_Asistencia"] == 1 ? "SI" : "NO" : value[0][0]["IN_Asistencia"];
 					array_info_estudiantes[array_info_estudiantes.length - 1].push(
 						{text: asistencia, style: "texto_tabla"}
 						);
@@ -496,6 +499,7 @@ $(document).ready(function () {
 				widths: ["auto", "auto", "auto", "*"],
 				body: array_info_atenciones,
 			},
+			unbreakable: true,
 		});
 
 		generarPdf(datosPDF);
@@ -512,23 +516,14 @@ $(document).ready(function () {
 					[{text: "DIVULGACIÓN Y APROPIACIÓN SOCIAL DEL PATRIMONIO", style: "titulo_principal"}],
 					[{text: "LISTA DE ASISTENCIA BENEFICIADOS PROGRAMA DE FORMACION EN PATRIMONIO CULTURAL - CIVINAUTAS", style: "titulo_principal"}]
 					]
-				}
+				},
+				layout: 'noBorders'
 			},
 			[{text: "\n"}],
 			datosPDF.datos_tabla_grupo,
 			[{text: "\n"}],
 			datosPDF.datos_tabla_estudiantes,
 			[{text: "\n"}],
-			[
-			{
-				table: {
-					widths: ["*"],
-					body: [
-					[{text: "OBSERVACIONES:", style: "titulo"}]
-					]
-				}
-			}
-			],
 			datosPDF.datos_tabla_atenciones,
 			[
 			{
@@ -548,6 +543,18 @@ $(document).ready(function () {
 				}
 			}
 			],
+			[{text: "\n"}],
+			[
+			{
+				table: {
+					widths: ["*"],
+					heights: [70],
+					body: [
+					[{text: "OBSERVACIONES:", style: "titulo"}]
+					]
+				}
+			}
+			],
 			],
 			pageOrientation: 'landscape',
 			styles: {
@@ -563,7 +570,7 @@ $(document).ready(function () {
 					alignment: 'center',
 					fontSize: 11,
 					bold: true,
-					fillColor: '#eeeeee'
+					fillColor: '#d8d8d8'
 				},
 				titulo:{
 					fontSize: 11,
