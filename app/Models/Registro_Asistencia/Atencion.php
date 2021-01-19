@@ -56,11 +56,13 @@ class Atencion extends Model
     } 
 
     public function getEncabezadoConsultaMensual($id_grupo,$id_mes) {
-        $informacion = Atencion::select(Atencion::raw("Pk_Id_Atencion, DT_Fecha_Atencion"))
+        $informacion = Atencion::select(Atencion::raw("Pk_Id_Atencion, DATE_FORMAT(DT_Fecha_Atencion, '%d/%m/%Y') AS 'DT_Fecha_Atencion', IN_Tipo_Actividad, COALESCE(VC_Tematica, '') AS 'VC_Tematica'"))
+        //->join("tb_tipo_actividad", "Fk_Id_Parametro", "=", "IN_Modalidad")
         ->where([
           ['Fk_Id_Grupo', $id_grupo],
           ['DT_Fecha_Atencion','like','%'.$id_mes.'%']
         ])
+        ->orderBy("DT_Fecha_Atencion", "asc")
         ->get();
         return $informacion;
     } 

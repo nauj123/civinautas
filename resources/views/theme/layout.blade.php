@@ -180,6 +180,8 @@
 </div>
 <script src="{{ asset ('assets/js/vendor/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ asset ('js/home/home.js?v=2020.12.24.02') }}" defer></script>
+<script src="../../node_modules/pdfmake/build/pdfmake.js" ></script>
+<script src="../../node_modules/pdfmake/build/vfs_fonts.js" ></script>
 <!-- <script src="{{ asset ('assets/js/vendor/bootstrap.bundle.min.js') }}"></script> -->
 <script src="{{ asset ('assets/js/vendor/perfect-scrollbar.min.js') }}"></script>
 <script src="{{ asset ('assets/js/vendor/echarts.min.js') }}"></script>

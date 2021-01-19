@@ -102,9 +102,6 @@ $(document).ready(function(){
 			showConfirmButton: false,
 			allowOutsideClick: false,
 			allowEscapeKey: false,
-			backdrop: `
-			rgba(0,0,123,0.4)
-			`
 		});
 
 		var file = $("#archivo-simat")[0].files[0];

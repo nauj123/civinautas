@@ -41,11 +41,11 @@ class EstudianteGrupo extends Model
         JOIN tb_grupos AS GR ON EG.Fk_Id_Grupo = GR.Pk_Id_Grupo
         JOIN tb_estudiantes AS ES ON EG.Fk_Id_Estudiante = ES.Pk_Id_Beneficiario
         WHERE EG.Pk_Id_Estudiante_Grupo = $id_estudiante"; 
-       $informacion = DB::select($sql);
-       return $informacion;
-      } 
+        $informacion = DB::select($sql);
+        return $informacion;
+    } 
 
-      public function getEstudiantesGrupoAsistencia($id_Grupo){
+    public function getEstudiantesGrupoAsistencia($id_Grupo){
     	$sql = "SELECT
         EG.Fk_Id_Estudiante AS 'IDESTUDIANTE',
         ES.IN_Identificacion AS 'IDENTIFICACION',
@@ -64,25 +64,12 @@ class EstudianteGrupo extends Model
         $informacion = DB::select($sql);
         return $informacion;
     } 
-
-    public function getEncabezadoConsultaMensual() {
-        $informacion = EstudianteGrupo::select(EstudianteGrupo::raw("Pk_Id_Atencion, DT_Fecha_Atencion"))
-        ->where([
-          ['Fk_Id_Grupo', 7]
-        ])
-        ->get();
-        return $informacion;
-    } 
-
     public function getEstudaintesGrupoConsulta($id_grupo){
-		$informacion = EstudianteGrupo::select("Pk_Id_Beneficiario", "IN_Identificacion", "VC_Primer_Nombre", "VC_Segundo_Nombre", "VC_Primer_Apellido", "VC_Segundo_Apellido", "IN_Estado")
-		->join("tb_estudiantes as es", "es.Pk_Id_Beneficiario", "=", "Fk_Id_Estudiante")
-		->where([
-			["Fk_Id_Grupo", $id_grupo]
-    ])
-    ->orderBy('VC_Primer_Apellido','desc')
-		->get();
-		return $informacion;
-	}
-
+      $informacion = EstudianteGrupo::select("Pk_Id_Beneficiario", "IN_Identificacion", "IN_Genero", "VC_Primer_Nombre", "VC_Segundo_Nombre", "VC_Primer_Apellido", "VC_Segundo_Apellido", "IN_Estado")
+      ->join("tb_estudiantes as es", "es.Pk_Id_Beneficiario", "=", "Fk_Id_Estudiante")
+      ->where("Fk_Id_Grupo", $id_grupo)
+      ->orderBy('VC_Primer_Apellido','asc')
+      ->get();
+      return $informacion;
+  }
 }

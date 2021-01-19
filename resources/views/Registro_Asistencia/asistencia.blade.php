@@ -167,6 +167,13 @@
 					</div>
 				</div>
 				<div id="div_table_asistencia"></div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-lg-4 offset-lg-4">
+							<button type="button" class="btn btn-block btn-primary" id="pdf-asistencia-mensual" style="display: none;">Descargar PDF</button>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -32,6 +32,7 @@
         "datatables.net-responsive-bs4": "^2.2.5",
         "jquery": "^3.5.1",
         "jszip": "^3.5.0",
+        "pdfmake": "^0.1.70",
         "sweetalert2": "^10.0.2",
         "vue-bootstrap-selectpicker": "^1.0.6",
         "xlsx": "^0.16.9"
