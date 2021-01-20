@@ -462,11 +462,19 @@ $(document).ready(function () {
 				celular: celular,
 				enfoque: '',
 				estrato: estrato,
-				id_grupo_agregar: $("#grupo-mediador").val()
+				id_grupo_agregar: $("#grupo-mediador").val() 
 			},
 			success: function (data) {
 				if (data == 200) {
 					swal("Éxito", "Se agrego correctamente el estudiante al grupo seleccionado, por favor consultarlo en el listado del grupo", "success");
+					getEstudiantesGrupo();
+				}
+				if (data == 210) {
+					swal("Advertencia", "El estudiante ya se encuentra registrado en el sistema", "warning");
+					getEstudiantesGrupo();
+				}
+				if (data == 211) {
+					swal("Advertencia", "El estudiante ya se encuentra registrado en el grupo", "warning");
 					getEstudiantesGrupo();
 				}
 			},
@@ -565,7 +573,19 @@ $(document).ready(function () {
 			},
 			success: function (data) {
 				if (data == 200) {
-					swal("Éxito", "Se registro la información del estudiante correctamente y se agrego al grupo seleccionado, ya puede ser consultado en el listado del grupo", "success");
+					swal("Éxito", "Se agrego correctamente el estudiante al grupo seleccionado, por favor consultarlo en el listado del grupo", "success");
+					$("#modal-registrar-estudiante").modal('hide');
+					LimpiarFormulario();
+					getEstudiantesGrupo();
+				}
+				if (data == 210) {
+					swal("Advertencia", "El estudiante ya se encuentra registrado en el sistema", "warning");
+					$("#modal-registrar-estudiante").modal('hide');
+					LimpiarFormulario();
+					getEstudiantesGrupo();
+				}
+				if (data == 211) {
+					swal("Advertencia", "El estudiante ya se encuentra registrado en el grupo", "warning");
 					$("#modal-registrar-estudiante").modal('hide');
 					LimpiarFormulario();
 					getEstudiantesGrupo();
