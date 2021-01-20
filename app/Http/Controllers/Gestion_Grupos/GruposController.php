@@ -139,14 +139,12 @@ class GruposController extends Controller
 			} else {
 				return 211;
 			}
-		} else {
-			
-			$estudiante = Estudiantes::where('IN_Identificacion', '=', $request->identificacion)->first();
-			$id_estudiante = $estudiante["Pk_Id_Beneficiario"];
-			$estudiantegrupo = new EstudianteGrupo;
-			
+		} else {			
+			$estudianteexite = Estudiantes::where('IN_Identificacion', '=', $request->identificacion)->first();
+			$id_estudiante = $estudianteexite["Pk_Id_Beneficiario"];			
 
-			$estudiante = EstudianteGrupo::where('Fk_Id_Estudiante', '=', $id_estudiante, 'AND', 'Fk_Id_Grupo', '=', $request->id_grupo_agregar)->first();
+			$estudiante = EstudianteGrupo::where('Fk_Id_Estudiante', '=', $id_estudiante)->where('Fk_Id_Grupo', '=', $request->id_grupo_agregar)->first();
+			$estudiantegrupo = new EstudianteGrupo;
 			if ($estudiante === null) {
 				$estudiantegrupo->Fk_Id_Grupo = $request->id_grupo_agregar;
 				$estudiantegrupo->Fk_Id_Estudiante = $id_estudiante;
@@ -158,12 +156,8 @@ class GruposController extends Controller
 					return 200;
 			}else{
 				return 211;
-			} 
-			
+			}
 		}
-
-		/*			
-		return 200; */
 	}
 
 	public function getEstadoEstudiante(Request $request)
